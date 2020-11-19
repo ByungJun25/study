@@ -117,7 +117,7 @@ String s = "a"; //a가 리터럴입니다.
 변수는 (타입 + 변수명)으로 선언할 수 있습니다.
 ```java
 int a;
-String b
+String b;
 ```
 
 #### 2. **초기화**  
@@ -155,8 +155,7 @@ public class Test {
 }
 ```
 
-* 초기화 블럭
-생성자가 시작되기 전, 실행되는 블럭으로써, 이 블럭을 통해서 변수를 초기화 할 수 있습니다.  
+* 초기화 블럭 - 생성자가 시작되기 전, 실행되는 블럭으로써, 이 블럭을 통해서 변수를 초기화 할 수 있습니다.  
 ```java
 public class Test {
     public static String ss;
