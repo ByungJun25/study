@@ -161,7 +161,65 @@ public static main(String[] args) {
 
 
 ### instanceof
+`instanceof` 연산자는 인스턴스의 실제 타입을 대상 클래스 타입인지 판별해주는 연산자입니다.  
+`instanceof` 연산자는 다음과 같이 사용합니다.  
+```java
+// 문법: (인스턴스 변수) `instanceof` (클래스 or 인터페이스) 
 
+public static void main(String[] args) {
+    String s = "";
+    if(s instanceof String) { // return true
+        //...
+    }
+}
+```
+
+**`instanceof` 연산자를 어떻게 활용하는 것일까요?**  
+
+IDE에 다음과 같이 `instanceof`를 적으면 컴파일 에러가 나는 것을 볼 수 있습니다.
+```java
+public static void main(String[] args) {
+    String s = "";
+    if(s instanceof Integer) { // Incompatible conditional operand types String and Integer
+        //...
+    }
+}
+```
+
+그리고 java는 언어의 특징상 타입을 표기하도록 되어있기때문에, method의 parameter 역시 이미 타입이 체크되고 있습니다.  
+그렇다면 `instanceof`가 있는 이유는 무엇일까요?   
+이 부분을 설명하기 위해서는 상속 및 다형성에 관한 이해가 필요합니다. 추후 상속 부분에서 자세히 언급할 예정이기에 여기서 짧게 예시를 들어 설명하겠습니다.  
+
+상속이란 기존의 클래스의 메소드 및 필드를 물려받아, 이를 재정의 하거나 새 기능을 추가하여 새로운 클래스를 정의하는 것을 의미합니다.  
+다형성이란 하나의 인스턴스가 여러 타입을 가질 수 있는 것을 의미하는데, 이로인해 하나의 인스턴스는 상속한 상위 클래스 타입으로 표현 할 수 있습니다.  
+**또한 java의 모든 참조 타입은 `Object`라는 클래스를 상속합니다.**  
+즉, 우리는 모든 참조 변수를 `Object`라는 타입으로 표현할 수 있습니다. 이제 아래의 예시를 보겠습니다.
+```java
+public class Test {
+    //...
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Test t = new Test();
+        String s = "";
+
+        print(t); // object 변수는 Test 타입입니다.
+        print(s); // object 변수는 Test 타입이 아닙니다.
+        
+    }
+
+    public static void print(Object object) {
+        if(object instanceof Test) {
+            System.out.println("object 변수는 Test 타입입니다.");
+        } else {
+			System.out.println("object 변수는 Test 타입이 아닙니다.");
+		}
+    }
+}
+```
+위의 예시를 보면, `print`메소드는 `Object` 타입의 파라미터를 받고 있습니다. 앞서 말했다시피, 모든 참조변수는 `Object`를 상속하고 있기때문에, 우리는 `Test`타입 변수와 `String` 타입 변수를 `print`메소드에 넘겨줄 수 있습니다. 그리고 메소드 내부에 보면 이 `Object` 타입의 변수가 `Test`타입인지 아닌지 판별하여 각기 다른 문자열을 출력하고 있습니다.  
+이처럼 **다형성 및 상속을 이용한 부분에서 `instanceof`는 타입을 판단하기 위한 중요한 판별도구가 될 수 있음을 확인할 수 있습니다. 또한 `instanceof`를 이용하면 `Casting`을 통한 타입변환전에 타입을 검증할 수 있기때문에, 데이터가 달라 발생하는 타입변환 에러를 쉽게 막을 수 있습니다.**  
 
 ### assignment(=) operator
 
