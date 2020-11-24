@@ -89,28 +89,28 @@ public static main(String[] args) {
 }
 ```
 * **AND 연산**  
-![andOp](./andOp.PNG)
+  ![andOp](./andOp.PNG)
 
 * **OR 연산**  
-![orOp](./orOp.PNG)
+  ![orOp](./orOp.PNG)
 
 * **XOR 연산**  
-![xorOp](./xorOp.PNG)
+  ![xorOp](./xorOp.PNG)
 
 * **NOT 연산**  
-![notOp](./notOp.PNG)
+  ![notOp](./notOp.PNG)
 
 * **LEFT SHIFT 연산**  
-![leftshiftOp](./leftshiftOp.PNG)
+  ![leftshiftOp](./leftshiftOp.PNG)
 
 * **RIGHT SHIFT 연산**  
-![rightshift](./rightshift.PNG)
+  ![rightshift](./rightshift.PNG)
 
 * **LOGICAL RIGHT SHIFT 연산**  
-![logicalshiftrightOp1](./logicalshiftrightOp1.PNG)
+  ![logicalshiftrightOp1](./logicalshiftrightOp1.PNG)
 
 * **LOGICAL RIGHT SHIFT 연산**  
-![logicalshiftrightOp2](./logicalshiftrightOp2.PNG)
+  ![logicalshiftrightOp2](./logicalshiftrightOp2.PNG)
 
 
 ### 관계 연산자
