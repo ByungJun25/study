@@ -147,7 +147,7 @@ public static main(String[] args) {
 |논리 연산자|설명|
 |---------|---------|
 |`&&`| 논리식이 모두 `true`이면 `true`를 반환합니다. (논리 AND 연산)|
-|`||`| 논리식 중에서 하나라도 `true`이면 `true`를 반환합니다. (논리 OR 연산)|
+|`\|\|`| 논리식 중에서 하나라도 `true`이면 `true`를 반환합니다. (논리 OR 연산)|
 |`!`| 논리식이 `true`면 `false`를, `false`면 `true`를 반환합니다. (논리 NOT 연산)|
   
 
@@ -237,3 +237,4 @@ public class Main {
 
 
 ### 참고사이트
+[TCPSchool](http://www.tcpschool.com/java/intro)
