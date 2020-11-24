@@ -213,8 +213,8 @@ public class Main {
         if(object instanceof Test) {
             System.out.println("object 변수는 Test 타입입니다.");
         } else {
-			System.out.println("object 변수는 Test 타입이 아닙니다.");
-		}
+            System.out.println("object 변수는 Test 타입이 아닙니다.");
+        }
     }
 }
 ```
