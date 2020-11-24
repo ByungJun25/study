@@ -75,17 +75,43 @@ public static main(String[] args) {
 
     int leftShiftOp = n2 << 2;
     int rightShiftOp = n2 >> 2;
-    int logicalshiftrightOp = n1 >>> 2;
+    int logicalshiftrightOp1 = n1 >>> 2;
+    int logicalshiftrightOp2 = n2 >>> 2;
 
-    System.out.println("(&) 연산자 결과: "+andOp); // (&) 연산자 결과: 10
-    System.out.println("(|) 연산자 결과: "+orOp); // (|) 연산자 결과: -2
-    System.out.println("(^) 연산자 결과: "+xorOp); // (^) 연산자 결과: -12
-    System.out.println("(~) 연산자 결과: "+notOp); // (~) 연산자 결과: 1
-    System.out.println("(<<) 연산자 결과: "+leftShiftOp); // (<<) 연산자 결과: -8
-    System.out.println("(>>) 연산자 결과: "+rightShiftOp); // (>>) 연산자 결과: -1
-    System.out.println("(>>>) 연산자 결과: "+logicalshiftrightOp); // (>>>) 연산자 결과: 2
+    System.out.println("10과 -2의 (&) 연산자 결과: "+andOp); // 10과 -2의 (&) 연산자 결과: 10
+    System.out.println("10과 -2의 (|) 연산자 결과: "+orOp); // 10과 -2의 (|) 연산자 결과: -2
+    System.out.println("10과 -2의 (^) 연산자 결과: "+xorOp); // 10과 -2의 (^) 연산자 결과: -12
+    System.out.println("-2의 (~) 연산자 결과: "+notOp); // -2의 (~) 연산자 결과: 1
+    System.out.println("-2의 (<<) 연산자 결과: "+leftShiftOp); // -2의 (<<) 연산자 결과: -8
+    System.out.println("-2의 (>>) 연산자 결과: "+rightShiftOp); // -2의 (>>) 연산자 결과: -1
+    System.out.println("10의 (>>>) 연산자 결과: "+logicalshiftrightOp1); // 10의 (>>>) 연산자 결과: 2
+    System.out.println("-2의 (>>>) 연산자 결과: "+logicalshiftrightOp2); // -2의 (>>>) 연산자 결과: 1073741823
 }
 ```
+* **AND 연산**
+![andOp](./andOp.PNG)
+
+* **OR 연산**
+![orOp](./orOp.PNG)
+
+* **XOR 연산**
+![xorOp](./xorOp.PNG)
+
+* **NOT 연산**
+![notOp](./notOp.PNG)
+
+* **LEFT SHIFT 연산**
+![leftshiftOp](./leftshiftOp.PNG)
+
+* **RIGHT SHIFT 연산**
+![rightshift](./rightshift.PNG)
+
+* **LOGICAL RIGHT SHIFT 연산**
+![logicalshiftrightOp1](./logicalshiftrightOp1.PNG)
+
+* **LOGICAL RIGHT SHIFT 연산**
+![logicalshiftrightOp2](./logicalshiftrightOp2.PNG)
+
 
 ### 관계 연산자
 
