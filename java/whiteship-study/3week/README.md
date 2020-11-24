@@ -142,6 +142,22 @@ public static main(String[] args) {
 > `a` 가 `A`보다 큰 이유는, `a`의 아스키코드가 97이고 `A`의 아스키코드가 65이기 때문입니다.
 
 ### 논리 연산자
+논리 연산자는 주어진 논리식을 판단하여, `true` 혹은 `false`를 결정하는 연산자입니다.  
+논리 연산자의 종류는 다음과 같습니다.
+|논리 연산자|설명|
+|---------|---------|
+|`&&`| 논리식이 모두 `true`이면 `true`를 반환합니다. (논리 AND 연산)|
+|`||`| 논리식 중에서 하나라도 `true`이면 `true`를 반환합니다. (논리 OR 연산)|
+|`!`| 논리식이 `true`면 `false`를, `false`면 `true`를 반환합니다. (논리 NOT 연산)|
+  
+
+**진리표**  
+|A|B|A && B|A\|\|B|!A|
+|---------|---------|---------|---------|---------|
+|true|true|true|true|false|
+|true|false|false|true|false|
+|false|true|false|true|true|
+|false|false|false|false|true|
 
 
 ### instanceof
