@@ -7,11 +7,11 @@
 * [관계 연산자](#관계-연산자)
 * [논리 연산자](#논리-연산자)
 * [instanceof](#instanceof)
-* [assignment(=) operator](#assignment(=)-operator)
-* [화살표(->) 연산자](#화살표(->)-연산자)
+* [assignment(=) operator](##assignment-operator)
+* [화살표(->) 연산자](#화살표--연산자)
 * [3항 연산자](#3항-연산자)
 * [연산자 우선 순위](#연산자-우선-순위)
-* [switch 연산자(Java13)](#switch-연산자(Java13))
+* [switch 연산자(Java13)](#switch-연산자java13)
 * [참고사이트](#참고사이트)
 
 ### 연산자란?
