@@ -152,7 +152,7 @@ public static main(String[] args) {
   
 
 **진리표**  
-|A|B|A && B|A\|\|B|!A|
+|A|B|A && B|A \|\| B|!A|
 |---------|---------|---------|---------|---------|
 |true|true|true|true|false|
 |true|false|false|true|false|
