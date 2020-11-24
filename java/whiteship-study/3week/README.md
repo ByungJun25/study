@@ -88,28 +88,28 @@ public static main(String[] args) {
     System.out.println("-2의 (>>>) 연산자 결과: "+logicalshiftrightOp2); // -2의 (>>>) 연산자 결과: 1073741823
 }
 ```
-* **AND 연산**
+* **AND 연산**  
 ![andOp](./andOp.PNG)
 
-* **OR 연산**
+* **OR 연산**  
 ![orOp](./orOp.PNG)
 
-* **XOR 연산**
+* **XOR 연산**  
 ![xorOp](./xorOp.PNG)
 
-* **NOT 연산**
+* **NOT 연산**  
 ![notOp](./notOp.PNG)
 
-* **LEFT SHIFT 연산**
+* **LEFT SHIFT 연산**  
 ![leftshiftOp](./leftshiftOp.PNG)
 
-* **RIGHT SHIFT 연산**
+* **RIGHT SHIFT 연산**  
 ![rightshift](./rightshift.PNG)
 
-* **LOGICAL RIGHT SHIFT 연산**
+* **LOGICAL RIGHT SHIFT 연산**  
 ![logicalshiftrightOp1](./logicalshiftrightOp1.PNG)
 
-* **LOGICAL RIGHT SHIFT 연산**
+* **LOGICAL RIGHT SHIFT 연산**  
 ![logicalshiftrightOp2](./logicalshiftrightOp2.PNG)
 
 
