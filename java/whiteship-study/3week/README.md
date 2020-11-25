@@ -8,7 +8,7 @@
 * [논리 연산자](#논리-연산자)
 * [instanceof](#instanceof)
 * [assignment(=) operator](##assignment-operator)
-* [화살표(->) 연산자](#화살표--연산자)
+* [화살표(->) 연산자(람다 표현식)](#화살표--연산자)
 * [3항 연산자](#3항-연산자)
 * [연산자 우선 순위](#연산자-우선-순위)
 * [switch 연산자(Java13)](#switch-연산자java13)
@@ -289,7 +289,67 @@ public static void main(String[] args) {
 ```
 
 ### 화살표(->) 연산자
+람다 표현식이란 파라미터를 받고 결과 값을 돌려주는 짧은 블록코드를 말합니다.  
+람다 표현식은 java 8부터 도입되었습니다. 람다 표현식이 도입되기 전에는 익명 클래스를 사용하여 비슷한 동작을 구현해왔습니다.  
+람다 표현식의 문법은 다음과 같습니다.  
+1. 1개의 파라미터와 1개의 표현식을 가지는 경우  
+`parameter -> expression`
+2. 2개 이상의 파라미터와 1개의 표현식을 가지는 경우  
+`(parameter1, parameter2, ...) -> expression`
+3. 2개 이상의 파라미터와 코드블럭을 가지는 경우
+`(parameter1, parameter2, ...) -> { code block }`
 
+```java
+public static void main(String[] args) {
+  ArrayList<Integer> numbers = new ArrayList<>();
+  numbers.add(1);
+  numbers.add(2);
+  numbers.add(3);
+  numbers.add(4);
+  numbers.add(5);
+
+  numbers.forEach(n -> System.out.println("number: "+n));
+
+  // number: 1
+  // number: 2
+  // number: 3
+  // number: 4
+  // number: 5
+}
+```
+
+람다 표현식은 파라미터로 전달될 수도 있고, 메소드의 결과값으로도 사용할 수 있습니다.  
+이때, 람다 표현식을 저장하기 위한 참조 변수가 필요한데, 이 참조 변수의 타입을 `함수형 인터페이스`라고 합니다.  
+`함수형 인터페이스`는 일반적인 인터페이스와는 다르게 단 하나의 추상 메소드만 가져야 합니다.  
+또한 `@FunctionalInterface` 어노테이션을 통해 `함수형 인터페이스`임을 명시할 수 있습니다.  
+어노테이션을 사용하지 않아도 함수를 하나만 가지면 `함수형 인터페이스`로 사용할 수 있지만, 이 경우 컴파일러가 일반 인터페이스로 인식하기때문에 
+인터페이스에 메소드 추가가 가능합니다.(단, 할당하는 쪽에서는 컴파일 에러가 발생합니다.) 하지만 어노테이션을 사용하면 인터페이스에 메소드 추가가 아예 
+불가능하기때문에 보다 코드를 관리하기 좋습니다. 따라서 `함수형 인터페이스`를 정의할때, 항상 어노테이션을 붙이는게 좋습니다.
+
+**익명 클래스와 람다 표현식의 차이점**  
+앞서 java8 이전에는 익명 클래스를 이용하여 비슷한 동작을 구현해왔다고 했는데, 그럼 익명 클래스와 람다 표현식은 어떻게 다른지 알아보도록 하겠습니다.  
+우선 다음의 코드를 먼저 보도록 하겠습니다.
+```java
+@FunctionalInterface
+public interface FunctionalClass1 {
+  public void run();
+}
+
+@FunctionalInterface
+public interface FunctionalClass2 {
+  public void run();
+}
+
+public interface AnonymousClass {
+  public void run();
+}
+
+public class Main {
+  public static void main(String[] args) {
+    
+  }
+}
+```
 
 ### 3항 연산자
 
