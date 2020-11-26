@@ -397,7 +397,23 @@ public class Main {
 3. `람다 표현식`은 새로운 레벨의 스코프를 만들어내지 않기 때문에, 상위 스코프의 변수에 접근이 가능하게됩니다. 하지만 `람다 표현식`에서 접근 가능한 변수는 상위 스코프내의 사실상 final인 지역 변수나 파라미터 제한됩니다.(final로 명시가 되어있든, 아니면 final처럼 변수의 값의 변화가 없는 경우를 뜻함.)
 
 ### 3항 연산자
+3항 연산자는 조건식의 결과값에 따라 선택적으로 값을 반환하는 연산자입니다.  
+3항 연산자는 피연산자를 3개를 가집니다.  
+3항 연산자를 사용하는 방법은 아래와 같습니다.
 
+```java
+public static void main(String[] args) {
+  // 문법: (조건식) ? 반환값1 : 반환값2
+
+  String result = isGreaterThanTen(1) ? "10보다 큽니다." : "10보다 작습니다.";
+
+  System.out.println(result); // 10보다 작습니다.
+}
+
+public static boolean isGreaterThanTen(int num) {
+  return num > 10;
+}
+``` 
 
 ### 연산자 우선 순위
 
