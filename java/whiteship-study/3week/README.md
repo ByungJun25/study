@@ -416,10 +416,16 @@ public static boolean isGreaterThanTen(int num) {
 ``` 
 
 ### 연산자 우선 순위
+모든 연산자에게는 우선 순위가 부여되어 있습니다. 우선 순위는 많이 쓰이는 것은 외우면 좋고, 일반적으로 필요할때마다 참고하시면 됩니다.  
+아래 표에서 위에서부터 아래로 우선순위가 부여됩니다.
 
+![Operators_precedence](./Operators_precedence.PNG)
+
+표 출처: [https://www.tutorialspoint.com/Java-Operators-Precedence](https://www.tutorialspoint.com/Java-Operators-Precedence)
 
 ### switch 연산자(Java13)
 
 
 ### 참고사이트
 [TCPSchool](http://www.tcpschool.com/java/intro)
+[switch(JDK 13) - Baeldung](https://www.baeldung.com/java-switch)
