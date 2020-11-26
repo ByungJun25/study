@@ -571,7 +571,7 @@ public static void main(String[] args) {
 }
 
 public static String switchExpressWithYield(String animal) {
-		return switch(animal) {
+    return switch(animal) {
       case "DOG", "CAT" -> {
         String result = animal + "인 경우입니다.";
         yield result;
