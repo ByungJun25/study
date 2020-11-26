@@ -349,47 +349,47 @@ public interface AnonymousClass {
 
 public class Main {
   public static void main(String[] args) {
-		FunctionalClass1 fc1 = () -> {
+    FunctionalClass1 fc1 = () -> {
       System.out.println("FunctionalClass1 입니다.");
       //System.out.println("this는 누구? - " + this.toString()); // 컴파일 에러
     };
-		FunctionalClass1 fc2 = () -> System.out.println("FunctionalClass2 입니다.");
-
-		run(fc1);
-		run(fc2);
-		run(new AnonymousClass() {
-			public void run() {
-				System.out.println("AnonymousClass 입니다.");
+    FunctionalClass1 fc2 = () -> System.out.println("FunctionalClass2 입니다.");
+    
+    run(fc1);
+    run(fc2);
+    run(new AnonymousClass() {
+      public void run() {
+        System.out.println("AnonymousClass 입니다.");
         this.run2();
-			}
+      }
       public void run2() {
         System.out.println("call by this!");
       }
-		});
-
-		// run(() -> System.out.println("어떤 일이 발생할까요?")); // 타입을 모르기 때문에 컴파일 에러가 발생합니다.
+    });
+    
+    // run(() -> System.out.println("어떤 일이 발생할까요?")); // 타입을 모르기 때문에 컴파일 에러가 발생합니다.
     run((FunctionalClass1)() -> System.out.println("FunctionalClass1로 캐스팅."));
-	}
-
-	public static void run(FunctionalClass1 fc1) {
-		fc1.run();
-	}
-
-	public static void run(FunctionalClass2 fc2) {
-		fc2.run();
-	}
-
-	public static void run(AnonymousClass anc) {
-		anc.run();
-	}
-
+  }
+  
+  public static void run(FunctionalClass1 fc1) {
+    fc1.run();
+  }
+  
+  public static void run(FunctionalClass2 fc2) {
+    fc2.run();
+  }
+  
+  public static void run(AnonymousClass anc) {
+    anc.run();
+  }
+  
   public void print() {
     String variable = "var";
-		FunctionalClass1 fc1 = () -> {
-			//String variable = "var";  // 컴파일 에러 - 상위 스코프에 있는 변수 재정의 시도.
+    FunctionalClass1 fc1 = () -> {
+      //String variable = "var";  // 컴파일 에러 - 상위 스코프에 있는 변수 재정의 시도.
       //variable = "test";  // 컴파일 에러 - 접근가능한 변수는 무조건 final or effectively final 이여야 합니다.
-			System.out.println(variable); // 상위 스코프의 final or effectively final 변수 접근이 가능합니다.
-		};
+      System.out.println(variable); // 상위 스코프의 final or effectively final 변수 접근이 가능합니다.
+    };
   }
 }
 ```
@@ -572,14 +572,14 @@ public static void main(String[] args) {
 
 public static String switchExpressWithYield(String animal) {
 		return switch(animal) {
-		  case "DOG", "CAT" -> {
-			String result = animal + "인 경우입니다.";
-			yield result;
-		  }
-		  case "FISH" -> "FISH인 경우입니다.";
-		  default -> "정의되지 않은 경우입니다.";
-		};
-	}
+      case "DOG", "CAT" -> {
+        String result = animal + "인 경우입니다.";
+        yield result;
+      }
+      case "FISH" -> "FISH인 경우입니다.";
+      default -> "정의되지 않은 경우입니다.";
+    };
+}
 ```
 
 **`switch`문을 이용하는 경우와 `switch 표현식`을 이용할때 차이점**
@@ -591,33 +591,33 @@ public enum Language {
 public static void main(String[] args) {
     Language language = Language.JAVA;
     String animal = "DOG";
-
-		switch(animal) {
-			case "DOG", "CAT" -> System.out.println("DOG or CAT");
-			case "FISH" -> System.out.println("FISH");
-		}
-
-		String result = switch(animal) {
-			case "DOG", "CAT" -> {
-				System.out.println("DOG or CAT");
-				yield animal;
-			}
-			case "FISH" -> "FISH";
-			//default -> "default"; // default를 주석처리하면 모든 경우를 고려하지 않았기때문에 컴파일 에러가 발생합니다.
-		};
-
+    
+    switch(animal) {
+      case "DOG", "CAT" -> System.out.println("DOG or CAT");
+      case "FISH" -> System.out.println("FISH");
+    }
+    
+    String result = switch(animal) {
+      case "DOG", "CAT" -> {
+        System.out.println("DOG or CAT");
+        yield animal;
+      }
+      case "FISH" -> "FISH";
+      //default -> "default"; // default를 주석처리하면 모든 경우를 고려하지 않았기때문에 컴파일 에러가 발생합니다.
+    };
+    
     // 이 경우에는 모든 경우의 수를 고려하였기 때문에 default가 없더라도 컴파일 에러가 발생하지 않습니다.
     String result2 = switch (language) {
-			case JAVA -> {
-				yield language.name();
-			}
-			case C, CPP, CS -> {
-				yield language.name();
-			}
-			case JS -> {
-				yield language.name();
-			}
-		};
+      case JAVA -> {
+        yield language.name();
+      }
+      case C, CPP, CS -> {
+        yield language.name();
+      }
+      case JS -> {
+        yield language.name();
+      }
+    };
 }
 
 ```
