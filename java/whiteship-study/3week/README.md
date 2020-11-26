@@ -424,8 +424,201 @@ public static boolean isGreaterThanTen(int num) {
 표 출처: [https://www.tutorialspoint.com/Java-Operators-Precedence](https://www.tutorialspoint.com/Java-Operators-Precedence)
 
 ### switch 연산자(Java13)
+`switch 연산자`란 어떤 변수의 값에 따라 여러 다양한 실행문을 작동시키는 연산자입니다.  
+`switch 연산자`를 사용하면 다중 `if-else`문을 보다 읽기 쉽게 만들수 있기때문에, 다중 `if-else` 대신에 사용하면 좋습니다.  
+`switch 연산자`에는 `primitive` 타입과 `primitive wrapper` 클래스들 그리고 `enum`과 `String` 클래스를 사용할 수 있습니다.  
+`switch 연산자`에는 `null` 값을 줄 수 없습니다. 만약 `null` 값을 보내게 되면, `NullPointerException` 에러를 발생시킵니다.  
+`switch 연산자`는 다음과 같이 사용할 수 있습니다.
 
+```java
+public enum Language {
+  JAVA, C, CPP, CS, JS, 
+}
+
+public static void main(String[] args) {
+  System.out.println(basic(Language.JAVA.name())); // java 언어입니다.
+  System.out.println(basic(Language.C.name()));  // c 언어입니다.
+  System.out.println(basic(Language.CPP.name()));  // c++ 언어입니다.
+  System.out.println(basic(Language.CS.name()));  // c# 언어입니다.
+  System.out.println(basic(Language.JS.name()));  // javascript 언어입니다.
+  System.out.println(basic("PHP"));  // 정의되지 않은 언어입니다.
+  System.out.println(basic(null));  // NullPointerException
+}
+
+public static String basic(String language) {
+    String result = "";
+
+    switch(language) {
+      case "JAVA":
+        result = "java 언어입니다.";
+        break;
+      case "C":
+        result = "c 언어입니다.";
+        break;
+      case "CPP":
+        result = "c++ 언어입니다.";
+        break;
+      case "CS":
+        result = "c# 언어입니다.";
+        break;
+      case "JS":
+        result = "javascript 언어입니다.";
+        break;
+      default:
+        result = "정의되지 않은 언어입니다.";
+    }
+
+    return result;
+}
+```
+
+**`switch 연산자`를 작성할때 `break`를 쓰지 않으면, 그 하위 모든 블럭이 실행되어버립니다.**
+```java
+public enum Language {
+  JAVA, C, CPP, CS, JS
+}
+
+public static void main(String[] args) {
+  System.out.println(basic(Language.JAVA.name())); // c 언어입니다. -> break가 없어서 다음 case의 실행문이 작동하고 이후 break문을 통해 중지되었기 때문입니다.
+}
+
+public static String basic(String language) {
+    String result = "";
+
+    switch(language) {
+      case "JAVA":
+        result = "java 언어입니다.";
+      case "C":
+        result = "c 언어입니다.";
+        break;
+      case "CPP":
+        result = "c++ 언어입니다.";
+        break;
+      case "CS":
+        result = "c# 언어입니다.";
+        break;
+      case "JS":
+        result = "javascript 언어입니다.";
+        break;
+      default:
+        result = "정의되지 않은 언어입니다.";
+    }
+
+    return result;
+}
+```
+
+`switch 연산자`를 사용할때 여러 case에 하나의 실행문을 실행하고자 한다면 다음과 같이 여러 case를 연달아 작성하면 됩니다.
+```java
+public static void main(String[] args) {
+  System.out.println(multiCase("DOG")); // DOG 아니면 CAT인 경우입니다.
+  System.out.println(multiCase("CAT")); // DOG 아니면 CAT인 경우입니다.
+  System.out.println(multiCase("FISH")); // FISH인 경우입니다.
+}
+
+public static String multiCase(String animal) {
+    String result = "";
+
+    switch(animal) {
+      case "DOG":
+      case "CAT":
+        result = "DOG 아니면 CAT인 경우입니다.";
+        break;
+      case "FISH":
+        result = "FISH인 경우입니다.";
+        break;
+      default:
+        result = "정의되지 않은 경우입니다.";
+    }
+
+    return result;
+}
+```
+
+> **`switch 표현식`은 JAVA 14부터 정식 기능으로 도입되었습니다. 따라서 12 혹은 13에서 사용을 원하시면 `preview feature`을 사용할 수 있도록 설정해야 합니다.(Default로 비활성화되어 있습니다.)**  
+
+JDK 12부터 `switch 연산자`에 `switch 표현식`이라는 것이 도입되었습니다. 이를 통해 switch문을 보다 더 간편하게 작성할 수 있습니다.  
+`switch 표현식`을 통해 작성할 경우 `break`가 필요없습니다. 왜냐하면 `switch 표현식`은 더이상 하위의 case를 실행하지 않기때문입니다.  
+또한 쉼표를 통해 하나의 case에 다양한 기준조건을 넣을 수 있게되었습니다.
+```java
+public static void main(String[] args) {
+  System.out.println(multiCaseWithExpression("DOG")); // DOG 아니면 CAT인 경우입니다.
+  System.out.println(multiCaseWithExpression("CAT")); // DOG 아니면 CAT인 경우입니다.
+  System.out.println(multiCaseWithExpression("FISH")); // FISH인 경우입니다.
+}
+
+public static String multiCaseWithExpression(String animal) {
+    return switch(animal) {
+      case "DOG", "CAT" -> "DOG 아니면 CAT인 경우입니다.";
+      case "FISH" -> "FISH인 경우입니다.";
+      default -> "정의되지 않은 경우입니다.";
+    }
+}
+```
+
+JDK 13부터 `switch 연산자`에 `yield` 키워드가 도입되었습니다. 이를 통해 이제 `switch 표현식`에 다양한 로직을 추가하고 값을 반환 할 수 있게되었습니다.  
+`yield` 키워드를 사용하는 방법은 다음과 같습니다.
+```java
+public static void main(String[] args) {
+  System.out.println(switchExpressWithYield("DOG")); // DOG인 경우입니다.
+  System.out.println(switchExpressWithYield("CAT")); // CAT인 경우입니다.
+  System.out.println(switchExpressWithYield("FISH")); // FISH인 경우입니다.
+}
+
+public static String switchExpressWithYield(String animal) {
+		return switch(animal) {
+		  case "DOG", "CAT" -> {
+			String result = animal + "인 경우입니다.";
+			yield result;
+		  }
+		  case "FISH" -> "FISH인 경우입니다.";
+		  default -> "정의되지 않은 경우입니다.";
+		};
+	}
+```
+
+**`switch`문을 이용하는 경우와 `switch 표현식`을 이용할때 차이점**
+```java
+public enum Language {
+  JAVA, C, CPP, CS, JS
+}
+
+public static void main(String[] args) {
+    Language language = Language.JAVA;
+    String animal = "DOG";
+
+		switch(animal) {
+			case "DOG", "CAT" -> System.out.println("DOG or CAT");
+			case "FISH" -> System.out.println("FISH");
+		}
+
+		String result = switch(animal) {
+			case "DOG", "CAT" -> {
+				System.out.println("DOG or CAT");
+				yield animal;
+			}
+			case "FISH" -> "FISH";
+			//default -> "default"; // default를 주석처리하면 모든 경우를 고려하지 않았기때문에 컴파일 에러가 발생합니다.
+		};
+
+    // 이 경우에는 모든 경우의 수를 고려하였기 때문에 default가 없더라도 컴파일 에러가 발생하지 않습니다.
+    String result2 = switch (language) {
+			case JAVA -> {
+				yield language.name();
+			}
+			case C, CPP, CS -> {
+				yield language.name();
+			}
+			case JS -> {
+				yield language.name();
+			}
+		};
+}
+
+```
+위의 코드에서 `switch 표현식`에서 default를 선언하지 않으면 컴파일 에러가 발생하게 됩니다. 이러한 이유는 일반적인 switch문의 경우, 모든 경우를 고려할 필요가 없지만, `switch 표현식`의 경우 모든 경우를 고려하도록 설계되어있기 때문입니다. 따라서 `switch 표현식`을 사용할때는 모든 경우를 고려하도록 코드를 짜야합니다. (enum의 경우 모든 경우를 적게되면 default를 작성하지 않더라도 컴파일 에러가 생기지 않습니다.)
 
 ### 참고사이트
-[TCPSchool](http://www.tcpschool.com/java/intro)
-[switch(JDK 13) - Baeldung](https://www.baeldung.com/java-switch)
+[TCPSchool](http://www.tcpschool.com/java/intro)  
+[switch(JDK 13) - Baeldung](https://www.baeldung.com/java-switch)  
+[switch(JDK 13) - mkyong](https://mkyong.com/java/java-13-switch-expressions/)  
