@@ -320,7 +320,7 @@ public static void main(String[] args) {
 
 람다 표현식은 파라미터로 전달될 수도 있고, 메소드의 결과값으로도 사용할 수 있습니다.  
 이때, 람다 표현식을 저장하기 위한 참조 변수가 필요한데, 이 참조 변수의 타입을 `함수형 인터페이스`라고 합니다.  
-`함수형 인터페이스`는 일반적인 인터페이스와는 다르게 단 하나의 추상 메소드만 가져야 합니다.  
+`함수형 인터페이스`는 일반적인 인터페이스와는 다르게 **단 하나의 추상 메소드만 가져야 합니다**.  
 또한 `@FunctionalInterface` 어노테이션을 통해 `함수형 인터페이스`임을 명시할 수 있습니다.  
 어노테이션을 사용하지 않아도 함수를 하나만 가지면 `함수형 인터페이스`로 사용할 수 있지만, 이 경우 컴파일러가 일반 인터페이스로 인식하기때문에 
 인터페이스에 메소드 추가가 가능합니다.(단, 할당하는 쪽에서는 컴파일 에러가 발생합니다.) 하지만 어노테이션을 사용하면 인터페이스에 메소드 추가가 아예 
@@ -342,14 +342,59 @@ public interface FunctionalClass2 {
 
 public interface AnonymousClass {
   public void run();
+  public void run2();
 }
 
 public class Main {
   public static void main(String[] args) {
-    
+		FunctionalClass1 fc1 = () -> {
+      System.out.println("FunctionalClass1 입니다.");
+      //System.out.println("this는 누구? - " + this.toString()); // 컴파일 에러
+    };
+		FunctionalClass1 fc2 = () -> System.out.println("FunctionalClass2 입니다.");
+
+		run(fc1);
+		run(fc2);
+		run(new AnonymousClass() {
+			public void run() {
+				System.out.println("AnonymousClass 입니다.");
+        this.run2();
+			}
+      public void run2() {
+        System.out.println("call by this!");
+      }
+		});
+
+		// run(() -> System.out.println("어떤 일이 발생할까요?")); // 타입을 모르기 때문에 컴파일 에러가 발생합니다.
+    run((FunctionalClass1)() -> System.out.println("FunctionalClass1로 캐스팅."));
+	}
+
+	public static void run(FunctionalClass1 fc1) {
+		fc1.run();
+	}
+
+	public static void run(FunctionalClass2 fc2) {
+		fc2.run();
+	}
+
+	public static void run(AnonymousClass anc) {
+		anc.run();
+	}
+
+  public void print() {
+    String variable = "var";
+		FunctionalClass1 fc1 = () -> {
+			//String variable = "var";  // 컴파일 에러 - 상위 스코프에 있는 변수 재정의 시도.
+      //variable = "test";  // 컴파일 에러 - 접근가능한 변수는 무조건 final or effectively final 이여야 합니다.
+			System.out.println(variable); // 상위 스코프의 final or effectively final 변수 접근이 가능합니다.
+		};
   }
 }
 ```
+
+1. 위의 코드에는 람다 `함수형 인터페이스`를 파라미터로 받는 메서드가 있습니다. 하지만 같은 시그니처를 가지고 있는 경우, `람다 표현식`을 그대로 사용하면 어떤 메서드를 호출해야 하는지 알 수 없게 되어 컴파일 에러가 발생하게 됩니다. 따라서 이러한 경우에는 `람다 표현식` 앞에 타입을 명시해 줘야 합니다. 
+2. `람다 표현식` 내의 `this`는 선언된 클래스를 가리키며, `익명 클래스`내의 `this`는 `익명 클래스` 자신을 가리킵니다. 따라서 위의 코드 내에서 `fc1`변수 내에서 `this`를 호출할 수 없는 반면(static이기 때문에), `익명 클래스`내에서는 `this`를 호출할 수 있는 것을 볼 수 있습니다. 
+3. `람다 표현식`은 새로운 레벨의 스코프를 만들어내지 않기 때문에, 상위 스코프의 변수에 접근이 가능하게됩니다. 하지만 `람다 표현식`에서 접근 가능한 변수는 상위 스코프내의 사실상 final인 지역 변수나 파라미터 제한됩니다.(final로 명시가 되어있든, 아니면 final처럼 변수의 값의 변화가 없는 경우를 뜻함.)
 
 ### 3항 연산자
 
