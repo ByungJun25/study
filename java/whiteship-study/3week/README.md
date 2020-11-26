@@ -12,6 +12,8 @@
 * [3항 연산자](#3항-연산자)
 * [연산자 우선 순위](#연산자-우선-순위)
 * [switch 연산자(Java13)](#switch-연산자java13)
+  * [switch 문](#switch-문)
+  * [switch 표현식](#switch-표현식)
 * [참고사이트](#참고사이트)
 
 ### 연산자란?
@@ -424,6 +426,8 @@ public static boolean isGreaterThanTen(int num) {
 표 출처: [https://www.tutorialspoint.com/Java-Operators-Precedence](https://www.tutorialspoint.com/Java-Operators-Precedence)
 
 ### switch 연산자(Java13)
+#### **switch 문**
+
 `switch 연산자`란 어떤 변수의 값에 따라 여러 다양한 실행문을 작동시키는 연산자입니다.  
 `switch 연산자`를 사용하면 다중 `if-else`문을 보다 읽기 쉽게 만들수 있기때문에, 다중 `if-else` 대신에 사용하면 좋습니다.  
 `switch 연산자`에는 `primitive` 타입과 `primitive wrapper` 클래스들 그리고 `enum`과 `String` 클래스를 사용할 수 있습니다.  
@@ -535,6 +539,7 @@ public static String multiCase(String animal) {
 }
 ```
 
+#### **switch 표현식**
 > **`switch 표현식`은 JAVA 14부터 정식 기능으로 도입되었습니다. 따라서 12 혹은 13에서 사용을 원하시면 `preview feature`을 사용할 수 있도록 설정해야 합니다.(Default로 비활성화되어 있습니다.)**  
 
 JDK 12부터 `switch 연산자`에 `switch 표현식`이라는 것이 도입되었습니다. 이를 통해 switch문을 보다 더 간편하게 작성할 수 있습니다.  
