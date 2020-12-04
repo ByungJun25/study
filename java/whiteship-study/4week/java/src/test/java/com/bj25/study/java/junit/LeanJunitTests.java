@@ -1,4 +1,4 @@
-package com.bj25.study.java;
+package com.bj25.study.java.junit;
 
 import org.junit.jupiter.api.Test;
 
