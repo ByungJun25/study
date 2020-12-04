@@ -343,6 +343,7 @@ public static void main(String[] args) {
 
 #### JUnit 5 in VSCode
 > VSCode에서 JUnit을 설정하는 방법에 대해 적어봤습니다.
+
 VSCode에서는 JUnit 5를 `Java Test Runner` extenstion을 통해 지원하고 있습니다.  
 VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 쉽게 실행하고 디버깅할 수 있도록 지원하고 있습니다.  
 
@@ -353,6 +354,6 @@ VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 
 ### Queue
 
 ### 참고 사이트
-[Oracle Java Documentation](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/flow.html)
-[JUnit5 User Guide](https://junit.org/junit5/docs/current/user-guide/)
-[Visual Studio Code java Testing](https://code.visualstudio.com/docs/java/java-testing)
+[Oracle Java Documentation](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/flow.html)  
+[JUnit5 User Guide](https://junit.org/junit5/docs/current/user-guide/)  
+[Visual Studio Code java Testing](https://code.visualstudio.com/docs/java/java-testing)  
