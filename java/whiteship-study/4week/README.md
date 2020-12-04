@@ -25,10 +25,10 @@
   * [LinkedList 구현](#LinkedList-구현)
 * [Stack](#Stack)
   * [Stack이란](#Stack이란)
-  * [Stack 구현](#Stack 구현)
+  * [Stack 구현](#Stack-구현)
 * [Queue](#Queue)
   * [Queue란](#Queue란)
-  * [Queue 구현](#Queue 구현)
+  * [Queue 구현](#Queue-구현)
 
 ### 선택문
 선택문이란, 어떤 특정 조건에 따라 실행 순서를 변경하도록 제어하는 구문을 말합니다.  
@@ -60,32 +60,32 @@ public static void main(String[] args) {
 
 ```java
 public static void main(String[] args) {
-		int value = 15;
-
-		// if ~ else 경우
-		if (value % 2 == 0) {
-			System.out.println("value는 2의 배수입니다.");
-		} else {
-			System.out.println("value는 2의 배수가 아닙니다.");
-		}
-
-		// 중첩 if문
-		if (value % 5 == 0) {
-			if (value % 3 == 0) {
-				System.out.println("value는 5의 배수이면서, 3의 배수입니다.");
-			} else {
-				System.out.println("value는 5의 배수이지만, 3의 배수가 아닙니다.");
-			}
-		}
-
-		// if ~ else if ~ else 의 경우
-		if (value % 2 == 0) {
-			System.out.println("value는 2의 배수입니다.");
-		} else if (value % 5 == 0) {
-			System.out.println("value는 5의 배수입니다.");
-		} else {
-			System.out.println("value는 2의 배수도 5의 배수도 아닙니다.");
-		}
+  int value = 15;
+  
+  // if ~ else 경우
+  if (value % 2 == 0) {
+    System.out.println("value는 2의 배수입니다.");
+  } else {
+    System.out.println("value는 2의 배수가 아닙니다.");
+  }
+  
+  // 중첩 if문
+  if (value % 5 == 0) {
+    if (value % 3 == 0) {
+      System.out.println("value는 5의 배수이면서, 3의 배수입니다.");
+    } else {
+      System.out.println("value는 5의 배수이지만, 3의 배수가 아닙니다.");
+    }
+  }
+  
+  // if ~ else if ~ else 의 경우
+  if (value % 2 == 0) {
+    System.out.println("value는 2의 배수입니다.");
+  } else if (value % 5 == 0) {
+    System.out.println("value는 5의 배수입니다.");
+  } else {
+    System.out.println("value는 2의 배수도 5의 배수도 아닙니다.");
+  }
 }
 ```
 
@@ -104,20 +104,20 @@ public static void main(String[] args) {
 
 ```java
 public static void main(String[] args) {
-		int num = 1;
-		while (num < 11) { // num의 값이 11미만일때까지 실행합니다.
-			System.out.println("Number is: " + num);
-			num++;
-		}
+  int num = 1;
+  while (num < 11) { // num의 값이 11미만일때까지 실행합니다.
+    System.out.println("Number is: " + num);
+    num++;
+  }
 }
 ```
 
 `while`문은 다음과 같이 무한 루프로 사용할 수도 있습니다.
 ```java
 public static void main(String[] args) {
-		while (true) {
-			// Some codes.
-		}
+  while (true) {
+    // Some codes.
+  }
 }
 ```
 
@@ -125,11 +125,11 @@ public static void main(String[] args) {
 `do ~ while`문은 `while`문과 달리 조건식을 루프의 바닥에 적는데, 이로 인해 `do`블럭안에 적힌 코드가 항상 최소 한번은 실행되도록 하는 구문입니다.  
 ```java
 public static void main(String[] args) {
-    int num = 1;
-    do {
-      System.out.println("Number is: " + num); // Number is: 1 은 조건에 관계없이 무조건 출력됩니다.
-      num++;
-    } while (num < 11)
+  int num = 1;
+  do {
+    System.out.println("Number is: " + num); // Number is: 1 은 조건에 관계없이 무조건 출력됩니다.
+    num++;
+  } while (num < 11)
 }
 ```
 
