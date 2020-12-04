@@ -18,8 +18,12 @@
 
 ## 과제
 * [JUnit 5](#JUnit-5)
-  * [JUnit이란](#JUnit이란)
-  * [JUnit in VSCode](#JUnit-in-VSCode)
+  * [JUnit 5란](#JUnit-5란)
+  * [JUnit 사용법](#JUnit-사용법)
+    * [JUnit 5 설치](#JUnit-5-설치)
+    * [JUnit 5 주요 어노테이션](#JUnit-5-주요-어노테이션)
+    * [JUnit 5 테스트 코드 작성](#JUnit-5-테스트-코드-작성)
+  * [JUnit 5 in VSCode](#JUnit-5-in-VSCode)
 * [LinkedList](#LinkedList)
   * [LinkedList란](#LinkedList란)
   * [LinkedList 구현](#LinkedList-구현)
@@ -29,6 +33,7 @@
 * [Queue](#Queue)
   * [Queue란](#Queue란)
   * [Queue 구현](#Queue-구현)
+* [참고 사이트](#참고-사이트)
 
 ### 선택문
 선택문이란, 어떤 특정 조건에 따라 실행 순서를 변경하도록 제어하는 구문을 말합니다.  
@@ -260,9 +265,94 @@ public static void main(String[] args) {
 ```
 
 ### JUnit 5
+> JUnit은 자바 프로그래밍 언어용 유닛 테스트 프레임워크입니다.
+
+#### JUnit 5란
+`JUnit 5`는 다음의 세가지 프로젝트로 구성됩니다.  
+
+**JUnit 5 = JUnit Platform + JUnit Jupiter + JUnit Vintage**  
+
+* `JUnit Platform`은 테스트 프레임워크를 실행시키기 위한 기반이며, 테스트 프레임워크를 개발하기위한 테스트 엔진 API입니다.
+* `Junit Jupiter`은 JUnit 5 테스트를 작성 혹은 확장하기위한 새 프로그래밍 모델과 확장 모델의 조합입니다.
+* `JUnit Vintage`는 `JUnit Platform`에 이전의 `Junit3` 와 `Junit4` 기반의 테스트를 실행시키기 위한 테스트 엔진입니다.
+
+#### JUnit 사용법
+
+##### JUnit 5 설치
+> `JUnit 5`는 Java 8 이상의 버전을 요구합니다.(runtime)
+1. Gradle (version 4.6+)
+    1. JUnit 활성화
+    ```java
+    test {
+      userJUnitPlatform()
+    }
+    ```
+    2. Test Engine 설정
+    ```java
+    dependencies {
+      testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+      testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    }
+    ```
+
+2. Maven (version 2.22.0+)
+    1. Dependency 추가
+    ```xml
+    <dependencies>
+      <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-api</artifactId>
+          <version>5.7.0</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-engine</artifactId>
+          <version>5.7.0</version>
+          <scope>test</scope>
+      </dependency>
+    </dependencies>
+    ```
+
+##### JUnit 5 주요 어노테이션
+|Annotation|Description|
+|----------|-----------|
+|`@Test`| 메서드가 테스트 메서드임을 표시합니다.|
+|`@ParameterizedTest`| 메서드가 Parameterized 테스트 메서드임을 표시합니다.|
+|`@RepeatedTest`| 메서드가 반복 테스트를 위한 테스트 템플릿임을 표시합니다.|
+|`@TestFactory`| 메서드가 동적 테스트를 위한 테스트 팩토리임을 표시합니다.|
+|`@TestTemplate`| 메서드가 여러번 수행될 수 있는 테스트 케이스를 위한 템플릿임을 표시합니다.|
+|`@TestMethodOrder`| 테스트 메서드의 실행 순서를 설정하기위해 사용됩니다.|
+|`@TestInstance`| 테스트 인스턴스의 생명 주기를 설정하기위해 사용됩니다.|
+|`@DisplayName`| 테스트 클래스나 테스트 메서드의 커스텀 이름을 정의합니다.|
+|`@DisplayNameGeneration`| 테스트 클래스를 위한 커스텀 display name generator를 정의합니다.|
+|`@BeforeEach`| 이 어노테이션이 붙은 메서드는 매번 `@Test`, `@RepeatedTest`, `@ParameterizedTest`, `@TestFactory` 가 붙은 메서드가 실행되기 전에 실행됩니다. |
+|`@AfterEach`| 이 어노테이션이 붙은 메서드는 매번 `@Test`, `@RepeatedTest`, `@ParameterizedTest`, `@TestFactory` 가 붙은 메서드가 실행된 후에 실행됩니다.|
+|`@BeforeAll`| 이 어노테이션이 붙은 메서드는 `@Test`, `@RepeatedTest`, `@ParameterizedTest`, `@TestFactory` 가 붙은 모든 메서드가 실행되기 전에 실행됩니다.|
+|`@AfterAll`| 이 어노테이션이 붙은 메서드는 `@Test`, `@RepeatedTest`, `@ParameterizedTest`, `@TestFactory` 가 붙은 모든 메서드가 실행된 후에 실행됩니다.|
+|`@Nested`| 이 어노테이션이 붙은 클래스는 non-static nested 테스트 클래스임을 표시합니다. 이 어노테이션이 붙은 클래스에서 `@BeforeAll` 과 `@AfterAll` 이 붙은 메소드를 사용하기 위해선, "per-class"라는 테스트 인스턴스 생명주기를 사용해야합니다.|
+|`@Tag`| 클래스 혹은 메서드에 필터링을 위한 태그를 표시합니다. |
+|`@Disabled`| 테스트 클래스 혹은 테스트 메서드를 비활성화 하기위해 사용됩니다. |
+|`@Timeout`| 제한시간을 선언하는데 사용됩니다. 테스트 메서드 혹은 테스트 팩토리, 테스트 템플릿, 생명주기 메서드가 선언된 시간보다 오래걸리면, 테스트는 실패하게됩니다.|
+|`@ExtendWith`| 확장을 선언적으로 하기위해 사용됩니다.|
+|`@RegisterExtension`| 확장을 필드를 통한 프로그래밍적으로 하기위해 사용됩니다.|
+|`@TempDir`| 임시 폴더를 제공하기위해 사용됩니다. 이는 필드 인젝션이나 파라미터 인젝션을 통해 이루어집니다.|
+
+##### JUnit 5 테스트 코드 작성
+
+
+#### JUnit 5 in VSCode
+> VSCode에서 JUnit을 설정하는 방법에 대해 적어봤습니다.
+VSCode에서는 JUnit 5를 `Java Test Runner` extenstion을 통해 지원하고 있습니다.  
+VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 쉽게 실행하고 디버깅할 수 있도록 지원하고 있습니다.  
 
 ### LinkedList
 
 ### Stack
 
 ### Queue
+
+### 참고 사이트
+[Oracle Java Documentation](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/flow.html)
+[JUnit5 User Guide](https://junit.org/junit5/docs/current/user-guide/)
+[Visual Studio Code java Testing](https://code.visualstudio.com/docs/java/java-testing)
