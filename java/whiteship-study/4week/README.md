@@ -4,11 +4,11 @@
 ## 학습 내용
 * [선택문](#선택문)
   * [if](#if)
-  * [if~else](#if-else)
+  * [if~else](#ifelse)
   * [switch](#switch)
 * [반복문](#반복문)
   * [while](#while)
-  * [do~while](#do-while)
+  * [do~while](#dowhile)
   * [for](#for)
   * [enhanced for](#enhanced-for)
 * [분기문](#분기문)
