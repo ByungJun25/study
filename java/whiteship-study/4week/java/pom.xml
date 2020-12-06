@@ -13,6 +13,8 @@
 		<lombok.version>1.18.16</lombok.version>
 		<apache.common.lang.version>3.11</apache.common.lang.version>
 		<junit.version>5.7.0</junit.version>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 
 	<dependencies>
