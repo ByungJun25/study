@@ -32,6 +32,11 @@ public class ListNode<T> {
         this.next = null;
     }
 
+    /**
+     * 다음 노드의 존재 여부를 확인하는 메서드입니다.
+     * 
+     * @return
+     */
     public boolean hasNext() {
         if (this.next == null) {
             return false;
@@ -39,10 +44,20 @@ public class ListNode<T> {
         return true;
     }
 
+    /**
+     * 노드를 추가하는 메서드입니다.
+     * 
+     * @param next
+     */
     public void addNext(ListNode<T> next) {
         this.next = next;
     }
 
+    /**
+     * 마지막 노드를 반환하는 메서드입니다.
+     * 
+     * @return
+     */
     public ListNode<T> getLast() {
         ListNode<T> last = this;
 
@@ -53,6 +68,9 @@ public class ListNode<T> {
         return last;
     }
 
+    /**
+     * 마지막 노드를 제거하는 메서드입니다.
+     */
     public void removeLast() {
         ListNode<T> pre = null;
         ListNode<T> last = this;
@@ -62,7 +80,7 @@ public class ListNode<T> {
             last = last.getNext();
         }
 
-        if(pre != null) {
+        if (pre != null) {
             pre.addNext(null);
         }
     }

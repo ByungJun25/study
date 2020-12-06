@@ -7,6 +7,10 @@ public class Stack implements IStack {
     private int[] datas;
     private int elementCounts;
 
+    /**
+     * 기본 생성자입니다. 크기가 10인 배열을 초기화합니다.
+     * 
+     */
     public Stack() {
         this.datas = new int[10];
         this.elementCounts = 0;
@@ -42,6 +46,11 @@ public class Stack implements IStack {
         return result;
     }
 
+    /**
+     * 스택의 크기가 넣고자 하는 데이터의 양보다 작을때, 배열의 크기를 늘려주는 메서드입니다.
+     * 
+     * @param size
+     */
     private void grow(int size) {
         if (size > Integer.MAX_VALUE) {
             throw new OutOfMemoryError();

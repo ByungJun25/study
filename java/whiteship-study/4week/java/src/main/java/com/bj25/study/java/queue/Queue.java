@@ -12,6 +12,9 @@ public class Queue<T> implements IQueue<T> {
 
     private int elementCount;
 
+    /**
+     * 기본 생성자입니다. 크기가 10인 배열을 초기화합니다.
+     */
     public Queue() {
         this.datas = new Object[10];
         this.head = 0;
@@ -33,9 +36,14 @@ public class Queue<T> implements IQueue<T> {
         }
 
         this.tail += 1;
-        
+
     }
 
+    /**
+     * 큐에 데이터를 삽입할 수 있는 공간이 있는지 확인하는 메서드입니다.
+     * 
+     * @return
+     */
     private boolean hasPlace() {
         if (this.tail + 1 < this.datas.length) {
             return true;
@@ -50,6 +58,11 @@ public class Queue<T> implements IQueue<T> {
         }
     }
 
+    /**
+     * 큐의 사이즈가 넣고자하는 데이터의 양보다 작을 때, 배열의 크기를 늘려주는 메서드입니다.
+     * 
+     * @param size
+     */
     private void grow(int size) {
         if (size > Integer.MAX_VALUE) {
             throw new OutOfMemoryError();
