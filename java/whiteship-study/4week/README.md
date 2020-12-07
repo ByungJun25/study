@@ -395,7 +395,7 @@ VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 
 
 #### 결과
 
-링크: [결과 페이지 바로가기](#https://github.com/ByungJun25/study/tree/issue_8/java/whiteship-study/4week/dashboard)
+링크: [결과 페이지 바로가기](https://github.com/ByungJun25/study/java/whiteship-study/4week/dashboard)
 
 ### LinkedList
 
