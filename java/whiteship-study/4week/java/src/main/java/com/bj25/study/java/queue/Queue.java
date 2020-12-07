@@ -2,6 +2,11 @@ package com.bj25.study.java.queue;
 
 import java.util.Arrays;
 
+/**
+ * Object 배열을 이용한 Queue 클래스입니다.
+ * 
+ * @author BJ25
+ */
 public class Queue<T> implements IQueue<T> {
 
     private Object[] datas;

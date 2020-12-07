@@ -2,6 +2,11 @@ package com.bj25.study.java.stack;
 
 import com.bj25.study.java.linkedlist.ListNode;
 
+/**
+ * 앞서 만든 ListNode를 이용한 Stack 클래스입니다.
+ * 
+ * @author BJ25
+ */
 public class ListNodeStack implements IStack {
 
     private ListNode<Integer> head;
@@ -12,13 +17,13 @@ public class ListNodeStack implements IStack {
 
     @Override
     public int size() {
-        return (ListNode.getSize(this.head)-1);
+        return (ListNode.getSize(this.head) - 1);
     }
 
     @Override
     public void push(int data) {
         ListNode<Integer> nodeToAdd = new ListNode<>(data);
-        int position = this.size()+1;
+        int position = this.size() + 1;
 
         ListNode.add(this.head, nodeToAdd, position);
     }

@@ -1,5 +1,9 @@
 package com.bj25.study.java.stack;
 
+/**
+ * 
+ * @author BJ25
+ */
 public interface IStack {
 
     /**

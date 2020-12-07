@@ -2,6 +2,11 @@ package com.bj25.study.java.queue;
 
 import com.bj25.study.java.linkedlist.ListNode;
 
+/**
+ * 앞서 만든 ListNode를 이용한 Queue 클래스입니다.
+ * 
+ * @author BJ25
+ */
 public class ListNodeQueue<T> implements IQueue<T> {
 
     private ListNode<T> datas;

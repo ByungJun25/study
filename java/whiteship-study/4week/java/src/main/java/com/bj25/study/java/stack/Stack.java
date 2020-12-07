@@ -2,6 +2,11 @@ package com.bj25.study.java.stack;
 
 import java.util.Arrays;
 
+/**
+ * int 배열을 이용한 Stack 클래스입니다.
+ * 
+ * @author BJ25
+ */
 public class Stack implements IStack {
 
     private int[] datas;

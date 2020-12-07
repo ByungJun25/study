@@ -1,5 +1,9 @@
 package com.bj25.study.java.queue;
 
+/**
+ * 
+ * @author BJ25
+ */
 public interface IQueue<T> {
     /**
      * 큐에 데이터를 삽입하는 메서드입니다.(Enqueue)
