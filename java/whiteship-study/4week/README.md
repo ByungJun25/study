@@ -24,6 +24,10 @@
     * [JUnit 5 주요 어노테이션](#JUnit-5-주요-어노테이션)
     * [JUnit 5 테스트 코드 작성](#JUnit-5-테스트-코드-작성)
   * [JUnit 5 in VSCode](#JUnit-5-in-VSCode)
+* [GitHub API를 이용한 대시보드 만들기](#GitHub-API를-이용한-대시보드-만들기)
+  * [GitHub API for Java 설정](#GitHub-API-for-Java-설정)
+  * [정보 탐색 및 대시보드 생성](#정보-탐색-및-대시보드-생성)
+  * [결과](#결과)
 * [LinkedList](#LinkedList)
   * [LinkedList란](#LinkedList란)
   * [LinkedList 구현](#LinkedList-구현)
@@ -339,13 +343,58 @@ public static void main(String[] args) {
 |`@TempDir`| 임시 폴더를 제공하기위해 사용됩니다. 이는 필드 인젝션이나 파라미터 인젝션을 통해 이루어집니다.|
 
 ##### JUnit 5 테스트 코드 작성
+1. 프로젝트 생성  
+  > JAVA 개발을 위한 기본적인 vscode 설정 및 관련 extension 설치를 다 하였다고 가정하고 설명하겠습니다.  
 
+    1. `ctrl` + `schift` + `p` 단축키를 이용하여 vscode 명령 단축창을 연 후, `Maven: Create Maven Project` 를 클릭합니다.
+    2. 원하는 archetype을 선택합니다.
+    3. version을 선택합니다.
+    4. 프로젝트를 만들 폴더를 선택합니다.
+    5. Terminal을 통한 인터렉션(상호작용)을 통해 프로젝트 생성 작업을 시작합니다.
+
+2. JUnit 사용을 위한 Maven 설정  
+아래의 의존성을 `pom.xml`에 추가합니다.
+
+```xml
+<dependency>
+  <groupId>org.junit.jupiter</groupId>
+  <artifactId>junit-jupiter-api</artifactId>
+  <version>5.7.0</version> <!-- 작성 시점(2020.12.07) 기준 최신 버전 -->
+  <scope>test</scope>
+</dependency>
+```
+2. 코드 작성
+JUnit 테스트 코드는 다음과 같은 형식으로 작성하시면 됩니다.
+
+```java
+class JunitTest {
+
+	@Test 
+	void run() {
+    // ...
+	}
+
+}
+```
+
+보다 많은 코드 예제는 링크로 대체합니다. - [소스 예제](#) 
 
 #### JUnit 5 in VSCode
 > VSCode에서 JUnit을 설정하는 방법에 대해 적어봤습니다.
 
 VSCode에서는 JUnit 5를 `Java Test Runner` extenstion을 통해 지원하고 있습니다.  
 VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 쉽게 실행하고 디버깅할 수 있도록 지원하고 있습니다.  
+
+보다 자세한 내용은 [Visual Studio Code java Testing](https://code.visualstudio.com/docs/java/java-testing)에서 참고하실 수 있습니다.
+
+### GitHub API를 이용한 대시보드 만들기
+
+#### GitHub API for Java 설정
+
+#### 정보 탐색 및 대시보드 생성
+
+#### 결과
+[결과 페이지 바로가기](#https://github.com/ByungJun25/study/java/whiteship-study/4week/dashboard)
 
 ### LinkedList
 
