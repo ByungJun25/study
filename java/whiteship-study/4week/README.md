@@ -487,12 +487,12 @@ VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 
 아래에 구현된 소스코드 링크가 있으니, 자세한 내용은 코드를 보시면 되겠습니다.(주석을 달아놨습니다.) 
 
 **링크**  
-* [전체 구현 소스코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/dashboard)
-* [테스트 코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/dashboard)
+* [전체 구현 소스코드](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/dashboard)
+* [테스트 코드](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/dashboard)
 
 #### 결과
 
-링크: [결과 페이지 바로가기](https://github.com/ByungJun25/study/java/whiteship-study/4week/dashboard)
+링크: [결과 페이지 바로가기](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/4week/dashboard)
 
 ### LinkedList
 #### LinkedList란
@@ -507,8 +507,8 @@ VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 
 > 단일 연결 리스트로 구현하였습니다. 주어진 과제의 조건에 맞춰 작성되었습니다.
 
 **링크**  
-* [전체 구현 소스코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/linkedlist)
-* [테스트 코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/linkedlist)
+* [전체 구현 소스코드](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/linkedlist)
+* [테스트 코드](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/linkedlist)
 
 ### Stack
 #### Stack이란
@@ -524,8 +524,8 @@ VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 
 > 주어진 과제의 조건에 맞춰 `Stack` / `ListNodeStack` 으로 나누어 구현하였습니다.
 
 **링크**  
-* [전체 구현 소스코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/stack)
-* [테스트 코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/stack)
+* [전체 구현 소스코드](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/stack)
+* [테스트 코드](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/stack)
 
 ### Queue
 #### Queue란
@@ -536,8 +536,8 @@ VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 
 > 주어진 과제의 조건에 맞춰 `Queue` / `ListNodeQueue`로 나누어 구현하였습니다.
 
 **링크**  
-* [전체 구현 소스코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/queue)
-* [테스트 코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/queue)
+* [전체 구현 소스코드](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/queue)
+* [테스트 코드](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/queue)
 
 ### 참고 사이트
 [Oracle Java Documentation](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/flow.html)  
