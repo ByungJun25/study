@@ -65,22 +65,32 @@ public class GitHubHelper {
             throw new IllegalArgumentException("The repository is required!");
         }
 
+        // 이슈 리스트 얻기
         List<GHIssue> issues = this.github.getRepository(author + "/" + repository).getIssues(GHIssueState.ALL);
 
+        // 재분류를 위한 Project 데이터 생성
         Project project = Project.builder().build();
 
+        // 이슈를 순회하며 필요 정보 습득
         for (GHIssue issue : issues) {
+            // 재분류를 위한 Issue 정보 생성
             Issue targetIssue = Issue.builder().number(issue.getNumber()).title(issue.getTitle()).build();
 
+            // 코멘트 존재 여부 확인 - 리소스 낭비 방지
             if (issue.getCommentsCount() != 0) {
+                // 코멘트 리스트 습득
                 List<GHIssueComment> comments = issue.getComments();
+                // 코멘트를 순회하며 필요 정보 습득
                 for (GHIssueComment comment : comments) {
+                    // 로그인 아이디 습득
                     final String login = comment.getUser().getLogin();
+                    // 재분류를 위한 참여자 정보 생성
                     Participant participant = Participant.builder().userId(login).build();
+                    // 재분류를 위한 issue 데이터에 참여자 정보 저장
                     targetIssue.addParticipant(participant);
                 }
             }
-
+            // 재분류를 위한 Project 데이터에 이슈 정보 저장
             project.addIssue(targetIssue);
         }
 

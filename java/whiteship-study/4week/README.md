@@ -362,20 +362,71 @@ public static void main(String[] args) {
   <version>5.7.0</version> <!-- 작성 시점(2020.12.07) 기준 최신 버전 -->
   <scope>test</scope>
 </dependency>
+<dependency>
+  <groupId>org.junit.jupiter</groupId>
+  <artifactId>junit-jupiter-engine</artifactId>
+  <version>5.7.0</version>
+  <scope>test</scope>
+</dependency>
+<!-- (Optional) Params 관련 API 디펜던시. 필요에 따라 넣으시면 됩니다. -->
+<dependency>
+  <groupId>org.junit.jupiter</groupId>
+  <artifactId>junit-jupiter-params</artifactId>
+  <version>5.7.0</version>
+  <scope>test</scope>
+</dependency>
 ```
 2. 코드 작성
 JUnit 테스트 코드는 다음과 같은 형식으로 작성하시면 됩니다.
 
 ```java
 class JunitTest {
+  
+  @BeforeAll
+  static void initAll() {
+    
+  }
+  
+  @BeforeEach
+  void init() {
+    
+  }
+  
   @Test
-  void run() {
-    // ...
+  void succeedingTest() {
+    
+  }
+  
+  @Test
+  void failingTest() {
+    fail("a failing test");
+  }
+  
+  @Test
+  @Disabled("for demonstration purposes")
+  void skippedTest() {
+    // not executed
+  }
+  
+  @Test
+  void abortedTest() {
+    assumeTrue("abc".contains("Z"));
+    fail("test should have been aborted");
+  }
+  
+  @AfterEach
+  void tearDown() {
+    
+  }
+  
+  @AfterAll
+  static void tearDownAll() {
+    
   }
 }
 ```
-
-보다 많은 코드 예제는 링크로 대체합니다. - [소스 예제](#) 
+**보다 많은 코드 예제는 JUnit 5 의 UserGuide에서 보실수 있습니다.**
+예시 코드 출처: [JUnit 5 UserGuide](https://junit.org/junit5/docs/current/user-guide/#writing-tests-classes-and-methods)  
 
 #### JUnit 5 in VSCode
 > VSCode에서 JUnit을 설정하는 방법에 대해 적어봤습니다.
@@ -386,40 +437,107 @@ VSCode에서는 `CodeLens`라는 시스템을 통해 테스트 코드를 보다 
 보다 자세한 내용은 [Visual Studio Code java Testing](https://code.visualstudio.com/docs/java/java-testing)에서 참고하실 수 있습니다.
 
 ### GitHub API를 이용한 대시보드 만들기
+> GitHub API for JAVA 라이브러리를 이용하여 프로젝트 각 이슈별 참여자 및 참여자의 참여율을 표로 만드는 과제입니다.
 
 #### GitHub API for Java 설정
+1. 아래와 같이 디펜던시를 추가합니다.
+```xml
+<dependency>
+  <groupId>org.kohsuke</groupId>
+  <artifactId>github-api</artifactId>
+  <version>1.116</version> <!-- 작성 시점 기준 최신 버전-->
+</dependency>
+```
+
+2. GitHub API 사용을 위한 개인 토큰 발행
+    1. GitHub 로그인합니다.
+    2. 프로필을 눌러 개인 설정(`Settings`) 화면으로 이동합니다.
+    3. 좌측 메뉴에서 `Developer settings`로 이동합니다.
+    4. 좌측 메뉴에서 `Personal access tokens`로 이동합니다.
+    5. `Generate new token`을 클릭합니다.
+    6. `Note`에 원하는 이름을 적습니다.
+    7. 이번 과제에서 필요한 권한이 없기때문에, 아래 `scopes`는 아무것도 선택하지 않습니다.
+    8. `Generate token` 버튼을 눌러 토큰을 생성합니다.
+
+3. GitHub API for JAVA 라이브러리 사용을 위한 토큰 설정 (설정은 Property file로 하도록 하겠습니다.)
+    1. 사용자 폴더(Windows 시스템의 경우 보통 `C:/Users/{profile}`입니다.)로 이동합니다.
+    2. `.github` 라는 파일을 생성합니다.
+    3. 파일에 `oauth=개인토큰값` 과 같이 발행한 토큰값을 적고 저장합니다.  
+      example) `oauth=123456789`
+    4. `GitHub github = GitHubBuilder.fromPropertyFile().build();`을 통해 GitHub 라이브러리를 초기화합니다.
+
+> 여담으로 Postman을 이용하여 아무런 토큰값없이 Get 호출이 가능하길래 권한이 필요없는 줄 알고, `GitHub.connectAnonymously()` 메소드를 통해
+  익명으로 생성하여 사용해보았지만, 403 코드를 리턴받았습니다. 아마 Postman을 통한 방식에서는 이미 무언가 설정이 되어있는걸로 생각됩니다.
 
 #### 정보 탐색 및 대시보드 생성
+1. 레퍼지토리 가져오기  
+`github.getRepository("whiteship/live-study")` 호출
+> GitHub API for JAVA 문서를 보면, `getRepository` 호출시, 파라미터로 주는 이름값을 `owner/repo` 로 주도록 되어있습니다. 따라서 호출시, 필히 `owner/repo` 형식으로 작성해서 파라미터를 넘기도록 합니다.
 
-링크: [전체 구현 소스코드](#)
+2. 이슈 목록 가져오기  
+앞서 가져온 `GHRepository` 데이터의 `getIssues` 메소드를 이용합니다.
+이때 파라미터로 던질 데이터는 `GHIssueState`로 이슈의 상태를 가진 `enum` 값입니다. 이 과제에서는 전체 다 필요하므로 `GHIssueState.ALL`을 사용하도록 하겠습니다.
+
+3. 이슈내의 코멘트 목록 가져오기  
+앞서 가져온 `GHIssue` 리스트 데이터를 순회하면서, `getComments` 메소드를 통해 이슈내의 코멘트 목록을 가져올 수 있습니다. 저는 코멘트를 가져오기전에 `getCommentsCount` 메소드를 통해 코멘트가 존재하는지 여부를 먼저 판단했습니다.  
+이후 각 `GHIssueComment` 데이터로 부터 `getUser` 메소드를 통해 유저 정보를 가져오고 `GHUser` 데이터내에서 `getLogin`메소드를 통해 아이디 값을 수집하였습니다.
+
+4. 대시보드 생성  
+저의 경우, 라이브러리를 통해 가져온 데이터를 다시 필요에 따라 재분류(Project, Issue, Participant)하고, 재분류된 데이터를 통해 Dashboard를 생성하였습니다.  
+아래에 구현된 소스코드 링크가 있으니, 자세한 내용은 코드를 보시면 되겠습니다.(주석을 달아놨습니다.) 
+
+**링크**  
+* [전체 구현 소스코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/dashboard)
+* [테스트 코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/dashboard)
 
 #### 결과
 
 링크: [결과 페이지 바로가기](https://github.com/ByungJun25/study/java/whiteship-study/4week/dashboard)
 
 ### LinkedList
-
 #### LinkedList란
+연결 리스트는 각 노드가 데이터와 포인터를 가지고 한 줄로 연결되어 있는 방식으로 데이터를 저장하는 자료구조입니다.  
+연결 리스트에는 `단일 연결 리스트`, `이중 연결 리스트`, `원형 연결 리스트`가 있습니다.  
+
+![링크드 리스트 종류](./linkedlists.PNG)
+
+<이미지 출처 - [wikipedia](https://ko.wikipedia.org/wiki/%EC%97%B0%EA%B2%B0_%EB%A6%AC%EC%8A%A4%ED%8A%B8)>
 
 #### LinkedList 구현
+> 단일 연결 리스트로 구현하였습니다. 주어진 과제의 조건에 맞춰 작성되었습니다.
 
-링크: [전체 구현 소스코드](#)
+**링크**  
+* [전체 구현 소스코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/linkedlist)
+* [테스트 코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/linkedlist)
 
 ### Stack
-
 #### Stack이란
+스택은 제한적으로 접근할 수 있는 나열 구조를 말합니다.  
+즉 나중에 들어간 값이 먼저 나오는 구조입니다.(LIFO - Last In First Out)  
+쉽게 말해 컵에 어떤 데이터를 담는 것이라고 생각하면됩니다.  
+
+![스택의 구조](./stack.PNG)
+
+<이미지 출처 - [wikipedia](https://ko.wikipedia.org/wiki/%EC%8A%A4%ED%83%9D)>
 
 #### Stack 구현
+> 주어진 과제의 조건에 맞춰 `Stack` / `ListNodeStack` 으로 나누어 구현하였습니다.
 
-링크: [전체 구현 소스코드](#)
+**링크**  
+* [전체 구현 소스코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/stack)
+* [테스트 코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/stack)
 
 ### Queue
-
 #### Queue란
+큐는 스택과 달리 먼저 집어 넣은 데이터가 먼저나오는 FIFO(First In First Out)구조로 저장하는 형식을 말합니다.  
+쉽게 말해 일반적으로 입장을 위해 사람들이 줄을 선 것이라고 생각하면됩니다.  
 
 #### Queue 구현
+> 주어진 과제의 조건에 맞춰 `Queue` / `ListNodeQueue`로 나누어 구현하였습니다.
 
-링크: [전체 구현 소스코드](#)
+**링크**  
+* [전체 구현 소스코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/main/java/com/bj25/study/java/queue)
+* [테스트 코드](https://github.com/ByungJun25/study/java/whiteship-study/4week/java/src/test/java/com/bj25/study/java/queue)
 
 ### 참고 사이트
 [Oracle Java Documentation](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/flow.html)  

@@ -76,14 +76,17 @@ public class Dashboard {
         final List<Issue> issues = project.getIssues();
         final int total = project.getIssueCount();
 
+        // 유저별 참여 이슈 분류를 위한 Map 생성
         Map<String, List<Issue>> userMap = new HashMap<>();
 
+        // 프로젝트 내(즉, 모든 이슈내) 참여자 리스트 생성
         List<String> userIds = issues.stream()
                 .filter(i -> i.getParticipants() != null && !i.getParticipants().isEmpty())
                 .flatMap(i -> i.getParticipants().stream()).map(p -> p.getUserId()).distinct()
                 .collect(Collectors.toList());
-        Collections.sort(userIds);
+        Collections.sort(userIds); // 참여자 정렬
 
+        // 유저별 참여 이슈 분류
         for (Issue issue : issues) {
             if (issue.getParticipants() != null && !issue.getParticipants().isEmpty()) {
                 for (Participant p : issue.getParticipants()) {
@@ -114,11 +117,13 @@ public class Dashboard {
      */
     private boolean createDashboard(List<String> userIds, Map<String, List<Issue>> userIssueMap, int totalIssue)
             throws IOException {
+        // 파일 생성 위치 초기화
         final String output = System.getProperty("user.dir") + File.separator + ".." + File.separator + "dashboard"
                 + File.separator + "README.md";
 
         List<String> lines = new ArrayList<>();
 
+        // 테이블 헤더 작성
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("|참여자|");
         for (int i = 0; i < totalIssue; i++) {
@@ -127,6 +132,7 @@ public class Dashboard {
         stringBuilder.append("참여율|");
         lines.add(stringBuilder.toString());
 
+        // 테이블 헤더 분리 라인 작성
         stringBuilder = new StringBuilder();
         stringBuilder.append("|---|");
         for (int i = 0; i < totalIssue + 1; i++) {
@@ -134,6 +140,7 @@ public class Dashboard {
         }
         lines.add(stringBuilder.toString());
 
+        // 유저별 참여 이슈 마킹 및 참여율 작성
         for (String userId : userIds) {
             StringBuilder sBuilder = new StringBuilder();
             sBuilder.append("|");
@@ -158,6 +165,7 @@ public class Dashboard {
         return true;
     }
 
+    // 참여율 계산
     private BigDecimal calculateParticipationRating(int target, int total) {
         return BigDecimal.valueOf(target * 100).divide(BigDecimal.valueOf(total), 2, RoundingMode.HALF_UP);
     }
