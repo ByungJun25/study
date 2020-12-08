@@ -100,6 +100,7 @@ public static void main(String[] args) {
 
 #### switch
 `switch`문의 경우 앞서 3주차에 설명한 것으로 대신하도록 하겠습니다.  
+(**switch 연산자를 이용한 구문을 switch문이라고 합니다.**)  
 [switch operator 설명 바로가기](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/3week#switch-%EC%97%B0%EC%82%B0%EC%9E%90java13)  
 > `if`문이 여러개일 경우, `switch`문을 사용하는 것이 가독성도 더 좋고, 실행 속도도 더 빠릅니다.
 
