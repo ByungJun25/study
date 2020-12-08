@@ -210,6 +210,7 @@
 |yhxkit||||:white_check_mark:|||||||||||||||5.56%|
 |yks095|:white_check_mark:||||||||||||||||||5.56%|
 |yky03|:white_check_mark:|:white_check_mark:|:white_check_mark:||||||||||||||||16.67%|
+|youngsunshin94||||:white_check_mark:|||||||||||||||5.56%|
 |younwony|:white_check_mark:||:white_check_mark:||||||||||||||||11.11%|
 |yskkkkkk|:white_check_mark:|:white_check_mark:|:white_check_mark:||||||||||||||||16.67%|
 |ysmiler|:white_check_mark:|:white_check_mark:|:white_check_mark:||||||||||||||||16.67%|
