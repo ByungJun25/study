@@ -189,7 +189,7 @@ public class LinkedListTest {
         // when
         boolean result = ListNode.contains(head, nodeToCheck);
 
-        assertEquals(true, result); // 100개를 추가했으므로, 헤더 노드 포함 101개가 되어야 함.
+        assertEquals(true, result);
     }
 
     @DisplayName("Node를 가지고 있지 않는 경우")
