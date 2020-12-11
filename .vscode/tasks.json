@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "typescript",
+            "tsconfig": "javascript/practices/canvas/animation/tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "label": "tsc: build - javascript/practices/canvas/animation/tsconfig.json"
+        },
+        {
+            "type": "npm",
+            "script": "webpack",
+            "path": "javascript/practices/canvas/animation/",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "label": "npm: webpack - javascript/practices/canvas/animation",
+            "detail": "webpack --mode development"
+        },
+        {
+            "type": "npm",
+            "script": "webpack",
+            "path": "javascript/practices/canvas/mouse/",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "label": "npm: webpack - javascript/practices/canvas/mouse",
+            "detail": "webpack --mode development"
+        }
+    ]
+}

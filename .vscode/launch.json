@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch canvas - animation",
+            "request": "launch",
+            "type": "pwa-chrome",
+            "preLaunchTask": "npm: webpack - javascript/practices/canvas/animation",
+            "url": "${workspaceFolder}/javascript/practices/canvas/animation/html/helloweb.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Launch canvas - mouse interaction",
+            "request": "launch",
+            "type": "pwa-chrome",
+            "preLaunchTask": "npm: webpack - javascript/practices/canvas/mouse",
+            "url": "${workspaceFolder}/javascript/practices/canvas/mouse/html/helloweb.html",
+            "webRoot": "${workspaceFolder}"
+        },
+    ]
+}
