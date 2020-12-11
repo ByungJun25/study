@@ -1,4 +1,4 @@
-# vscode에서 workspace별로 maven의 settings.xml 파일을 분리하는 방법
+# vscode에서 maven플러그인 custom settings.xml 설정 방법.md
 
 > [vscode-maven 레포지토리](https://github.com/microsoft/vscode-maven)의 [#140](https://github.com/microsoft/vscode-maven/issues/140) 이슈를 참고하였습니다.
 
