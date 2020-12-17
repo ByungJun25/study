@@ -21,10 +21,10 @@
   * [Inner Class](#Inner-Class)
   * [Local Class](#Local-Class)
   * [Anonymous Class](#Anonymous-Class)
+* [참고 사이트](#참고-사이트)
 
 ## 과제
-
-* [참고 사이트](#참고-사이트)
+* [BinaryTree 구현](#BinaryTree-구현)
 
 ### Class
 
@@ -444,11 +444,9 @@ public class Main {
 ```
 
 3. **객체의 메모리 관리**  
-몇몇 object-oriented 언어에서는 프로그래머가 직접 생성한 모든 객체를 추적하고 사용이 끝나면 제거해줘야 합니다. 하지만 자바 언어에서는 `Garbage Collector`에 의해 생성된 객체가 필요없어질 경우 제거되게 됩니다. 이를 `garbage collection`이라고 부릅니다.  
-
-보통 더이상 참조되지 않는 객체가 `garbage collection`의 대상이 됩니다. 만약 변수에 할당된 참조일 경우, 그 변수가 범위(scope)를 벗아나게되면 삭제됩니다. 또는 변수에 `null`을 할당하여 명시적으로 객체 참조를 삭제할 수 있습니다. 
-
-`garbage collector`는 적절한 시기라고 판단되면, `garbage collection`을 자동으로 실행합니다.
+    - 몇몇 object-oriented 언어에서는 프로그래머가 직접 생성한 모든 객체를 추적하고 사용이 끝나면 제거해줘야 합니다. 하지만 자바 언어에서는 `Garbage Collector`에 의해 생성된 객체가 필요없어질 경우 제거되게 됩니다. 이를 `garbage collection`이라고 부릅니다.  
+    - 보통 더이상 참조되지 않는 객체가 `garbage collection`의 대상이 됩니다. 만약 변수에 할당된 참조일 경우, 그 변수가 범위(scope)를 벗어나게되면 삭제됩니다. 또는 변수에 `null`을 할당하여 명시적으로 객체 참조를 삭제할 수 있습니다. 
+    - `garbage collector`는 적절한 시기라고 판단되면, `garbage collection`을 자동으로 실행합니다.
 
 ### this 키워드
 인스턴스의 메서드나 생성자에서 사용되는 `this`라는 키워드는 현재의 객체를 가리킵니다. 따라서 `this`키워드를 통해 현재의 객체 내의 필드나 메서드를 참조할 수 있습니다.
@@ -713,3 +711,5 @@ public class Main {
 
 ### 참고 사이트
 * [Oracle - java documentation](https://docs.oracle.com/javase/tutorial/java/javaOO/index.html)
+
+### BinaryTree 구현
