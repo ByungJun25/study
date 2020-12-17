@@ -274,85 +274,83 @@ public class ClassExample {
     ```
 
 3. 파라미터 이름  
-메서드나 생성자를 선언할때, 파라미터의 이름을 정의할 수 있습니다. 이때 정의된 파라미터의 이름은 메서드 내에서 전달된 argument를 참조할때 사용됩니다.
-
-파라미터의 이름은 메서드의 범위내에서 유니크해야합니다. 따라서 메서드나 생성자내에서 동일한 이름의 지역 변수를 선언할 수 없습니다.
-
-**만약 파라미터의 이름이 클래스의 필드 이름과 동일할 경우, 파라미터는 메서드의 범위내에서 필드를 가려버립니다. 이런 경우 이름을 통해 필드에 접근할 수 없게되기 때문에, 필드에 접근하기 위해 `this` 키워드를 사용해야합니다.**
-
-```java
-public class MyClass {
-    private int number;
-
-    public MyClass(int number) {
-        // 파라미터에 사용된 number라는 이름이 필드의 이름과 동일하여 필드를 가려버리게 됩니다.
-        // 아래와 같이호출할 경우, number는 파라미터의 number를 의미합니다.
-        number = number;
+    - 메서드나 생성자를 선언할때, 파라미터의 이름을 정의할 수 있습니다. 이때 정의된 파라미터의 이름은 메서드 내에서 전달된 argument를 참조할때 사용됩니다.  
+    - 파라미터의 이름은 메서드의 범위내에서 유니크해야합니다. 따라서 메서드나 생성자내에서 동일한 이름의 지역 변수를 선언할 수 없습니다.  
+    - **만약 파라미터의 이름이 클래스의 필드 이름과 동일할 경우, 파라미터는 메서드의 범위내에서 필드를 가려버립니다. 이런 경우 이름을 통해 필드에 접근할 수 없게되기 때문에, 필드에 접근하기 위해 `this` 키워드를 사용해야합니다.**  
+    
+    ```java
+    public class MyClass {
+        private int number;
+    
+        public MyClass(int number) {
+            // 파라미터에 사용된 number라는 이름이 필드의 이름과 동일하여 필드를 가려버리게 됩니다.
+            // 아래와 같이호출할 경우, number는 파라미터의 number를 의미합니다.
+            number = number;
+        }
     }
-}
-```
+    ```
 
 4. Primitive 데이터 타입의 Arguments  
-Primitive 데이터 타입의 arugment는 메서드에 `value`로써 전달됩니다. 즉 **전달된 argument의 데이터를 변화시키더라도 그 유효성은 메서드 내에서만 한정되기때문에 메서드 외부에는 영향을 끼치지 않습니다.**
+Primitive 데이터 타입의 arugment는 메서드에 `value`로써 전달됩니다. 즉 **전달된 argument의 데이터를 변화시키더라도 그 유효성은 메서드 내에서만 한정되기때문에 메서드 외부에는 영향을 끼치지 않습니다.**  
 
-```java
-public class Main {
-    public static void main(String[] args) {
-        int number = 10;
-        method1(number);
-
-        System.out.println(number);  // 10을 출력합니다.
+    ```java
+    public class Main {
+        public static void main(String[] args) {
+            int number = 10;
+            method1(number);
+    
+            System.out.println(number);  // 10을 출력합니다.
+        }
+    
+        public static void method1(int number) {
+            number = 20;
+    
+            System.out.println(number); // 20을 출력합니다.
+        }
     }
-
-    public static void method1(int number) {
-        number = 20;
-
-        System.out.println(number); // 20을 출력합니다.
-    }
-}
-```
+    ```
 
 5. **Reference 데이터 타입의 Arguments**  
-Reference 데이터 타입의 파라미터 또한 메서드에 **`value`로써 전달됩니다.** 즉, **전달된 참조는 메서드가 종료되고 나서도 여전히 똑같은 객체를 참조하고 있다는 의미입니다.** 하지만 전달된 객체의 **필드 값을 메서드 내에서 변경할 경우, 이 변경 사항은 적용되게 됩니다.**
+Reference 데이터 타입의 파라미터 또한 메서드에 **`value`로써 전달됩니다.** 즉, **전달된 참조는 메서드가 종료되고 나서도 여전히 똑같은 객체를 참조하고 있다는 의미입니다.** 하지만 전달된 객체의 **필드 값을 메서드 내에서 변경할 경우, 이 변경 사항은 적용되게 됩니다.**  
 
-```java
-public class MyClass {
-    public int number;
-
-    public MyClass(int number) {
-        this.number = number;
+    ```java
+    public class MyClass {
+        public int number;
+    
+        public MyClass(int number) {
+            this.number = number;
+        }
+    
     }
-
-}
-
-public class Main {
-    public static void main(String[] args) {
-        MyClass myClass = new MyClass(10);
-        MyClass myClass2 = new MyClass(10);
-
-        method1(myClass, 20);
-        System.out.println(myClass.number);  // 20을 출력합니다. 참조되는 객체의 필드값이 변경되었고, 이는 적용됩니다.
-
-        method2(myClass2);
-        System.out.println(myClass2.number);  // 10을 출력합니다. 참조 객체는 변경되지 않기때문에 최초 10의 값을 그대로 가집니다.
+    
+    public class Main {
+        public static void main(String[] args) {
+            MyClass myClass = new MyClass(10);
+            MyClass myClass2 = new MyClass(10);
+    
+            method1(myClass, 20);
+            System.out.println(myClass.number);  // 20을 출력합니다. 참조되는 객체의 필드값이 변경되었고, 이는 적용됩니다.
+    
+            method2(myClass2);
+            System.out.println(myClass2.number);  // 10을 출력합니다. 참조 객체는 변경되지 않기때문에 최초 10의 값을 그대로 가집니다.
+        }
+    
+        public static void method1(MyClass myClass, int number) {
+            myClass.number = number;
+            System.out.println(myClass.number); // 20을 출력합니다. 위에서 20으로 변경하였기 때문입니다.
+    
+            myClass = new MyClass(30);
+    
+            System.out.println(myClass.number); // 새로운 객체를 할당하였기때문에, 30을 출력합니다.
+        }
+    
+        public static void method2(MyClass myClass) {
+            myClass = new MyClass(40);
+    
+            System.out.println(myClass.number); // 새로운 객체를 할당하였기때문에, 40을 출력합니다.
+        }
     }
-
-    public static void method1(MyClass myClass, int number) {
-        myClass.number = number;
-        System.out.println(myClass.number); // 20을 출력합니다. 위에서 20으로 변경하였기 때문입니다.
-
-        myClass = new MyClass(30);
-
-        System.out.println(myClass.number); // 새로운 객체를 할당하였기때문에, 30을 출력합니다.
-    }
-
-    public static void method2(MyClass myClass) {
-        myClass = new MyClass(40);
-
-        System.out.println(myClass.number); // 새로운 객체를 할당하였기때문에, 40을 출력합니다.
-    }
-}
-```
+    ```
 
 ### Object
 `Object(객체)`란 물리적으로 존재하거나 추상적으로 생각할 수 있는 것을 말합니다. 자바 프로그램에서는 메서드를 호출하여 상호작용하는 여러 수많은 객체를 생성하게됩니다.
