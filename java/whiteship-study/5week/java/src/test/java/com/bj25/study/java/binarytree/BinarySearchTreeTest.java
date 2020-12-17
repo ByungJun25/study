@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
@@ -474,7 +475,7 @@ public class BinarySearchTreeTest {
     @Nested
     class BinarySearchTreeTravelTest {
         BinarySearchTree bst = new BinarySearchTree();
-        Set<Integer> containedValues = new HashSet<>();
+        Set<Integer> containedValues = new LinkedHashSet<>();
 
         @DisplayName("데이터 초기화")
         @Test
