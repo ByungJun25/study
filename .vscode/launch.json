@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.binarytree.Main",
+            "projectName": "java-5week"
+        },
+        {
             "name": "Launch canvas - animation",
             "request": "launch",
             "type": "pwa-chrome",
@@ -19,6 +26,6 @@
             "preLaunchTask": "npm: webpack - javascript/practices/canvas/mouse",
             "url": "${workspaceFolder}/javascript/practices/canvas/mouse/html/helloweb.html",
             "webRoot": "${workspaceFolder}"
-        },
+        }
     ]
 }
