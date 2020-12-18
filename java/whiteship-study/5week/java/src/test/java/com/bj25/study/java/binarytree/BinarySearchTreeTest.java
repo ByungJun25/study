@@ -1,5 +1,6 @@
 package com.bj25.study.java.binarytree;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -10,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
@@ -477,6 +480,94 @@ public class BinarySearchTreeTest {
         BinarySearchTree bst = new BinarySearchTree();
         Set<Integer> containedValues = new LinkedHashSet<>();
 
+        {
+            List<Integer> values = new LinkedList<>();
+            values.add(83);
+            values.add(82);
+            values.add(86);
+            values.add(95);
+            values.add(5);
+            values.add(4);
+            values.add(33);
+            values.add(49);
+            values.add(21);
+            values.add(7);
+            values.add(45);
+            values.add(65);
+            values.add(85);
+
+            for(int value : values) {
+                bst.add(value);
+                containedValues.add(value);
+            }
+        }
+
+        @DisplayName("너비 우선 탐색 테스트")
+        @Test
+        @Order(1)
+        void bfs_test() {
+            // given
+            Object[] expected = {83, 82, 86, 5, 85, 95, 4, 33, 21, 49, 7, 45, 65};
+
+            // when
+            List<Integer> results = Tree.bfs(bst.getRoot());
+
+            // then
+            assertArrayEquals(expected, results.toArray());
+        }
+
+        @DisplayName("깊이 우선 탐색 테스트 - preOrder")
+        @Test
+        @Order(2)
+        void dfs_preOrder_test() {
+            // given
+            Object[] expected = {83, 82, 5, 4, 33, 21, 7, 49, 45, 65, 86, 85, 95};
+            
+            // when
+            List<Integer> results = Tree.dfs(bst.getRoot(), com.bj25.study.java.binarytree.enums.Order.PRE);
+
+            // then
+            assertArrayEquals(expected, results.toArray());
+        }
+
+        @DisplayName("깊이 우선 탐색 테스트 - inOrder")
+        @Test
+        @Order(3)
+        void dfs_inOrder_test() {
+            // given
+            Object[] expected = {4, 5, 7, 21, 33, 45, 49, 65, 82, 83, 85, 86, 95};
+            
+            // when
+            List<Integer> results = Tree.dfs(bst.getRoot(), com.bj25.study.java.binarytree.enums.Order.IN);
+
+            // then
+            assertArrayEquals(expected, results.toArray());
+        }
+
+        @DisplayName("깊이 우선 탐색 테스트 - postOrder")
+        @Test
+        @Order(4)
+        void dfs_postOrder_test() {
+            // given
+            Object[] expected = {4, 7, 21, 45, 65, 49, 33, 5, 82, 85, 95, 86, 83};
+            
+            // when
+            List<Integer> results = Tree.dfs(bst.getRoot(), com.bj25.study.java.binarytree.enums.Order.POST);
+
+            // then
+            assertArrayEquals(expected, results.toArray());
+        }
+
+    }
+
+    @DisplayName("Binary Search Tree 탐색 테스트 - 랜덤 값으로 테스트")
+    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+    @TestInstance(Lifecycle.PER_CLASS)
+    @Nested
+    class BinarySearchTreeTravel_With_Random_Test {
+        BinarySearchTree bst = new BinarySearchTree();
+        Set<Integer> containedValues = new LinkedHashSet<>();
+
         @DisplayName("데이터 초기화")
         @Test
         @Order(0)
@@ -499,9 +590,6 @@ public class BinarySearchTreeTest {
         void bfs_test() {
             // when
             Tree.bfs(bst.getRoot());
-
-            // then
-
         }
 
         @DisplayName("깊이 우선 탐색 테스트 - preOrder")
@@ -510,9 +598,6 @@ public class BinarySearchTreeTest {
         void dfs_preOrder_test() {
             // when
             Tree.dfs(bst.getRoot(), com.bj25.study.java.binarytree.enums.Order.PRE);
-
-            // then
-            
         }
 
         @DisplayName("깊이 우선 탐색 테스트 - inOrder")
@@ -521,9 +606,6 @@ public class BinarySearchTreeTest {
         void dfs_inOrder_test() {
             // when
             Tree.dfs(bst.getRoot(), com.bj25.study.java.binarytree.enums.Order.IN);
-
-            // then
-            
         }
 
         @DisplayName("깊이 우선 탐색 테스트 - postOrder")
@@ -532,9 +614,6 @@ public class BinarySearchTreeTest {
         void dfs_postOrder_test() {
             // when
             Tree.dfs(bst.getRoot(), com.bj25.study.java.binarytree.enums.Order.POST);
-
-            // then
-            
         }
 
     }
