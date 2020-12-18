@@ -2,6 +2,11 @@ package com.bj25.study.java.binarytree.model;
 
 import lombok.Getter;
 
+/**
+ * <p>Tree에 저장될 노드를 정의한 클래스입니다.
+ * 
+ * @author BJ25
+ */
 @Getter
 public class Node {
 
@@ -9,27 +14,54 @@ public class Node {
     private Node left;
     private Node right;
 
+    /**
+     * 주어진 데이터로 자식이 없는 노드를 생성하는 생성자입니다.
+     * 
+     * @param data
+     */
     public Node(int data) {
         this.data = data;
         this.left = null;
         this.right = null;
     }
 
+    /**
+     * left 자식을 추가하는 메소드입니다.
+     * 
+     * @param node
+     * @return
+     */
     public Node addLeft(Node node) {
         
         this.left = node;
         return this.left;
     }
 
+    /**
+     * right 자식을 추가하는 메소드입니다.
+     * 
+     * @param node
+     * @return
+     */
     public Node addRight(Node node) {
         this.right = node;
         return this.right;
     }
 
+    /**
+     * 현재 노드의 데이터 값을 변경하는 메소드입니다.
+     * 
+     * @param data
+     */
     public void updateData(int data) {
         this.data = data;
     }
 
+    /**
+     * 자식의 존재여부를 확인하는 메소드입니다.
+     * 
+     * @return
+     */
     public boolean hasNext() {
         if(this.hasLeft() || this.hasRight()) {
             return true;
@@ -37,6 +69,11 @@ public class Node {
         return false;
     }
 
+    /**
+     * right 자식의 존재여부를 확인하는 메소드입니다.
+     * 
+     * @return
+     */
     public boolean hasRight() {
         if(this.right != null) {
             return true;
@@ -44,6 +81,11 @@ public class Node {
         return false;
     }
 
+    /**
+     * left 자식의 존재여부를 확인하는 메소드입니다.
+     * 
+     * @return
+     */
     public boolean hasLeft() {
         if(this.left != null) {
             return true;

@@ -5,6 +5,11 @@ import java.util.Queue;
 
 import com.bj25.study.java.binarytree.enums.Order;
 
+/**
+ * <p>Tree 구현시에 필요한 메소드를 정의해둔 인터페이스입니다.
+ * 
+ * @author BJ25
+ */
 public interface Tree {
 
     /**
@@ -61,6 +66,12 @@ public interface Tree {
      */
     public int size();
 
+    /**
+     * 너비 우선 탐색을 하는 메소드입니다.
+     * 탐색하는 노드의 값을 탐색 순서대로 출력합니다.
+     * 
+     * @param node
+     */
     public static void bfs(Node node) {
         System.out.println("BFS start!");
         if (node == null) {
@@ -88,6 +99,12 @@ public interface Tree {
         System.out.println();
     }
 
+    /**
+     * 깊이 우선 탐색을 하는 메소드입니다.
+     * 주어진 order의 값에 따라 전위, 중위, 후위 탐색을 합니다.
+     * 
+     * @param node
+     */
     public static void dfs(Node node, Order order) {
         switch (order) {
             case PRE:
@@ -108,6 +125,11 @@ public interface Tree {
         System.out.println();
     }
 
+    /**
+     * 깊이 우선 탐색중 전위 순회를 하는 메소드입니다.
+     * 
+     * @param node
+     */
     private static void preOrder(Node node) {
         if (node != null) {
             System.out.print(" " + node.getData());
@@ -116,6 +138,11 @@ public interface Tree {
         }
     }
 
+    /**
+     * 깊이 우선 탐색중 중위 순회를 하는 메소드입니다.
+     * 
+     * @param node
+     */
     private static void inOrder(Node node) {
         if (node != null) {
             inOrder(node.getLeft());
@@ -124,6 +151,11 @@ public interface Tree {
         }
     }
 
+    /**
+     * 깊이 우선 탐색중 후위 순회를 하는 메소드입니다.
+     * 
+     * @param node
+     */
     private static void postOrder(Node node) {
         if (node != null) {
             postOrder(node.getLeft());
