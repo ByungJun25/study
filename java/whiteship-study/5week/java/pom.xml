@@ -10,17 +10,9 @@
 	</parent>
 
 	<groupId>com.bj25.study</groupId>
-	<artifactId>java-4week</artifactId>
+	<artifactId>java-5week</artifactId>
 	<version>${study.version}</version>
 	<name>java-study</name>
-	<description>white-ship java live study - 4 week</description>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.kohsuke</groupId>
-			<artifactId>github-api</artifactId>
-			<version>${github.api.version}</version>
-		</dependency>
-	</dependencies>
+	<description>white-ship java live study - 5 week</description>
 
 </project>
