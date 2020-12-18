@@ -1,6 +1,7 @@
 package com.bj25.study.java.binarytree.model;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import com.bj25.study.java.binarytree.enums.Order;
@@ -72,10 +73,13 @@ public interface Tree {
      * 
      * @param node
      */
-    public static void bfs(Node node) {
+    public static List<Integer> bfs(Node node) {
+        List<Integer> results = new LinkedList<>();
+
         System.out.println("BFS start!");
+
         if (node == null) {
-            return;
+            return results;
         }
 
         Queue<Node> queue = new LinkedList<>();
@@ -83,6 +87,7 @@ public interface Tree {
 
         while (!queue.isEmpty()) {
             Node target = queue.remove();
+            results.add(target.getData());
 
             System.out.print(target.getData() + " ");
 
@@ -97,6 +102,8 @@ public interface Tree {
         System.out.println();
         System.out.println("BFS end!");
         System.out.println();
+
+        return results;
     }
 
     /**
@@ -105,24 +112,27 @@ public interface Tree {
      * 
      * @param node
      */
-    public static void dfs(Node node, Order order) {
+    public static List<Integer> dfs(Node node, Order order) {
+        List<Integer> results = new LinkedList<>();
+
         switch (order) {
             case PRE:
                 System.out.println("DFS start! - pre order");
-                preOrder(node);
+                preOrder(node, results);
                 break;
             case IN:
                 System.out.println("DFS start! - in order");
-                inOrder(node);
+                inOrder(node, results);
                 break;
             case POST:
                 System.out.println("DFS start! - post order");
-                postOrder(node);
+                postOrder(node, results);
                 break;
         }
         System.out.println();
         System.out.println("DFS end!");
         System.out.println();
+        return results;
     }
 
     /**
@@ -130,11 +140,12 @@ public interface Tree {
      * 
      * @param node
      */
-    private static void preOrder(Node node) {
+    private static void preOrder(Node node, List<Integer> results) {
         if (node != null) {
+            results.add(node.getData());
             System.out.print(" " + node.getData());
-            preOrder(node.getLeft());
-            preOrder(node.getRight());
+            preOrder(node.getLeft(), results);
+            preOrder(node.getRight(), results);
         }
     }
 
@@ -143,11 +154,12 @@ public interface Tree {
      * 
      * @param node
      */
-    private static void inOrder(Node node) {
+    private static void inOrder(Node node, List<Integer> results) {
         if (node != null) {
-            inOrder(node.getLeft());
+            inOrder(node.getLeft(), results);
+            results.add(node.getData());
             System.out.print(" " + node.getData());
-            inOrder(node.getRight());
+            inOrder(node.getRight(), results);
         }
     }
 
@@ -156,10 +168,11 @@ public interface Tree {
      * 
      * @param node
      */
-    private static void postOrder(Node node) {
+    private static void postOrder(Node node, List<Integer> results) {
         if (node != null) {
-            postOrder(node.getLeft());
-            postOrder(node.getRight());
+            postOrder(node.getLeft(), results);
+            postOrder(node.getRight(), results);
+            results.add(node.getData());
             System.out.print(" " + node.getData());
         }
     }
