@@ -61,7 +61,7 @@ public class Parent {
         // extends Child를 제거하면 아무런 문제가 없습니다.
     }
     ```
-- **`Object`라는 클래스를 제외하고 모든 클래스는 단 하나의 `superclass`를 가지고 있습니다.**
+- **`Object`라는 클래스를 제외하고 모든 클래스는 하나의 `superclass`를 무조건 가지고 있습니다.**
 - **만약 `superclass`가 클래스에 명시되어 있지 않다면, 그 클래스는 암묵적으로 `Object` 클래스를 상속받습니다.**
     ![자바 클래스 트리](./Inheritance_Object_tree.PNG)  
     이미지 출처(source) - [Oracle 공식 튜토리얼](https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html)
