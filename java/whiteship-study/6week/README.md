@@ -63,6 +63,8 @@ public class Parent {
     ```
 - **`Object`라는 클래스를 제외하고 모든 클래스는 단 하나의 `superclass`를 가지고 있습니다.**
 - **만약 `superclass`가 클래스에 명시되어 있지 않다면, 그 클래스는 암묵적으로 `Object` 클래스를 상속받습니다.**
+    ![자바 클래스 트리](./Inheritance_Object_tree.PNG)  
+    이미지 출처(source) - [Oracle 공식 튜토리얼](https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html)
 - **`subclass`는 `superclass`의 모든 멤버들(필드, 메서드, 중첩 클래스)을 상속받습니다.**
     ```java
     public class Child extends Parent {
@@ -90,9 +92,6 @@ public class Parent {
     }
     ```
 - **`생성자`는 상속되지 않지만, `subclass`에서 `superclass`의 `생성자`를 호출 할 수 있습니다.**
-
-![자바 클래스 트리](./Inheritance_Object_tree.PNG)  
-이미지 출처(source) - [Oracle 공식 튜토리얼](https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html)
 
 #### 상속 이유
 **`Java` 언어에서 상속을 하는 이유는 이미 존재하는 클래스의 메서드와 필드를 재사용할 수 있기때문입니다.** 즉, 여러분이 새 클래스를 만들고자 하고, 구현하고자 하는 코드가 이미 다른 클래스에 존재한다면, 여러분은 새로 작성할 필요없이 클래스 상속을 통해 이미 작성한 코드를 재사용할 수 있게됩니다. 
