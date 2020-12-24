@@ -291,7 +291,7 @@ public class main {
 }
 ```
 
-위 코드의 실행 결과 값은 다음과 같습니다.
+위 코드의 실행 결과 값은 다음과 같습니다.  
 ![main 메서드 결과 로그](./result.PNG)  
 
 
@@ -438,49 +438,49 @@ public class Child extends Parent {
 
 
 ### final 키워드
-1. final class
-final class는 Class 앞에 `final` 키워드를 붙인 것을 말합니다. 이러한 클래스는 보통 상속을 금지하기 위해 사용됩니다. 
-
-```java
-public final class ConstantClass {
-
-}
-
-public class Child extends ConstantClass { // 컴파일 에러가 발생합니다.
-
-}
-```
-
-2. final method 
-final method는 method에 `final` 키워드를 붙인 것을 말합니다. 이러한 메서드는 상속시, 재정의가 불가능합니다.
-
-```java
-public class Parent {
-    public final void print() {
-        System.out.println("Parent class's print method!");
+1. final class  
+    final class는 Class 앞에 `final` 키워드를 붙인 것을 말합니다. 이러한 클래스는 보통 상속을 금지하기 위해 사용됩니다. 
+    
+    ```java
+    public final class ConstantClass {
+    
     }
-}
-
-public class Child extends Parent {
-    @Override
-    public final void print() { // 컴파일 에러가 발생합니다.
-        System.out.println("Child class's print method!");
+    
+    public class Child extends ConstantClass { // 컴파일 에러가 발생합니다.
+    
     }
-}
-```
+    ```
 
-3. final variable
-final variable은 변수 앞에 `final` 키워드를 붙인 것을 말합니다. 이러한 변수는 한번 값이 할당되면 재할당이 불가능합니다.
-
-```java
-public class Main {
-    final int number = 10;
-
-    public void method() {
-        this.number = 20; // 컴파일 에러 발생
+2. final method  
+    final method는 method에 `final` 키워드를 붙인 것을 말합니다. 이러한 메서드는 상속시, 재정의가 불가능합니다.
+    
+    ```java
+    public class Parent {
+        public final void print() {
+            System.out.println("Parent class's print method!");
+        }
     }
-}
-```
+    
+    public class Child extends Parent {
+        @Override
+        public final void print() { // 컴파일 에러가 발생합니다.
+            System.out.println("Child class's print method!");
+        }
+    }
+    ```
+
+3. final variable  
+    final variable은 변수 앞에 `final` 키워드를 붙인 것을 말합니다. 이러한 변수는 한번 값이 할당되면 재할당이 불가능합니다.
+    
+    ```java
+    public class Main {
+        final int number = 10;
+    
+        public void method() {
+            this.number = 20; // 컴파일 에러 발생
+        }
+    }
+    ```
 
 ### Object 클래스
 `Object` 클래스는 `java.lang` 패키지에 있으며, class 계층 트리에서 가장 위에 있습니다. 모든 클래스는 직접적 혹은 간접적으로 `Object` 클래스를 상속하기때문에 `Object` 클래스의 메서드를 가지고 있습니다. 몇몇 메서드의 경우 사용하고자 할 때, 클래스에 맞게 오버라이딩해야할 수도 있습니다.
