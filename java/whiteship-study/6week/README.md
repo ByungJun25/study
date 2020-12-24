@@ -977,3 +977,4 @@ public class Main {
 ### 참고 사이트
 * [Oracle - java documentation](https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html)
 * [토비의 봄 TV 1회](https://www.youtube.com/watch?v=s-tXAHub6vg&list=PLZurYav1io3IAh9_13_gb881_EHeRITO4&index=2&t=3692s)
+* [baeldung - DDD & Double dispatch](https://www.baeldung.com/ddd-double-dispatch)
