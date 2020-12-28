@@ -110,7 +110,7 @@ public class Main {
 ```
 
 ### import static 키워드
-static 변수나 static 메서드를 다른 패키지에서 바로 사용하고자 할 때 `import static`을 사용할 수 있습니다. `import static`를 사용하면 정적 변수나 정적 메서드를 클래스명을 적지 않아도 바로 사용할 수 있습니다.
+static 변수나 static 메서드를 다른 패키지에서 바로 사용하고자 할 때 `import static` 키워드를 사용할 수 있습니다. `import static`을 이용하면 정적 변수나 정적 메서드사용시, 클래스명을 적지 않아도 바로 사용할 수 있습니다.
 
 보통 테스트 코드 작성 시, Assertions 클래스의 정적 메서드들은 `import static`을 사용해 선언하고, 바로 이용하곤 합니다.
 
@@ -154,11 +154,11 @@ public class Main {
 > 자세한 내용은 [Oracle - java 8 classpath](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/classpath.html)를 참조하시기 바랍니다.
 
 ## 접근 제어지시자(Access Modifier)
-접근 제어지시자는 클래스, 메서드, 인스턴스 및 클래스 변수를 선안할 때 사용됩니다.
+접근 제어지시자는 클래스, 메서드, 인스턴스 및 클래스 변수를 선언할 때 사용됩니다.
 
 접근 제어지시자에는 다음의 종류가 있습니다.
 
-||클래스내부|동일패키지|상속받은클래스|이외의 영역|
+||클래스 내부|동일 패키지|상속 받은 클래스|이외의 영역|
 |---|---|---|---|---|
 |private| O | X | X | X |
 |default(no modifier) / package-private| O | O | X | X |
@@ -168,7 +168,7 @@ public class Main {
 * `public`
     : 어디에서나 접근 가능.
 * `protected`
-    : 같은 패키지거나 상속 받은 경우에만 접근 가능.
+    : 같은 패키지거나 상속 받은 클래스에서만 접근 가능.
 * `package-private`
     : 같은 패키지에서만 접근 가능.
 * `private`
