@@ -14,7 +14,7 @@
 * [클래스패스](#클래스패스)
   * CLASSPATH 환경변수(#CLASSPATH-환경변수)
   * classpath 옵션(#classpath-옵션)
-* [접근지시자](#접근지시자)
+* [접근 제어지시자(Access Modifier)](#접근-제어지시자Access-Modifier)
 * [참고 사이트](#참고-사이트)
 
 ## Package
@@ -128,12 +128,101 @@ public class Main {
 
 ## 클래스패스
 
+
 ### CLASSPATH 환경변수
+
 
 ### classpath 옵션
 
-## 접근지시자
 
-###
+## 접근 제어지시자(Access Modifier)
+접근 제어지시자는 클래스, 메서드, 인스턴스 및 클래스 변수를 선안할 때 사용됩니다.
+
+접근 제어지시자에는 다음의 종류가 있습니다.
+
+||클래스내부|동일패키지|상속받은클래스|이외의 영역|
+|---|---|---|---|---|
+|private| O | X | X | X |
+|default(no modifier) / package-private| O | O | X | X |
+|protected| O | O | O | X |
+|public| O | O | O | O |
+
+* `public`
+    : 어디에서나 접근 가능.
+* `protected`
+    : 같은 패키지거나 상속 받은 경우에만 접근 가능.
+* `package-private`
+    : 같은 패키지에서만 접근 가능.
+* `private`
+    : 해당 클래스 내에서만 접근 가능.
+
+```java
+// package com.example.demo
+public class Demo {
+    private int private_number = 10;
+    protected int protected_number = 20;
+    int default_number = 30;
+    public int public_number = 40;
+
+    public void print() {
+        System.out.println(this.private_number); // 해당 클래스에서는 private 타입 변수에 접근이 가능합니다.
+
+        System.out.println(this.protected_number);
+
+        System.out.println(this.default_number);
+
+        System.out.println(this.public_number);
+    }
+}
+
+// package com.example.demo // 같은 패키지
+public class Demo2 {
+    public void print() {
+        Demo demo = new Demo();
+        // System.out.println(demo.private_number); // private 타입이므로 접근이 불가능하여 컴파일 에러가 발생합니다.
+
+        System.out.println(demo.protected_number); // 같은 패키지이므로 protected 변수에 접근이 가능합니다.
+
+        System.out.println(demo.default_number); // 같은 패키지이므로 package-private 변수에 접근이 가능합니다.
+
+        System.out.println(demo.public_number); // public은 어디에서나 접근이 가능합니다.
+    }
+}
+
+// package com.example.child // 다른 패키지 - 상속
+public class ChildDemo extends Demo {
+    public void print() {
+        Demo demo = new Demo();
+        // System.out.println(demo.private_number); // private 타입이므로 접근이 불가능하여 컴파일 에러가 발생합니다.
+
+        // System.out.println(demo.protected_number); // 서로 다른 패키지이기 때문에 protected 타입의 변수에 접근이 불가능하여 컴파일 에러가 발생합니다.
+
+        // System.out.println(demo.default_number); // package-private 타입이므로 접근이 불가능하여 컴파일 에러가 발생합니다.
+
+        System.out.println(demo.public_number); // public은 어디에서나 접근이 가능합니다.
+
+        // System.out.println(this.private_number); // private 타입이므로 접근이 불가능하여 컴파일 에러가 발생합니다.
+
+        System.out.println(this.protected_number); // 상속을 받았으므로 접근이 가능합니다.
+
+        // System.out.println(this.default_number); // package-private 타입이므로 접근이 불가능하여 컴파일 에러가 발생합니다.
+    }
+}
+
+// package com.example.main // 다른 패키지
+public class Main {
+    public void print() {
+        Demo demo = new Demo();
+        // System.out.println(demo.private_number); // private 타입이므로 접근이 불가능하여 컴파일 에러가 발생합니다.
+
+        // System.out.println(demo.protected_number); // protected 타입이므로 접근이 불가능하여 컴파일 에러가 발생합니다.
+
+        // System.out.println(demo.default_number); // package-private 타입이므로 접근이 불가능하여 컴파일 에러가 발생합니다.
+
+        System.out.println(demo.public_number); // public은 어디에서나 접근이 가능합니다.
+    }
+}
+```
 
 ## 참고 사이트
+* [Oracle java document](https://docs.oracle.com/javase/tutorial/java/package/index.html)
