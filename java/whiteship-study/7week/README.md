@@ -12,7 +12,7 @@
   * import 사용법(#import-사용법)
   * import static 키워드(#import-static-키워드)
 * [클래스패스](#클래스패스)
-  * CLASSPATH 환경변수(#CLASSPATH-환경변수)
+  * CLASSPATH 환경 변수(#CLASSPATH-환경-변수)
   * classpath 옵션(#classpath-옵션)
 * [접근 제어지시자(Access Modifier)](#접근-제어지시자Access-Modifier)
 * [참고 사이트](#참고-사이트)
@@ -127,13 +127,31 @@ public class Main {
 ```
 
 ## 클래스패스
+`.java`파일은 자바 컴파일러에 의해 `.class` 파일로 변환됩니다. JVM이 런타임(runtime)시 이 변환된 코드(`.class`에 있는 바이트코드)를 클래스 로더에 로딩하기 위해서는 파일의 경로를 알아야 합니다. 이때 기준으로 사용되는 경로를 클래스 패스(classpath)라고 합니다.
 
+**기본적으로 JVM은 실행되는 디렉토리 위치를 기본 classpath로 사용합니다.**
 
-### CLASSPATH 환경변수
+클래스 로더는 클래스 패스로 주어진 디렉토리와 그 하위 디렉토리를 전부 참조하여 로딩할 클래스를 찾습니다.
 
+클래스패스를 지정하는 방법에는 다음의 2가지 방식이 있습니다.
+- `CLASSPATH` 환경 변수
+- `-classpath` 옵션
+
+### CLASSPATH 환경 변수
+- CLASSPATH라는 환경 변수를 통해 JVM이 런타임시 기준으로 삼을 파일 경로를 전달해 줄 수 있습니다.  
+- `CLASSPATH=경로`를 환경 변수에 등록해놓게 되면, JVM의 클래스 로더는 이 디렉토리에 있는 클래스를 로드합니다.  
+- CLASSPATH 환경 변수로 등록된 경로는 추후 설명할 `classpath` 옵션을 사용할 경우, `classpath` 옵션으로 준 값으로 대체됩니다.  
+- `;` 기호를 통해 여러 경로를 등록할 수 있습니다.
 
 ### classpath 옵션
+- `-classpath` 옵션은 `java`, `jdb`, `javac`, `javah`, `jdeps` 등의 명령어에서 사용할 수 있습니다.
+- `-classpath` 옵션을 사용할 경우, `CLASSPATH` 환경 변수에 등록된 경로를 대체합니다.
+- `-classpath` 옵션은 `-cp` 로 줄여서 사용이 가능합니다.
+- `;`(윈도우) 혹은 `:`(리눅스)를 이용하여 여러 경로를 줄 수 있습니다.
+- `.` 기호는 현재 디렉토리를 의미합니다.
+- `..` 기호는 현재 디렉토리의 상위 디렉토리를 의미합니다.
 
+> 자세한 내용은 [Oracle - java 8 classpath](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/classpath.html)를 참조하시기 바랍니다.
 
 ## 접근 제어지시자(Access Modifier)
 접근 제어지시자는 클래스, 메서드, 인스턴스 및 클래스 변수를 선안할 때 사용됩니다.
@@ -226,3 +244,5 @@ public class Main {
 
 ## 참고 사이트
 * [Oracle java document](https://docs.oracle.com/javase/tutorial/java/package/index.html)
+* [Oracle - java 8 classpath](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/classpath.html)
+* [생활 코딩 - 클래스 패스](https://opentutorials.org/course/1223/5527)
