@@ -53,7 +53,7 @@
 - JNI(자바 네이티브 인터페이스)
 - 네이티브 메소드 라이브러리
 
-![JVM Architecture](./JVM_Architecture_PlatformEngineer.PNG)  
+![JVM Architecture](./JVM-Architecture-PlatformEngineer.PNG)  
 [이미지 출처: PlatformEngineer.com](https://medium.com/platform-engineer)
 
 ## Class Loaders
@@ -143,13 +143,13 @@
 - 네이티브 코드는 캐시에 보관되기 때문에, 한번 컴파일된 코드는 계속 빠르게 수행될 수 있습니다.
 - `JIT 컴파일러`는 또한 자바 프로그램의 최적화를 담당합니다.
 
-    ![Java & JIT compiler](./Java_JIT_compiler.PNG)  
+    ![Java & JIT compiler](./Java-JIT-compiler.PNG)  
     [이미지 출처 - NaverD2](https://d2.naver.com/helloworld/1230)
 
 ## JIT 컴파일러 동작 방식
 JIT 컴파일러는 자주 호출되는 메서드를 파악하여, 바이트코드를 일단 중간 단계의 표현인 IR(Intermediate Representation)로 변환하고, 변환된 IR에 대한 최적화를 수행한 후, 네이티브 코드를 생성합니다. 이렇게 생성된 네이티브 코드는 캐시에 저장되며, 추후 재호출시 바로 네이티브 코드를 실행합니다.
 
-![JIT Compiler](./JIT_Compiler.PNG)  
+![JIT Compiler](./JIT-Compiler.PNG)  
 [이미지 출처 - NaverD2](https://d2.naver.com/helloworld/1230)
 
 > 보다 자세한 내용은 [Naver D2 - JVM Internal](https://d2.naver.com/helloworld/1230)를 참고하시길 바랍니다.
@@ -211,7 +211,7 @@ javac Hello.java
 
 그리고 다시 폴더를 열어보면 `Hello.java`가 컴파일된 `Hello.class`파일이 생긴 것을 볼 수 있습니다.
 
-![컴파일 결과](./result_compile.PNG) 
+![컴파일 결과](./result-compile.PNG) 
 
 ## 자바코드를 실행하는 방법
 앞서 컴파일된 `.class`파일을 실행하는 방법은, 해당 파일이 있는 곳에서 터미널을 열고 `java 클래스명` 명령어를 사용하면 실행이 됩니다.
