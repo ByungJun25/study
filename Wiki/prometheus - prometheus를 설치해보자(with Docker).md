@@ -50,6 +50,7 @@ prometheus-network:
 ```
 
 2. Prometheus 설정 파일을 다음과 같이 작성한다. (`prometheus.yml`)  
+이 설정은 마운트된 `./data/prometheus/prometheus.yml`에 적용되어야 합니다.  
 설정파일은 [FINDA 기술블로그 - Prometheus란?](https://medium.com/finda-tech/prometheus%EB%9E%80-cf52c9a8785f)을 참고하였습니다.
 
 ```yml
