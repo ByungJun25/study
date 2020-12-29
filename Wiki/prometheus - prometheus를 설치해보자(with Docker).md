@@ -56,7 +56,7 @@ prometheus-network:
 # 기본적인 전역 설정 
 global:
   scrape_interval:     15s # 15초마다 매트릭을 수집한다. 기본은 1분이다.
-  evaluation_interval: 15s # 15초마다 매트릭을 수집한다. 기본은 1분이다.
+  evaluation_interval: 15s # 15초마다 경고 규칙을 평가한다. 기본은 1분이다.
   # 'scrpae_timeout' 이라는 설정은 기본적으로 10초로 세팅되어 있다.
 
 # Alertmanager 설정
