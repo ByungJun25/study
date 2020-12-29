@@ -630,7 +630,7 @@ public static void main(String[] args) {
 
 ```
 위의 코드에서 `switch 표현식`에서 default를 선언하지 않으면 컴파일 에러가 발생하게 됩니다. 이러한 이유는 일반적인 switch문의 경우, 모든 경우를 고려할 필요가 없지만, `switch 표현식`의 경우 모든 경우를 고려하도록 설계되어있기 때문입니다. 따라서 `switch 표현식`을 사용할때는 모든 경우를 고려하도록 코드를 짜야합니다. (enum의 경우 모든 경우를 적게되면 default를 작성하지 않더라도 컴파일 에러가 생기지 않습니다.)
-
+ 
 ### 참고사이트
 [TCPSchool](http://www.tcpschool.com/java/intro)  
 [switch(JDK 13) - Baeldung](https://www.baeldung.com/java-switch)  
