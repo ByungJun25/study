@@ -41,7 +41,7 @@
 ## JVM이란
 `Java Virtual Machine(JVM)`은 자바 프로그램을 실행하는 가상 머신의 구현체입니다.
 
-`JVM`은 바이트 코드를 해석하고 클래스 정보를 메모리 영역에 저장하며, 이를 실행합니다.
+`JVM`은 바이트코드를 해석하고 클래스 정보를 메모리 영역에 저장하며, 이를 실행합니다.
 
 `JVM`을 통해 자바 프로그램은 플랫폼에 종속적이지 않고 실행될 수 있습니다.
 
@@ -139,7 +139,7 @@
 
 ## JIT 컴파일러란
 - `Just-In-Time(JIT) Compiler`는 인터프리터(`Interpreter`)의 단점을 보완하기 위해 도입된 컴파일러입니다. 
-- `JIT Compiler`는 자주 호출되는 메서드의 바이트 코드를 적절한 런타임 시점에 네이트브 코드(기계어)로 변환해주는 컴파일러입니다.
+- `JIT Compiler`는 자주 호출되는 메서드의 바이트코드를 적절한 런타임 시점에 네이티브 코드(기계어)로 변환해주는 컴파일러입니다.
 - 네이티브 코드는 캐시에 보관되기 때문에, 한번 컴파일된 코드는 계속 빠르게 수행될 수 있습니다.
 - `JIT 컴파일러`는 또한 자바 프로그램의 최적화를 담당합니다.
 
@@ -187,19 +187,325 @@ JIT 컴파일러는 자주 호출되는 메서드를 파악하여, 바이트코�
 # 컴파일 및 실행
 
 ## 컴파일이란
+컴파일이란 고급언어로 작성된 코드를 컴퓨터가 이해할 수 있도록 기계어로 변환하는 과정을 의미합니다.
+
+`Java`에서는 `.java`파일에 작성된 코드를 컴파일 하여 `JVM`이 읽을 수 있는 `.class`파일로 변환시킵니다.
 
 ## 자바코드를 컴파일해보자
+자바 코드를 컴파일 하기 위해선 우선 `JDK`를 설치해야합니다. 설치후, `bin` 폴더에 가면 `javac.exe` 파일을 볼 수 있습니다. 이 실행 파일이 바로 자바 컴파일러입니다.
+
+```java
+// Hello.java
+public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+```
+
+위와 같이 `Hello.java`파일에 코드를 작성후, 해당 파일이 있는 곳에 터미널을 열고, `javac 파일명.java` 명령어를 사용하면 컴파일이 됩니다.  
+
+```cmd
+javac Hello.java
+```
+
+그리고 다시 폴더를 열어보면 `Hello.java`가 컴파일된 `Hello.class`파일이 생긴 것을 볼 수 있습니다.
+
+![컴파일 결과](./result_compile.PNG) 
 
 ## 자바코드를 실행하는 방법
+앞서 컴파일된 `.class`파일을 실행하는 방법은, 해당 파일이 있는 곳에서 터미널을 열고 `java 클래스명` 명령어를 사용하면 실행이 됩니다.
+
+만약 `Could not find or load main class 클래스이름` 이라는 에러가 나올경우 다음의 경우를 의심해야합니다.
+
+1. 클래스 이름  
+    : `java` 명령어 사용 시 클래스명이 정확히 일치해야 합니다.(대소문자 모두 일치해야 합니다.)
+    ```cmd
+    # java hello -> 이름이 일치하지 않기때문에 에러가 나옵니다.
+    
+    java Hello
+    ```
+2. 파일 확장자 작성  
+    : `java` 명령어 사용 시 `.class`라는 확장자를 붙여서는 안됩니다.
+    ```cmd
+    # java Hello.class -> 확장자를 작성하였기 때문에 에러가 나옵니다.
+    
+    java Hello
+    ```
+3. 패키지 이름  
+    : 패키지를 명시하였다면, `.class` 파일은 패키 지명과 동일한 디렉터리 구조에 존재해야 하며, `java` 명령어 사용 시 패키지명을 모두 붙인 `Fully Qualified Class Name`을 사용해야 합니다.
+    ```cmd
+    # Hello.java 에 package com.example.demo; 이라고 패키지를 정의한 경우,
+    # Hello.class 파일이 com/example/demo 에 존재하고 있어야합니다.
+    # 명령어는 최상위 폴더에서 실행해야합니다. 즉, com의 상위 폴더에서 실행해야합니다.
+
+    # java Hello -> Fully Qualified Class Name이 아니기 때문에 에러가 나옵니다.
+
+    java com.example.demo.Hello
+    ```
+4. 클래스패스  
+    : 만약 시스템 변수에 클래스 패스를 지정해둔 상태라면, `java` 명령어 사용 시 `-classpath` 옵션을 이용하여 클래스 패스를 재정의 해줘야 합니다.
+    ```cmd
+    java -classpath . Hello
+    ```
 
 # 바이트코드
 
 ## 바이트코드란
+`바이트코드(Bytecode)`란 특정 하드웨어가 아닌 가상 컴퓨터에서 돌아가는 실행 프로그램을 위한 이진 표현법을 의미합니다.
+
+컴파일되어 만들어진 `바이트코드`는 특정 하드웨어의 기계 코드(네이티브코드)를 만드는 컴파일러의 입력으로 사용되거나, 가상 컴퓨터에서 바로 실행됩니다.
+
+`Java`에서는 `.class` 파일이 컴파일되어 만들어진 `바이트코드`를 가지고 있습니다. 이 바이트코드는 `JVM`에 의해 해석되고 실행됩니다.
 
 ## 바이트코드 보는법
+컴파일된 `.class`를 통해 바이트코드를 보는 방법은 `JDK`에서 제공하는 `javap` 명령어를 이용하는 것입니다.
+
+한번 예제를 통해 보도록 하겠습니다. 우선 아래와 같이 `Hello.java`에 코드를 작성합니다.
+
+```java
+package com.example.demo;
+
+public class Hello {
+    private int number = 10;
+
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+
+    public void print() {
+        System.out.println("public Print - Number: "+this.number);
+    }
+
+    private void privatePrint() {
+        System.out.println("private Print - Number: "+this.number);
+    }
+}
+```
+
+1. `javap` 명령어  
+    ```cmd
+    javap Hello.class
+    ```
+
+    위와 같이 기본 `javap` 명령어를 사용하면 아래와 같이 출력됩니다.
+
+    기본 `javap` 명령어는 컴파일된 클래스의 최소 구성을 보여주며, `private` 타입의 정보는 출력하지 않습니다.
+
+    ```cmd
+    Compiled from "Hello.java"
+    public class com.example.demo.Hello {
+    public com.example.demo.Hello();
+    public static void main(java.lang.String[]);
+    public void print();
+    }
+    ```
+
+2. `-p` 옵션  
+`-p` 옵션을 사용하면 모든 클래스와 멤버가 출력됩니다.
+
+    ```cmd
+    javap -p Hello.class
+    ```
+
+    결과
+    ```cmd
+    Compiled from "Hello.java"
+    public class com.example.demo.Hello {
+    private int number;
+    public com.example.demo.Hello();
+    public static void main(java.lang.String[]);
+    public void print();
+    private void privatePrint();
+    }
+    ```
+
+3. `-c` 옵션  
+`-c` 옵션을 사용하면, 자바 클래스에 대해 전체 디스어셈블(disassemble)이 가능합니다.
+
+    ```cmd
+    javap -c Hello.class
+    ```
+
+    결과
+    ```cmd
+    Compiled from "Hello.java"
+    public class com.example.demo.Hello {
+    public com.example.demo.Hello();
+        Code:
+        0: aload_0
+        1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+        4: aload_0
+        5: bipush        10
+        7: putfield      #2                  // Field number:I
+        10: return
+
+    public static void main(java.lang.String[]);
+        Code:
+        0: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        3: ldc           #4                  // String Hello World!
+        5: invokevirtual #5                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        8: new           #6                  // class com/example/demo/Hello
+        11: dup
+        12: invokespecial #7                  // Method "<init>":()V
+        15: astore_1
+        16: aload_1
+        17: invokevirtual #8                  // Method print:()V
+        20: return
+
+    public void print();
+        Code:
+        0: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        3: new           #9                  // class java/lang/StringBuilder
+        6: dup
+        7: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+        10: ldc           #11                 // String public Print - Number:
+        12: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        15: aload_0
+        16: getfield      #2                  // Field number:I
+        19: invokevirtual #13                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+        22: invokevirtual #14                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        25: invokevirtual #5                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        28: return
+    }
+    ```
+
+
+4. `-v` 옵션  
+`-v` 옵션을 사용하면 디스어셈블(disassemble)뿐만 아니라 메서드에 대한 스택 크기 및 인수와 같은 자세한 정보가 출력됩니다.
+
+    ```cmd
+    javap -v Hello.class
+    ```
+
+    결과
+    ```cmd
+    Compiled from "Hello.java"
+    public class com.example.demo.Hello
+    minor version: 0
+    major version: 52
+    flags: ACC_PUBLIC, ACC_SUPER
+    Constant pool:
+    #1 = Methodref          #16.#29        // java/lang/Object."<init>":()V
+    #2 = Fieldref           #6.#30         // com/example/demo/Hello.number:I
+    #3 = Fieldref           #31.#32        // java/lang/System.out:Ljava/io/PrintStream;
+    #4 = String             #33            // Hello World!
+    #5 = Methodref          #34.#35        // java/io/PrintStream.println:(Ljava/lang/String;)V
+    #6 = Class              #36            // com/example/demo/Hello
+    #7 = Methodref          #6.#29         // com/example/demo/Hello."<init>":()V
+    #8 = Methodref          #6.#37         // com/example/demo/Hello.print:()V
+    #9 = Class              #38            // java/lang/StringBuilder
+    #10 = Methodref          #9.#29         // java/lang/StringBuilder."<init>":()V
+    #11 = String             #39            // public Print - Number:
+    #12 = Methodref          #9.#40         // java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    #13 = Methodref          #9.#41         // java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+    #14 = Methodref          #9.#42         // java/lang/StringBuilder.toString:()Ljava/lang/String;
+    #15 = String             #43            // private Print - Number:
+    #16 = Class              #44            // java/lang/Object
+    #17 = Utf8               number
+    #18 = Utf8               I
+    #19 = Utf8               <init>
+    #20 = Utf8               ()V
+    #21 = Utf8               Code
+    #22 = Utf8               LineNumberTable
+    #23 = Utf8               main
+    #24 = Utf8               ([Ljava/lang/String;)V
+    #25 = Utf8               print
+    #26 = Utf8               privatePrint
+    #27 = Utf8               SourceFile
+    #28 = Utf8               Hello.java
+    #29 = NameAndType        #19:#20        // "<init>":()V
+    #30 = NameAndType        #17:#18        // number:I
+    #31 = Class              #45            // java/lang/System
+    #32 = NameAndType        #46:#47        // out:Ljava/io/PrintStream;
+    #33 = Utf8               Hello World!
+    #34 = Class              #48            // java/io/PrintStream
+    #35 = NameAndType        #49:#50        // println:(Ljava/lang/String;)V
+    #36 = Utf8               com/example/demo/Hello
+    #37 = NameAndType        #25:#20        // print:()V
+    #38 = Utf8               java/lang/StringBuilder
+    #39 = Utf8               public Print - Number:
+    #40 = NameAndType        #51:#52        // append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    #41 = NameAndType        #51:#53        // append:(I)Ljava/lang/StringBuilder;
+    #42 = NameAndType        #54:#55        // toString:()Ljava/lang/String;
+    #43 = Utf8               private Print - Number:
+    #44 = Utf8               java/lang/Object
+    #45 = Utf8               java/lang/System
+    #46 = Utf8               out
+    #47 = Utf8               Ljava/io/PrintStream;
+    #48 = Utf8               java/io/PrintStream
+    #49 = Utf8               println
+    #50 = Utf8               (Ljava/lang/String;)V
+    #51 = Utf8               append
+    #52 = Utf8               (Ljava/lang/String;)Ljava/lang/StringBuilder;
+    #53 = Utf8               (I)Ljava/lang/StringBuilder;
+    #54 = Utf8               toString
+    #55 = Utf8               ()Ljava/lang/String;
+    {
+    public com.example.demo.Hello();
+        descriptor: ()V
+        flags: ACC_PUBLIC
+        Code:
+        stack=2, locals=1, args_size=1
+            0: aload_0
+            1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+            4: aload_0
+            5: bipush        10
+            7: putfield      #2                  // Field number:I
+            10: return
+        LineNumberTable:
+            line 3: 0
+            line 4: 4
+
+    public static void main(java.lang.String[]);
+        descriptor: ([Ljava/lang/String;)V
+        flags: ACC_PUBLIC, ACC_STATIC
+        Code:
+        stack=2, locals=2, args_size=1
+            0: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
+            3: ldc           #4                  // String Hello World!
+            5: invokevirtual #5                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+            8: new           #6                  // class com/example/demo/Hello
+            11: dup
+            12: invokespecial #7                  // Method "<init>":()V
+            15: astore_1
+            16: aload_1
+            17: invokevirtual #8                  // Method print:()V
+            20: return
+        LineNumberTable:
+            line 7: 0
+            line 9: 8
+            line 10: 16
+            line 11: 20
+
+    public void print();
+        descriptor: ()V
+        flags: ACC_PUBLIC
+        Code:
+        stack=3, locals=1, args_size=1
+            0: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;
+            3: new           #9                  // class java/lang/StringBuilder
+            6: dup
+            7: invokespecial #10                 // Method java/lang/StringBuilder."<init>":()V
+            10: ldc           #11                 // String public Print - Number:
+            12: invokevirtual #12                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+            15: aload_0
+            16: getfield      #2                  // Field number:I
+            19: invokevirtual #13                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+            22: invokevirtual #14                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+            25: invokevirtual #5                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+            28: return
+        LineNumberTable:
+            line 14: 0
+            line 15: 28
+    }
+    SourceFile: "Hello.java"
+    ```
 
 ## 참고사이트
+* [Wikipedia - 바이트코드](https://ko.wikipedia.org/wiki/%EB%B0%94%EC%9D%B4%ED%8A%B8%EC%BD%94%EB%93%9C)
 * [Naver D2 - JVM Internal](https://d2.naver.com/helloworld/1230)
 * [뉴욕피자 - JVM Architecture란?](https://yeon-kr.tistory.com/112)
 * [Baeldung - Class Loaders in Java](https://www.baeldung.com/java-classloaders)
 * [Baeldung - Difference Between JVM, JRE, and JDK](https://www.baeldung.com/jvm-vs-jre-vs-jdk)
+* [Baeldung - View Bytecode of a Class File in Java](https://www.baeldung.com/java-class-view-bytecode)
