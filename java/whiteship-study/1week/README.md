@@ -136,7 +136,7 @@
 - `Execution Engine`은 메모리 영역에 있는 정보를 이용하여 명령을 실행합니다.
 
 ## Interpreter
-- `Interpreter(인터프린터)`는 바이트코드를 한줄 한줄 읽어가며 실행합니다.
+- `Interpreter(인터프리터)`는 바이트코드를 한줄 한줄 읽어가며 실행합니다.
 - `Interpreter`는 하나의 메서드가 여러번 호출될때, 매번 새롭게 해석하기때문에 느린 단점이 있습니다. 이러한 단점을 완화하기위해 `JIT Compiler`를 사용합니다.
 
 ## JIT Compiler
