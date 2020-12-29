@@ -220,6 +220,12 @@ javac Hello.java
 ## 자바코드를 실행하는 방법
 앞서 컴파일된 `.class`파일을 실행하는 방법은, 해당 파일이 있는 곳에서 터미널을 열고 `java 클래스명` 명령어를 사용하면 실행이 됩니다.
 
+```cmd
+> java Hello
+
+Hello World!
+```
+
 만약 `Could not find or load main class 클래스이름` 이라는 에러가 나올경우 다음의 경우를 의심해야합니다.
 
 1. 클래스 이름  
