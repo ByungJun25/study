@@ -243,7 +243,7 @@ Hello World!
     java Hello
     ```
 3. 패키지 이름  
-    : 패키지를 명시하였다면, `.class` 파일은 패키 지명과 동일한 디렉터리 구조에 존재해야 하며, `java` 명령어 사용 시 패키지명을 모두 붙인 `Fully Qualified Class Name`을 사용해야 합니다.
+    : 패키지를 명시하였다면, `.class` 파일은 패키지명과 동일한 디렉터리 구조에 존재해야 하며, `java` 명령어 사용 시 패키지명을 모두 붙인 `Fully Qualified Class Name`을 사용해야 합니다.
     ```cmd
     # Hello.java 에 package com.example.demo; 이라고 패키지를 정의한 경우,
     # Hello.class 파일이 com/example/demo 에 존재하고 있어야합니다.
