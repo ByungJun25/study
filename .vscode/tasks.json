@@ -50,6 +50,16 @@
             ],
             "label": "npm: webpack - javascript/practices/canvas/fireworks",
             "detail": "webpack --mode development"
+        },
+        {
+            "type": "npm",
+            "script": "webpack",
+            "path": "javascript/practices/canvas/starcraft/",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "label": "npm: webpack - javascript/practices/canvas/starcraft",
+            "detail": "webpack --mode development"
         }
     ]
 }
