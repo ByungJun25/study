@@ -26,6 +26,22 @@
             "preLaunchTask": "npm: webpack - javascript/practices/canvas/mouse",
             "url": "${workspaceFolder}/javascript/practices/canvas/mouse/html/helloweb.html",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Launch canvas - fireworks",
+            "request": "launch",
+            "type": "pwa-chrome",
+            "preLaunchTask": "npm: webpack - javascript/practices/canvas/fireworks",
+            "url": "${workspaceFolder}/javascript/practices/canvas/fireworks/html/helloweb.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Launch canvas - starcraft",
+            "request": "launch",
+            "type": "pwa-chrome",
+            "preLaunchTask": "npm: webpack - javascript/practices/canvas/starcraft",
+            "url": "${workspaceFolder}/javascript/practices/canvas/starcraft/html/helloweb.html",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }
