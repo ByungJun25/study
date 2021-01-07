@@ -291,7 +291,7 @@ public class Main implements MyInterface, OtherInterface {
 > 여담으로 `default` 메서드는 재귀호출도 가능합니다. 하지만 아시다시피, 인터페이스에는 변수 선언이 불가능하기에, 멈출 조건을 메서드 내에서 구현해야합니다(리턴 값을 주도록해서 조건을 구성해야합니다).
 
 ## Interface의 static method
-`Java 8`부터 `interface`에 `static` 메서드를 선언할 수 있게 되었습니다. 이를 통해 이제 이를 utility 클래스를 정의할 필요없이 관련된 utility 메서드를 모아둘 수 있게 되었고, 보다 높은 응집도를 가진 코드를 짤 수 있게되었습니다.
+`Java 8`부터 `interface`에 `static` 메서드를 선언할 수 있게 되었습니다. 이를 통해 이제 utility 클래스를 정의할 필요없이 관련된 utility 메서드를 모아둘 수 있게 되었고, 보다 높은 응집도를 가진 코드를 짤 수 있게되었습니다.
 
 `interface`의 `static` 메서드는 일반 `static` 메서드와 동일합니다.
 
