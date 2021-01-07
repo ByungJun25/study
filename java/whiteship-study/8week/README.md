@@ -6,11 +6,17 @@
   * [Interface란](#Interface란)
   * [Interface 정의하기](#Interface-정의하기)
   * [Interface 구현하기](#Interface-구현하기)
-  * [Interface 사용하기](#Interface-사용하기)
-  * [Interface의 상속](#Interface의-상속)
+    * 서로 같은 리턴타입의 중복 method 선언시, 구현 메서드는?
+    * 서로 다른 리턴타입의 중복 method 선언시, 구현 메서드는?
+  * [Interface 레퍼런스를 통해 구현체 사용하기](#Interface-레퍼런스를-통해-구현체-사용하기)
   * [Interface의 default method](#Interface의-default-method)
+    * default method 생성 및 사용
+    * 중복 default method 존재시
+    * default method 와 this 키워드
+    * default method 와 super 키워드
   * [Interface의 static method](#Interface의-static-method)
   * [Interface의 private method](#Interface의-private-method)
+  * [Interface의 상속](#Interface의-상속)
 * [참고 사이트](#참고-사이트)
 
 # Interface
@@ -58,21 +64,225 @@ public interface InterfaceName extends OtherInterface, OtherInterface2 {
 `Interface`를 정의할때는 다음의 조건이 있습니다.
 - `interface`에는 `public`과 `package-private` 접근 지시 제어자만 사용할 수 있습니다.
 - 상수(`static final` 키워드가 붙은 변수)와 메서드 헤더만 선언 할 수 있습니다.
-- 모든 변수는 암묵적으로 `static final`으로 취급됩니다.
+- 모든 변수는 암묵적으로 `public static final`로 취급됩니다.
 - 모든 메서드 시그니처는 암묵적으로 `public`으로 취급됩니다.
 - 인터페이스 내의 모든 메서드는 이미 정의상 추상적이기 때문에, `abstract` 키워드가 필요하지 않습니다.
 
 ## Interface 구현하기
+`Interface`는 앞서 말했다시피, 스스로 인스턴스화 될 수 없습니다. 따라서 일반 `class`에서 `implements`라는 키워드로 구현할 수 있습니다. 또한 하나의 클래스가 여러 인터페이스를 구현할 수 있습니다.
 
+`Interface`구현시, `interface`를 구현하는 클래스는 `interface`의 모든 메서드를 구현해야합니다. 만약 모든 메서드를 구현하지 않는다면, 해당 클래스는 `abstract` 키워드로 표시되어야합니다. 
 
-## Interface 사용하기
+`Interface`는 구현 예는 아래와 같습니다.
 
+```java
+public interface MyInterface {
+    void myMethod();
+}
 
-## Interface의 상속
+public interface OtherInterface {
+    void otherMethod();
+}
 
+// 인터페이스의 모든 메서드를 구현해야합니다.
+public class MyClass implements MyInterface, OtherInterface {
+    @Override
+    public void myMethod() {
+        // 메서드 구현
+    }
+
+    @Override
+    public void otherMethod() {
+        // 메서드 구현
+    }
+}
+
+// 일부만 구현시 abstract 키워드를 붙여야합니다.
+public abstract class OtherClass implements MyInterface, OtherInterface {
+    @Override
+    public void otherMethod() {
+        // 메서드 구현
+    }
+}
+```
+
+앞서 하나의 클래스가 여러 인터페이스를 구현할 수 있는데, 만약에 서로 다른 인터페이스가 완전히 동일한 메서드를 가지고 있으면 어떻게 될까요?
+> **만약 서로 다른 클래스가 완전히 동일한 메서드를 선언하고 있다면, 구현 클래스에서는 하나의 구현 메서드만 있으면 됩니다.** 
+
+```java
+public interface MyInterface {
+    void print();
+}
+
+public interface OtherInterface {
+    void print();
+}
+
+// 인터페이스의 모든 메서드를 구현해야합니다.
+public class MyClass implements MyInterface, OtherInterface {
+    @Override
+    public void print() {
+        // 메서드 구현
+    }
+}
+```
+
+그런데 만약 같은 메서드 시그니처이지만 반환 값이 다르다면 어떻게 될까요?
+> **만약 서로 다른 리턴타입의 동일한 메서드를 선언하고 있다면, 이는 구현 클래스에서 구현할 수 없습니다.**
+
+```java
+public interface MyInterface {
+    String method();
+}
+
+public interface OtherInterface {
+    int method();
+}
+
+// 인터페이스의 모든 메서드를 구현해야합니다.
+public class MyClass implements MyInterface, OtherInterface {
+    @Override
+    public String method() {
+        // 컴파일 에러 발생
+    }
+
+    /*
+    @Override
+    public int method() {
+        // 컴파일 에러 발생
+    }
+    */
+}
+```
+
+## Interface 레퍼런스를 통해 구현체 사용하기
+`Interface`는 레퍼런스 타입으로 사용이 가능합니다. 따라서 `interface`를 구현하는 모든 클래스는 구현한 `interface` 타입으로 참조변수를 선언할 수 있습니다.([다형성](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/6week#Polymorphism))
+
+`Interface`의 레퍼런스를 통해 메소드를 호출하게되면, 실구현체 내의 구현된 메소드를 호출하게 됩니다.
+
+자바의 `Collection` 타입이 대표적인 `Interface`의 사용 예입니다.
+
+![Java - Collection](./Collection.png)  
+**위 그림은 `Collection`의 계층도 일부만 표현하고 있습니다. 보다 자세한 계층도는 `Java Collection hierarchy`로 검색하시면 보실 수 있습니다.**
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Collection<Integer> listCollection = new ArrayList<>(); // ArrayList는 List interface를 구현하고 있는데, List interface는 Collection interface를 상속 받고 있습니다.
+        Collection<Integer> setCollection = new HashSet<>(); // HashSet은 Set interface를 구현하고 있는데, Set interface는 Collection interface를 상속 받고 있습니다.
+
+        listCollection.add(1); // ArrayList에 구현된 add 메서드를 호출합니다.
+        setCollection.add(1); // HashSet에 구현된 add 메서드를 호출합니다.
+    }
+}
+```
 
 ## Interface의 default method
+`Java 8`부터 `interface`에 `default` 메서드를 선언할 수 있게 되었습니다. `default` 메서드는 일반 메서드 헤더의 선언과 다르게 구현부(body)를 가질 수 있습니다. 따라서 `interface`를 구현하는 클래스에서 메서드를 구현하지 않아도, `interface` 내에 구현된 부분을 호출할 수 있습니다.
 
+`default` 메서드는 어떠한 리팩토링 없이 하위호환성을 보존하기 위해서 나왔습니다. 기존에는 `interface`에 메서드 선언이 추가되면 그 `interface`를 구현하는 하위 모든 클래스에서 선언된 메서드를 구현해야 했습니다. 이로 인해 동일한 코드가 여러 군데에 존재하는 경우가 빈번했습니다. 하지만 `default` 메서드가 나오면서, 이제 `interface`에 새로운 메서드를 추가하더라도, 구현 클래스에서 메서드 구현에 따른 추가 작업이 필요 없어졌습니다. 또한 동일한 코드가 한 군데로 모아짐에 따라 유지 보수도 훨씬 간편해졌습니다.
+
+`default` 메서드는 암묵적으로 `public`으로 취급됩니다. 따라서 `public` 키워드를 생략할 수 있습니다.
+
+`default` 메서드 역시 구현 클래스에서 `override`를 할 수 있습니다.
+
+`default` 메서드는 다음과 같이 선언하고 사용할 수 있습니다.
+
+```java
+public interface MyInterface {
+    default void print() {
+        System.out.println("default print method");
+    }
+}
+
+public interface OtherInterface {
+    default void method() {
+        System.out.println("default method");
+    }
+}
+
+public class Main implements MyInterface, OtherInterface {
+    public static void main(String[] args) {
+        MyInterface mainClass= Main();
+        mainClass.print(); // Main클래스에서 어떤 메서드도 구현하지 않았지만, MyInterface에 정의된 default 메서드가 문제없이 호출됩니다.
+        mainClass.method(); // override된 Main클래스 내의 method()가 호출됩니다.
+    }
+
+    @Override
+    public void method() {
+        System.out.println("Main default method");
+    }
+}
+```
+
+그렇다면 만약 두 `interface`에 동일한 `default` 메서드가 선언되어 있다면 어떻게 될까요?
+> **서로 다른 인터페이스에 동일한 default 메서드가 존재한다면 무조건 override를 해야합니다. override를 하지 않으면 컴파일 에러가 발생합니다.**
+
+```java
+public interface MyInterface {
+    default void print() {
+        System.out.println("MyInterface default print method");
+    }
+}
+
+public interface OtherInterface {
+    default void print() {
+        System.out.println("OtherInterface default print method");
+    }
+}
+
+public class Main implements MyInterface, OtherInterface {
+    public static void main(String[] args) {
+        MyInterface mainClass= Main();
+        mainClass.print(); // Main클래스에서 재정의한 print 메서드가 호출됩니다.
+    }
+
+    // 서로 다른 인터페이스에 동일한 default 메서드가 존재한다면 무조건 override를 해야합니다.
+    @Override
+    public void print() {
+        System.out.println("Main default method");
+    }
+}
+```
+
+만약 구현 클래스에서 인터페이스에 있는 `default` 메서드를 호출하고 싶을때는어떻게 해야할까요?
+> **`super` 키워드를 이용하면 인터페이스에 있는 `default` 메서드를 호출 할 수 있습니다. 만약 재정의(override)를 하지 않았다면, `this` 키워드를 통해서도 호출할 수 있습니다.**
+
+```java
+public interface MyInterface {
+    default void print() {
+        System.out.println("MyInterface default print method");
+    }
+    default void method() {
+        System.out.println("MyInterface default method");
+    }
+}
+
+public interface OtherInterface {
+    default void print() {
+        System.out.println("OtherInterface default print method");
+    }
+}
+
+public class Main implements MyInterface, OtherInterface {
+    public static void main(String[] args) {
+        MyInterface mainClass= Main();
+        mainClass.print(); // Main클래스에서 재정의한 print 메서드가 호출됩니다.
+    }
+
+    // 서로 다른 인터페이스에 동일한 default 메서드가 존재한다면 무조건 override를 해야합니다.
+    @Override
+    public void print() {
+        MyInterface.super.print(); // MyInterface에 정의된 default 메서드가 호출됩니다.
+        OtherInterface.super.print(); // OtherInterface 정의된 default 메서드가 호출됩니다.
+    }
+
+    public void test() {
+        MyInterface.super.print(); // 일반 메서드에서도 super키워드를 통해 interface의 default 메서드를 호출 할 수 있습니다.
+        this.method(); // 만약 override하지 않았으면 interface의 default 메서드가 호출되고, override하였다면 override된 메서드가 호출됩니다.
+    }
+}
+```
 
 ## Interface의 static method
 
@@ -80,5 +290,9 @@ public interface InterfaceName extends OtherInterface, OtherInterface2 {
 ## Interface의 private method
 
 
+## Interface의 상속
+
+
 ## 참고 사이트
 * [Oracle Java Document](https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html)
+* [Wikipedia - Interface](https://en.wikipedia.org/wiki/Interface)
