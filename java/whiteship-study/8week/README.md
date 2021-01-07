@@ -285,10 +285,48 @@ public class Main implements MyInterface, OtherInterface {
 ```
 
 ## Interface의 static method
+`Java 8`부터 `interface`에 `static` 메서드를 선언할 수 있게 되었습니다. 이를 통해 이제 이를 utility 클래스를 정의할 필요없이 관련된 utility 메서드를 모아둘 수 있게 되었고, 보다 높은 응집도를 가진 코드를 짤 수 있게되었습니다.
 
+`interface`의 `static` 메서드는 일반 `static` 메서드와 동일합니다.
+
+```java
+public interface MyInterface {
+    static void print() {
+        System.out.println("MyInterface default print method");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MyInterface.print(); // MyInterface의 static print 메서드를 호출합니다.
+    }
+}
+```
 
 ## Interface의 private method
+`Java 9`부터 `interface`에 `private` 메서드를 선언할 수 있게 되었습니다. 이를 통해 이제 좀 더 유연한 코드를 만들 수 있게되었습니다.
+> 개인적인 생각으로 추가되는 게 당연하다고 생각합니다. 왜냐하면 java 8부터 `default` 메서드를 지원하게 되어, 메서드의 구현이 가능하게 되었는데 `private`를 만들 수 없다면, 하나의 메서드가 엄청나게 긴 코드를 가질 수밖에 없게 됩니다.(안 그러면 전부다 공개 메서드로 쪼개야 하는데 이렇게 되면 외부에서 어떤 메서드를 호출해야 할지 알 수가 없습니다.) 관련 있는 코드를 메서드 별로 쪼개기 위해선 `private` 메서드가 필수일 수밖에 없습니다.
 
+`interface`의 `private` 메서드는 일반 `private` 메서드와 동일합니다.
+
+```java
+public interface MyInterface {
+    default void print() {
+        System.out.println(this.getText());
+    }
+    
+    private String getText() {
+        return "MyInterface default print method";
+    }
+}
+
+public class Main implements MyInterface {
+    public static void main(String[] args) {
+        MyInterface mainClass = new Main();
+        mainClass.print();
+    }
+}
+```
 
 ## Interface의 상속
 
@@ -296,3 +334,4 @@ public class Main implements MyInterface, OtherInterface {
 ## 참고 사이트
 * [Oracle Java Document](https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html)
 * [Wikipedia - Interface](https://en.wikipedia.org/wiki/Interface)
+* [bealdung - Static and Default Methods in Interfaces in Java](https://www.baeldung.com/java-static-default-methods)
