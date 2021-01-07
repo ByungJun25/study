@@ -17,6 +17,10 @@
   * [Interface의 static method](#Interface의-static-method)
   * [Interface의 private method](#Interface의-private-method)
   * [Interface의 상속](#Interface의-상속)
+    * 싱글 상속
+    * 다중 상속
+    * 서로 다른 인터페이스에 존재하는 메서드 시그니처가 같은 추상 메서드의 상속 (리턴타입이 같을 때 / 다를 때)
+    * 서로 다른 인터페이스에 존재하는 메서드 시그니처가 같은 `default` 메서드의 상속 (리턴타입이 같을 때 / 다를 때)
 * [참고 사이트](#참고-사이트)
 
 # Interface
@@ -184,7 +188,7 @@ public class Main {
 
 `default` 메서드는 암묵적으로 `public`으로 취급됩니다. 따라서 `public` 키워드를 생략할 수 있습니다.
 
-`default` 메서드 역시 구현 클래스에서 `override`를 할 수 있습니다.
+`default` 메서드 역시 구현 클래스에서 `override`를 할 수 있습니다. `override`를 하지 않고 `this` 키워드를 통해 바로 접근할 수도 있습니다.
 
 `default` 메서드는 다음과 같이 선언하고 사용할 수 있습니다.
 
@@ -284,6 +288,8 @@ public class Main implements MyInterface, OtherInterface {
 }
 ```
 
+> 여담으로 `default` 메서드는 재귀호출도 가능합니다. 하지만 아시다시피, 인터페이스에는 변수 선언이 불가능하기에, 멈출 조건을 메서드 내에서 구현해야합니다(리턴 값을 주도록해서 조건을 구성해야합니다).
+
 ## Interface의 static method
 `Java 8`부터 `interface`에 `static` 메서드를 선언할 수 있게 되었습니다. 이를 통해 이제 이를 utility 클래스를 정의할 필요없이 관련된 utility 메서드를 모아둘 수 있게 되었고, 보다 높은 응집도를 가진 코드를 짤 수 있게되었습니다.
 
@@ -329,7 +335,148 @@ public class Main implements MyInterface {
 ```
 
 ## Interface의 상속
+`Interface`는 상속이 가능합니다. 상속을 통해 다양하게 기능을 확장할 수 있습니다. 상속된 인터페이스를 구현하는 클래스는 인터페이스가 상속받은 추상 메서드와 인터페이스에 정의된 추상 메서드 모두 구현해야합니다. (싱글 상속 자체는 일반 클래스의 상속과 동일하게 동작한다고 보시면 됩니다.)
 
+자식 인터페이스에서 부모 인터페이스의 추상 메서드를 `default` 메서드로 `override` 할 수도 있습니다.
+
+`default` 메서드 상속시, 일반 클래스의 상속과 다른점이라면, 상위 인터페이스 메서드에 접근할 시, `[인터페이스명].super`로 접근할 수 있다는 점입니다.
+
+```java
+public interface MyInterface {
+    void method();
+    default void print() {
+        System.out.println("MyInterface default method");
+    }
+    void test();
+}
+
+public interface OtherInterface extends MyInterface {
+    void otherMethod();
+    @Override
+    default void print() {
+        MyInterface.super.print(); // super 키워드를 통해 상위 인터페이스의 default 메서드에 접근이 가능합니다.
+        System.out.println("OtherInterface default method");
+    }
+    @Override
+    default void test() {
+        System.out.println("Override test method of MyInterface") // 상위 인터페이스의 추상 메서드를 defaul 메서드로 override 할 수 있습니다.
+    }
+}
+
+public class Main implements OtherInterface {
+    public static void main(String[] args) {
+        Main main = new Main();
+
+        main.test(); // OtherInterface에 재정의된 test 메서드가 호출됩니다.
+        main.print();  // OtherInterface에 재정의된 print 메서드가 호출됩니다.
+    }
+
+    @Override
+    public void method() {
+        this.print(); // OtherInterface에 재정의된 print 메서드가 호출됩니다.
+    }
+
+    @Override
+    public void otherMethod() {
+        this.print(); // OtherInterface에 재정의된 print 메서드가 호출됩니다.
+    }
+}
+```
+
+또한 `interface`는 **클래스와 다르게 다중 상속을 지원합니다.** 다중 상속을 하기 위해서는 `extends` 키워드 뒤에 `,`를 이용하여 여러 인터페이스를 작성하면 됩니다. 
+
+```java
+public interface MyInterface {
+    void myMethod();
+    void method();
+}
+
+public interface OtherInterface {
+    void otherMethod();
+}
+
+public interface MainInterface extends MyInterface, OtherInterface {
+    // myMethod 와 otherMethod를 상속 받습니다.
+}
+```
+
+이러한 다중 속성으로 인해 상속시 아래와 같이 제한 조건이 있습니다.
+
+- 메서드 시그니처는 같지만 리턴 타입이 다른 추상 메서드가 서로 다른 인터페이스에 존재할 경우, 이를 다중 상속하면 컴파일 에러가 발생합니다. (이는 `default` 메서드에도 동일하게 적용됩니다.)
+
+    ```java
+    public interface MyInterface {
+        int method();
+        default int getValue() {
+            return 1;
+        }
+    }
+    
+    public interface OtherInterface {
+        String method();
+        default String getValue() {
+            return "text";
+        }
+    }
+    
+    public interface MainInterface extends MyInterface, OtherInterface {
+        // 컴파일 에러!
+    }
+    ```
+
+- 메서드 시그니처와 리턴 타입이 같은 추상 메서드의 경우에는 문제가 없습니다. 또한 구현 클래스에서 하나의 구현만 존재하면 됩니다.
+
+    ```java
+    public interface MyInterface {
+        void method();
+    }
+    
+    public interface OtherInterface {
+        void method();
+    }
+    
+    public interface MainInterface extends MyInterface, OtherInterface {
+        
+    }
+
+    public class Main implements MainInterface {
+        @Override
+        public void method() {
+            // 구현 코드
+        }
+    }
+    ```
+
+- 메서드 시그니처와 리턴 타입이 같은 `default` 메서드가 서로 다른 인터페이스에 정의되어 있는 경우, 이를 다중 상속할 시, 자식 인터페이스에서 **무조건 재정의를 해줘야합니다.**
+
+    ```java
+    public interface MyInterface {
+        default void print() {
+            System.out.println("MyInterface default method")
+        }
+    }
+    
+    public interface OtherInterface {
+        default void print() {
+            System.out.println("OtherInterface default method")
+        }
+    }
+    
+    public interface MainInterface extends MyInterface, OtherInterface {
+        // 재정의를 하지 않으면 컴파일 에러가 발생합니다.
+        @Override
+        default void print() {
+            System.out.println("MainInterface default method")
+        }
+    }
+
+    public class Main implements MainInterface {
+        public static void main(String[] args) {
+            Main main = new Main();
+            main.print(); // MainInterface default method 가 출력됩니다.
+        }
+    }
+    ```
 
 ## 참고 사이트
 * [Oracle Java Document](https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html)
