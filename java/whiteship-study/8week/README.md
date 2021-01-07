@@ -480,5 +480,5 @@ public interface MainInterface extends MyInterface, OtherInterface {
 
 ## 참고 사이트
 * [Oracle Java Document](https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html)
-* [Wikipedia - Interface](https://en.wikipedia.org/wiki/Interface)
+* [Wikipedia - Interface](https://en.wikipedia.org/wiki/Interface_(Java))
 * [bealdung - Static and Default Methods in Interfaces in Java](https://www.baeldung.com/java-static-default-methods)

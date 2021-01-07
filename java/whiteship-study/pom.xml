@@ -21,6 +21,7 @@
     <modules>
         <module>4week/java</module>
         <module>5week/java</module>
+        <module>8week/java</module>
     </modules>
 
     <!--

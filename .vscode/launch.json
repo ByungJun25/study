@@ -6,10 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - Main",
+            "name": "Launch Test1",
             "request": "launch",
-            "mainClass": "com.bj25.study.java.binarytree.Main",
-            "projectName": "java-5week"
+            "mainClass": "com.bj25.study.java.interfaces.Test1",
+            "projectName": "java-8week"
         },
         {
             "name": "Launch canvas - animation",
