@@ -1,4 +1,4 @@
- # repo.spring.io을 통해 받는 3rd-party 앱이 더이상 익명 사용자에게는 유효하지 않음
+ # repo.spring.io을 통해 3rd-party artifact 로드시, 더이상 익명 사용자에게는 유효하지 않음
 
 > 링크: [Notice of Permissions Changes to repo.spring.io, Fall and Winter, 2020](https://spring.io/blog/2020/10/29/notice-of-permissions-changes-to-repo-spring-io-fall-and-winter-2020)
 
