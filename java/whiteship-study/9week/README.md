@@ -242,7 +242,7 @@ public class IOExceptionExample {
     ```
 
 ## Exception 표시
-`Checked Exception`의 경우 컴파일러가 체크를 해주지 않기때문에, 우리는 다른 사용자에게 이 메서드가 Exception이 있다는 것을 알려야합니다. 이는 `javadoc`을 이용하면 쉽고 간편하게 구성할 수 있습니다. `javadoc`에서는 `@throws` 와 `@exception` 키워드를 통해 메서드 내의 `Exception`에 대한 설명을 추가할 수 있도록해줍니다.
+`Unchecked Exception`의 경우 컴파일러가 체크를 해주지 않기때문에, 우리는 다른 사용자에게 이 메서드가 Exception이 있다는 것을 알려야합니다. 이는 `javadoc`을 이용하면 쉽고 간편하게 구성할 수 있습니다. `javadoc`에서는 `@throws` 와 `@exception` 키워드를 통해 메서드 내의 `Exception`에 대한 설명을 추가할 수 있도록해줍니다.
 
 사용 예시는 아래와 같습니다.
 
