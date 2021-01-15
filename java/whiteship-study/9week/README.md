@@ -29,6 +29,7 @@
 
 ## java의 예외 계층 구조
 java가 제공하는 예외에는 `Error`와 `Exception`이 있는데 모두 `throwable`을 상속하고 있습니다. 계층 구조는 다음과 같습니다.
+
 ![Java - Throwable](./Throwable.png)  
 
 ## Error란
