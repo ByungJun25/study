@@ -20,6 +20,7 @@
   * [Multiple catch Blocks](#Multiple-catch-Blocks)
   * [Union catch Blocks](#Union-catch-Blocks)
 * [커스텀 예외](#커스텀-예외)
+  * [커스텀 예외가 필요한 이유](#커스텀-예외가-필요한-이유)
   * [Custom Checked Exception](#Custom-Checked-Exception)
   * [Custom Unchecked Exception](#Custom-Unchecked-Exception)
   * [Custom 예외생성시 참고할 점](#Custom-예외생성시-참고할-점)
@@ -538,6 +539,8 @@ try {
 
 # 커스텀 예외
 
+## 커스텀 예외가 필요한 이유
+
 ## Custom Checked Exception
 `Exception` 클래스를 상속하면 `Custom Checked Exception` 클래스를 만들 수 있습니다.
 
@@ -587,3 +590,8 @@ public class Main {
 * [Baeldung - Common Java Exceptions](https://www.baeldung.com/java-common-exceptions)
 * [Baeldung - Checked and Unchecked Exceptions in Java](https://www.baeldung.com/java-checked-unchecked-exceptions)
 * [Baeldung - Exception Handling in Java](https://www.baeldung.com/java-exceptions)
+* [Baeldung - Java – Try with Resources](https://www.baeldung.com/java-try-with-resources)
+* [Baeldung - Java Global Exception Handler](https://www.baeldung.com/java-global-exception-handler)
+* [Baeldung - Performance Effects of Exceptions in Java](https://www.baeldung.com/java-exceptions-performance)
+* [Baeldung - Create a Custom Exception in Java](https://www.baeldung.com/java-new-custom-exception)
+* [Oracle - Chained Exceptions](https://docs.oracle.com/javase/tutorial/essential/exceptions/chained.html)
