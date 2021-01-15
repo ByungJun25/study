@@ -20,7 +20,6 @@
   * [Multiple catch Blocks](#Multiple-catch-Blocks)
   * [Union catch Blocks](#Union-catch-Blocks)
 * [커스텀 예외](#커스텀-예외)
-  * [커스텀 예외가 필요한 이유](#커스텀-예외가-필요한-이유)
   * [Custom Checked Exception](#Custom-Checked-Exception)
   * [Custom Unchecked Exception](#Custom-Unchecked-Exception)
   * [Custom 예외생성시 참고할 점](#Custom-예외생성시-참고할-점)
@@ -538,8 +537,6 @@ try {
 이 문법도 주의사항이 있습니다. 바로 **상위 예외 클래스가 선언되어있다면, 하위 예외 클래스를 선언할 수 없다는 것입니다.**
 
 # 커스텀 예외
-
-## 커스텀 예외가 필요한 이유
 
 ## Custom Checked Exception
 `Exception` 클래스를 상속하면 `Custom Checked Exception` 클래스를 만들 수 있습니다.
