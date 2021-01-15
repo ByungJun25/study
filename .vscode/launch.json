@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Launch Example",
             "request": "launch",
+            "mainClass": "com.bj25.study.java.exceptions.multicatch.Example",
+            "projectName": "java-9week"
+        },
+        {
+            "type": "java",
+            "name": "Launch Example",
+            "request": "launch",
             "mainClass": "com.bj25.study.java.exceptions.h2example.Example",
             "projectName": "java-9week"
         },

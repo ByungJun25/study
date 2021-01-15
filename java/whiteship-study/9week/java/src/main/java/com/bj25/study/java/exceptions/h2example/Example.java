@@ -10,16 +10,19 @@ public class Example {
     public static void main(String[] args) throws SQLException {
         String url = "jdbc:h2:mem:";
         Connection con = DriverManager.getConnection(url);
+        con.setAutoCommit(false);
 
         try (Statement stm = con.createStatement()) {
             stm.execute("CREATE TABLE TEST (id INTEGER not NULL, value VARCHAR(255), PRIMARY KEY(id))");
-            Example.insert(stm, 1, "test1");
+            Example.insert(con, 1, "test1");
             Example.createRuntimException();
-            Example.insert(stm, 2, "test2");
+            Example.insert(con, 2, "test2");
+            con.commit();
         } catch (SQLException ex) {
             System.out.println(ex);
         } catch (RuntimeException e) {
             System.out.println("RuntimeException 발생");
+            con.rollback();
         } catch (Exception exception) {
             System.out.println("Exception 발생");
         }
@@ -42,6 +45,11 @@ public class Example {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+    }
+
+    public static void insert(Connection con, int id, String value) throws SQLException {
+        final String query = "INSERT INTO TEST VALUES (" + id + ", '" + value + "')";
+        con.prepareStatement(query).executeUpdate();
     }
 
     public static void insert(Statement stm, int id, String value) throws SQLException {

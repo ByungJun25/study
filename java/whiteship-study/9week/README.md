@@ -82,7 +82,7 @@ public class IOExceptionExample {
 ```
 
 ## Common Checked Exceptions
-1. IOException
+1. IOException  
   `IOException`은 `input`혹은 `output` 작업이 실패할때 발생하는 예외입니다. 예로 `FileNotFoundException`, `MalformedURLException`등이 있습니다.
 
     ```java
@@ -99,7 +99,7 @@ public class IOExceptionExample {
     }
     ```
 
-2. ParseException
+2. ParseException  
   `ParseException`은 텍스트를 파싱하는 작업이 실패할때 발생하는 예외입니다.
 
     ```java
@@ -114,7 +114,7 @@ public class IOExceptionExample {
     }
     ```
 
-3. InterruptedException
+3. InterruptedException  
   `InterruptedException`는 다른 쓰레드가 `waiting` 혹은 `timed_wating` 상태인 쓰레드를 인터럽트할때 발생하는 예외입니다. (`interrupt` 메서드를 통해 다른 쓰레드를 인터럽트 할 수 있습니다.)
 
     ```java
@@ -129,7 +129,7 @@ public class IOExceptionExample {
         @Override
         public void run() {
           try {
-            Thread.sleep(10000); // 10초가 sleep
+            Thread.sleep(10000); // 10초간 sleep
           } catch (InterruptedException e) {
             System.out.println("InterruptedException 발생");
           }
@@ -142,7 +142,7 @@ public class IOExceptionExample {
 `Unchecked Exception`이란 프로그램이 실행될때, 사용하는 방법에 의해 발생하는 오류를 의미합니다. 대표적으로 `NullPointerException`이 있습니다. 이는 사용하고자 하는 객체의 포인터가 `null`을 가리킬때 발생하는 예외입니다. 이처럼 사용하는 상황과는 상관없이 사용 방법이 잘못되었을때 `Unchecked Exception`이 발생합니다. `java`는 이 `Unchecked Exception`을 컴파일 시점에 확인하지 않습니다. 따라서 `Unchecked Exception`은 `throws` 키워드를 이용하여 메서드에 선언할 필요도 없습니다. 그러므로 이를 핸들링할지 말지는 사용자가 직접 정해야합니다.
 
 ## Common Unchecked Exceptions
-1. NullPointerException
+1. NullPointerException  
   `NullPointerException`은 객체를 필요로 하는 곳에서 `null`을 사용하려고 시도할때 발생하는 예외입니다.
 
     ```java
@@ -154,7 +154,7 @@ public class IOExceptionExample {
     }
     ```
 
-2. ArrayIndexOutOfBoundsException
+2. ArrayIndexOutOfBoundsException  
   `ArrayIndexOutOfBoundsException`은 잘못된 인덱스에 접근할때 발생하는 예외입니다.
 
     ```java
@@ -166,7 +166,7 @@ public class IOExceptionExample {
     }
     ```
 
-3. StringIndexOutOfBoundsException
+3. StringIndexOutOfBoundsException  
   `StringIndexOutOfBoundsException`은 텍스트의 길이보다 크거나 같은 인덱스에 접근할때 발생하는 예외입니다.
 
     ```java
@@ -178,7 +178,7 @@ public class IOExceptionExample {
     }
     ```
 
-4. NumberFormatException
+4. NumberFormatException  
   `NumberFormatException`은 텍스트가 변환하고자하는 숫자 데이터 형식에 맞지 않을때 발생하는 예외입니다.
 
     ```java
@@ -189,7 +189,7 @@ public class IOExceptionExample {
     }
     ```
 
-5. ArithmeticException
+5. ArithmeticException  
   `ArithmeticException`은 산술 연산을 실행할때, 해당 연산이 잘못된 조건일때 발생하는 예외입니다.
 
     ```java
@@ -202,7 +202,7 @@ public class IOExceptionExample {
     }
     ```
 
-6. ClassCastException
+6. ClassCastException  
   `ClassCastException`은 런타임시 객체를 다운 캐스팅할때, 맞는 인스턴스가 아닌 객체를 캐스팅할때 발생하는 예외입니다.
 
     ```java
@@ -218,7 +218,7 @@ public class IOExceptionExample {
     }
     ```
 
-7. IllegalArgumentException
+7. IllegalArgumentException  
   `IllegalArgumentException`은 어떤 메서드를 호출할때, 잘못된 변수를 전달하면 발생하는 예외입니다.
 
     ```java
@@ -229,7 +229,7 @@ public class IOExceptionExample {
     }
     ```
 
-8. IllegalStateException
+8. IllegalStateException  
   `IllegalStateException`은 메서드 호출이 잘못된 시점에 호출되었을때 발생하는 예외입니다.
 
     ```java
@@ -268,26 +268,29 @@ public class Example {
   public static void main(String[] args) throws SQLException {
     String url = "jdbc:h2:mem:";
     Connection con = DriverManager.getConnection(url);
+    con.setAutoCommit(false); // auto commit을 비활성화 합니다.
 
     try (Statement stm = con.createStatement()) {
       stm.execute("CREATE TABLE TEST (id INTEGER not NULL, value VARCHAR(255), PRIMARY KEY(id))");
-      Example.insert(stm, 1, "test1"); // test1 입력.
+      Example.insert(con, 1, "test1"); // test1 데이터를 추가
       
-      Example.createRuntimException(); // 런타임 에러 발생.
+      Example.createRuntimException(); // 런타임 예외 발생
       
-      Example.insert(stm, 2, "test2"); // test2는 입력되지 않음.
+      Example.insert(con, 2, "test2");
+      con.commit();
     } catch (SQLException ex) {
       System.out.println(ex);
     } catch (RuntimeException e) {
       System.out.println("RuntimeException 발생");
+      //con.rollback();  // 만약 여기에 주석을 지우고 rollback을 호출한다면 test1이 입력되지 않습니다.
     } catch (Exception exception) {
       System.out.println("Exception 발생");
     }
 
     try (Statement stm = con.createStatement(); ResultSet rs = stm.executeQuery("SELECT * FROM TEST")) {
-      while(rs.next()) {
+      while (rs.next()) {
         String value = rs.getString("value");
-        System.out.println("Value: "+value); // test1이 출력됨.
+        System.out.println("Value: " + value); // test1이 출력됩니다.
       }
     } catch (SQLException ex) {
       System.out.println(ex);
@@ -304,8 +307,13 @@ public class Example {
     }
   }
 
+  public static void insert(Connection con, int id, String value) throws SQLException {
+    final String query = "INSERT INTO TEST VALUES (" + id + ", '" + value + "')";
+    con.prepareStatement(query).executeUpdate();
+  }
+
   public static void insert(Statement stm, int id, String value) throws SQLException {
-    stm.execute("INSERT INTO TEST VALUES ("+id+", '"+value+"')");
+    stm.execute("INSERT INTO TEST VALUES (" + id + ", '" + value + "')");
   }
 
   public static void createRuntimException() {
@@ -580,8 +588,8 @@ public class Main {
 
 ## Custom 예외생성시 참고할 점
 * 커스텀 예외 클래스의 명칭은 java에서 제공하는 예외 클래스들처럼 이름에서 그 예외가 무엇인지 알 수 있도록 명명하는 것이 좋습니다.
-* Super 클래스의 모든 생성자를 호출하는 각 생성자를 만들어 두는 것이 좋습니다.(이는 `Chained Exception`을 적극 활용할 수 있도록 해줍니다.)
-* 중복되는 예외 클래스의 정의는 되도록 지양하도록 합니다. 중복된 예외는 오히려 원인을 밝히기 어렵게 만듭니다.
+* Super 클래스의 모든 생성자를 호출하는 각 생성자를 만들어 두는 것이 좋습니다.(이는 `root cause`를 잃지않을 수 있도록 만들어줍니다.)
+* 중복되는 예외 클래스의 정의는 되도록 지양하도록 합니다. 중복된 예외는 오히려 원인을 밝히기 어렵게 만듭니다. 
 
 ## 참고 사이트
 * [Baeldung - Common Java Exceptions](https://www.baeldung.com/java-common-exceptions)
