@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch HelloWorld",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.HelloWorld",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
             "name": "Launch Example",
             "request": "launch",
             "mainClass": "com.bj25.study.java.exceptions.multicatch.Example",

@@ -10,9 +10,9 @@
 	</parent>
 
 	<groupId>com.bj25.study</groupId>
-	<artifactId>java-9week</artifactId>
+	<artifactId>java-10week</artifactId>
 	<version>${study.version}</version>
 	<name>java-study</name>
-	<description>white-ship java live study - 9 week</description>
+	<description>white-ship java live study - 10 week</description>
 
 </project>
