@@ -1,4 +1,4 @@
-package com.bj25.study.java.threads;
+package com.bj25.study.java.enums;
 
 public enum Time implements Example {
     TEST {
