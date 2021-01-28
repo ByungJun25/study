@@ -94,6 +94,7 @@ public class ListNode<T> {
         return result;
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
