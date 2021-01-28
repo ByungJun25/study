@@ -66,7 +66,7 @@ public enum Time {
 ## enum이 제공하는 메서드
 **`enum`이 만들어질때, 컴파일러에 의해 자동적으로 몇몇 메서드가 추가됩니다.**
 
-1. `values()` 메서드
+1. `values()` 메서드  
 `values()` 메서드는 현재 호출하는 `enum`의 모든 값들을 가진 배열을 반환합니다. 이때 반환되는 배열내의 원소 순서는 선언된 순서와 동일합니다.
 
     ```java
@@ -81,7 +81,7 @@ public enum Time {
     }
     ```
 
-2. `valueOf(String name)` 메서드
+2. `valueOf(String name)` 메서드  
 `valueOf(String name)` 메서드는 호출하는 `enum`타입에서 주어지는 이름과 일치하는 값을 반환하는 메서드입니다. 이 메서드는 내부적으로 다시 `java.lang.Enum`클래스의 `valueOf(Class<T> enumType, String name)` 메서드를 호출하도록 되어있습니다.
 
     ```java
@@ -236,7 +236,7 @@ public class Main {
 
 `java.lang.Enum`의 메서드들은 `final`로 선언되어 있기때문에, `enum`에서 재정의가 불가능합니다.
 
-1. `name` 메서드
+1. `name` 메서드  
 `name` 메서드는 `enum` 상수의 이름을 반환합니다. (여기서 이름은 정확히 선언된 이름을 의미합니다.)
 
     ```java
@@ -251,7 +251,7 @@ public class Main {
     }
     ```
 
-3. `ordinal` 메서드
+3. `ordinal` 메서드  
 `ordinal` 메서드는 `enum` 상수가 선언된 순서를 반환합니다. 단, 0부터 시작합니다.
 
     ```java
@@ -266,7 +266,7 @@ public class Main {
     }
     ```
 
-1. `compareTo` 메서드
+1. `compareTo` 메서드  
 `compareTo` 메서드는 호출하는 `enum`의 `ordinal` 값에서 타켓 `enum`의 `ordinal`값을 뺀 결과값을 반환합니다.
 
     ```java
@@ -282,7 +282,7 @@ public class Main {
     }
     ```
 
-4. `getDeclaringClass` 메서드
+4. `getDeclaringClass` 메서드  
 `getDeclaringClass` 메서드는 호출하는 `enum` 상수에 대응하는 클래스를 반환합니다.
 
     ```java
@@ -327,7 +327,7 @@ public enum Number {
 }
 ```
 
-1. `allOf` 메서드
+1. `allOf` 메서드  
     `allOf` 메서드는 주어지는 `enum` 클래스의 모든 값을 가진 `enumset`을 만듭니다.
 
     ```java
@@ -339,7 +339,7 @@ public enum Number {
     }
     ```
 
-1. `noneOf` 메서드
+1. `noneOf` 메서드  
     `noneOf` 메서드는 주어지는 `enum` 클래스 타입의 빈 `EnumSet`을 만듭니다.
 
     ```java
@@ -351,7 +351,7 @@ public enum Number {
     }
     ```
 
-1. `of` 메서드
+1. `of` 메서드  
     `of` 메서드는 주어진 `enum` 값을 가진 `EnumSet`을 만듭니다. `of` 메서드는 여러개로 `오버로딩`되어 있는데, 그 중 `가변 함수`의 경우, 다른 메서드들 보다 느리다고 `javadoc`에 설명되어 있습니다. 따라서 상황에 따라 적절히 사용해야 합니다.
 
     ```java
@@ -363,7 +363,7 @@ public enum Number {
     }
     ```
 
-1. `range` 메서드
+1. `range` 메서드  
     `range` 메서드는 파라미터로 주어진 `enum` 값 사이의 모든 값을 가진 `EnumSet`을 만듭니다. **이 메서드 사용시 주의할 사항은 파라미터의 순서는 필히 `enum`이 선언된 순서에 맞게 넣어야 합니다. 역순으로 넣을 경우 `IllegalArgumentException`이 발생하게 됩니다.**
 
     ```java
@@ -377,7 +377,7 @@ public enum Number {
     }
     ```
 
-1. `complementOf` 메서드
+1. `complementOf` 메서드  
     `complementOf` 메서드는 파라미터로 주어진 `enum`값을 제외한 모든 값을 가진 `EnumSet`을 만듭니다.
 
     ```java
@@ -389,7 +389,7 @@ public enum Number {
     }
     ```
 
-1. `copyOf` 메서드
+1. `copyOf` 메서드  
     `copyOf` 메서드는 다른 `Collection`의 모든 값을 복사한 `EnumSet`을 만듭니다.
 
     ```java
