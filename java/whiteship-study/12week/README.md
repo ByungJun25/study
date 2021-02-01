@@ -256,7 +256,7 @@ void scheduledTask() {
 - `forRemoval` - 해당 기능이 다음 버전때 제거될 경우, `true`로 설정하여 사용자에게 정보를 제공하도록 합니다.
 
 ## @SafeVarargs
-`@SafeVarargs`는 가변인자와 제네릭을 함께 사용할때 잘못된 사용을 경고하기 위한 경고메세지를 숨기는데 사용되는 어노테이션입니다.
+`@SafeVarargs`는 가변인자와 제네릭을 함께 사용할때, 잘못된 사용을 경고하기 위한 경고메세지를 숨기는데 사용되는 어노테이션입니다.
 
 보다 자세한 내용은 [Baeldung - Java @SafeVarargs Annotation](https://www.baeldung.com/java-safevarargs)을 참고하시면 좋습니다.
 
