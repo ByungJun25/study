@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.bj25.study</groupId>
+		<artifactId>java-study-parent</artifactId>
+		<version>${study.version}</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+	<groupId>com.bj25.study</groupId>
+	<artifactId>java-12week</artifactId>
+	<version>${study.version}</version>
+	<name>java-study</name>
+	<description>white-ship java live study - 12 week</description>
+
+</project>
