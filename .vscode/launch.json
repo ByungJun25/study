@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
+            "mainClass": "com.bj25.study.java.annotations.Main",
+            "projectName": "java-12week"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
             "mainClass": "com.bj25.study.java.enums.Main",
             "projectName": "java-11week"
         },
