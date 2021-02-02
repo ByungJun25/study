@@ -10,15 +10,24 @@
 	</parent>
 
 	<groupId>com.bj25.study</groupId>
-	<artifactId>java-12week</artifactId>
+	<artifactId>java-12week-processor</artifactId>
 	<version>${study.version}</version>
 	<name>java-study</name>
-	<description>white-ship java live study - 12 week</description>
+	<description>white-ship java live study - 12 week - processor</description>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.google.auto.service/auto-service -->
 		<dependency>
-			<groupId>com.bj25.study</groupId>
-			<artifactId>java-12week-processor</artifactId>
+			<groupId>com.google.auto.service</groupId>
+			<artifactId>auto-service</artifactId>
+			<version>1.0-rc7</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.squareup/javapoet -->
+		<dependency>
+			<groupId>com.squareup</groupId>
+			<artifactId>javapoet</artifactId>
+			<version>1.13.0</version>
 		</dependency>
 	</dependencies>
 

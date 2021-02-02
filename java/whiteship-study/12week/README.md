@@ -20,6 +20,7 @@
     * [@FuntionalInterface](#FuntionalInterface)
     * [@Native](#Native)
   * [annotation 프로세서](#annotation-프로세서)
+    * [custom annotation processor](#custom-annotation-processor)
 * [참고 사이트](#참고-사이트)
 
 # Annotations
@@ -269,8 +270,65 @@ void scheduledTask() {
 `@Native`는 `Java 8`에서 소개되었습니다. 이 어노테이션은 필드에서만 사용가능하며, 해당 필드가 `native code`로부터 참조되는 상수라는 것을 표시합니다.
 
 ## annotation 프로세서
+`Annotation Processing`은 `javac`에 있는 빌드 툴로써, **컴파일 시점**에 어노테이션에 대한 여러 다양한 처리를 위해 사용됩니다. 
+
+`Java 5`에서부터 사용이 가능했으며, `Java 6`에서 유용한 API들이 제공되었습니다.
+
+개별 커스텀한 `annotation processor`를 등록할 수 있으며, 특정 자바 코드나 혹은 컴파일된 바이트코드의 어노테이션에 대한 처리를 할 수 있습니다. 이를 통해, 새로운 자바 파일을 만들어 낼 수 있고, 생성된 자바코드는 자동으로 컴파일됩니다. **단, 기존에 존재하는 코드에 대해 변경은 불가능합니다.**
+
+## custom annotation processor
+
+1. 커스텀 `Processor`를 생성하기위해선 `AbstractProcessor`를 상속받아야합니다.  
+
+    **Custom annotation processor의 경우, 무조건 빈생성자가 있어야합니다.**
+
+    ```java
+    public class CustomProcess extends AbstractProcessor {
+      @Override
+      public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        // codes...
+      }
+    }
+    ```
+
+    `AbstractProcessor`에는 다음의 4가지 중요 메소드가 있습니다.
+
+    - `init(ProcessingEnvironment processingEnv)` - annotation processing툴에 의해 실행되는 메서드입니다. 이 메서드를 통해 초기화 작업을 할 수 있습니다.
+    - `process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv)` - `main`메서드같은 기능을 하는 메서드입니다. 이 메서드를 통해 원하는 로직을 구성할 수 있고, 구성된 로직이 실행됩니다.
+    - `getSupportedAnnotationTypes()` - 현재 annotation processor가 담당할 annotation을 등록하는 메서드입니다. **이 메서드를 통해 반환되는 값은 `FQN(Fully qualified name)`이어야 합니다.** 이 메서드는 `@SupportedAnnotationTypes`로 대체할 수 있습니다.
+    - `getSupportedSourceVersion()` - 사용할 자바 버전을 지정하는 메서드입니다. 이 메서드는 `@SupportedSourceVersion`로 대체할 수 있습니다.
+
+2. custom annotation processor 등록하기  
+
+    직접 만든 `annotation processor`는 `javac`에 등록이 되어야합니다. 이를 위해서는 `.jar` 파일을 제공해야합니다. 또한 이 `.jar`파일은 커스텀 코드뿐만 아니라 `META-INF/services`에 `javax.annotation.processing.Processor`라는 특별한 파일을 포함해야합니다.
+
+    `javax.annotation.processing.Processor` 파일은 프로세서에 대한 `FQN`을 리스트로 가지고 있어야합니다.
+
+    앞의 사항을 모두 만족하면, `javac`가 buildpath에서 자동적으로 `javax.annotation.processing.Processor`파일을 감지하고 커스텀 annotation processor를 등록합니다.
+
+3. 예제  
+
+    그럼 지금부터 간단한 `annotation process`를 만들어 보도록 하겠습니다. 만들 Processor는 어노테이션이 붙은 클래스의 get메서드들을 이용해서 DTO 클래스를 만들어줍니다.
+
+    1. 시작에 앞서 준비 사항은 다음과 같습니다.
+
+        - Annotation 및 Processor를 정의할 모듈
+        - Processor를 사용할 모듈
+        - Google의 `auto-service` 라이브러리 - 자동으로 `javax.annotation.processing.Processor`파일을 만들어줍니다. [[참고 - Google/AutoService](https://github.com/google/auto/tree/master/service)]
+        - JavaPoet 라이브러리 - `.java` 파일을 손쉽게 만들어주는 라이브러리입니다.[[참고 - JavaPoet](https://github.com/square/javapoet)]
+    
+    2. Annotation 정의
+    
+        ```java
+        public @
+        ```
+    
+    3. 
+
+
 
 ## 참고 사이트
 - [Oracle - Annotations](https://docs.oracle.com/javase/tutorial/java/annotations/)
 - [Baeldung - Overview of Java Built-in Annotations](https://www.baeldung.com/java-default-annotations)
 - [Baeldung - Java Annotation Processing and Creating a Builder](https://www.baeldung.com/java-annotation-processing-builder)
+- [Hannes Dorfmann - Annotation Processing 101](http://hannesdorfmann.com/annotation-processing/annotationprocessing101/)
