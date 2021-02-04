@@ -11,7 +11,7 @@
 
     <groupId>com.bj25.study</groupId>
     <artifactId>java-study-parent</artifactId>
-    <version>${study.version}</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -27,6 +27,7 @@
         <module>11week/java</module>
         <module>12week/processor</module>
         <module>12week/java</module>
+        <module>12week/demo</module>
     </modules>
 
     <dependencyManagement>
@@ -34,7 +35,12 @@
             <dependency>
                 <groupId>com.bj25.study</groupId>
                 <artifactId>java-12week-processor</artifactId>
-                <version>${study.version}</version>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bj25.study</groupId>
+                <artifactId>java-12week</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -68,7 +74,6 @@
     </build>
 -->
     <properties>
-        <study.version>0.0.1-SNAPSHOT</study.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <github.api.version>1.116</github.api.version>

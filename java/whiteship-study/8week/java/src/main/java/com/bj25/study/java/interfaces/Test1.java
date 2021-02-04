@@ -9,13 +9,9 @@ public class Test1 implements Test4 {
 
     @Override
     public void otherMethod() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void method() {
-        // TODO Auto-generated method stub
-
     }
 }

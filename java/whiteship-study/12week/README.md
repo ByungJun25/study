@@ -270,7 +270,11 @@ void scheduledTask() {
 `@Native`는 `Java 8`에서 소개되었습니다. 이 어노테이션은 필드에서만 사용가능하며, 해당 필드가 `native code`로부터 참조되는 상수라는 것을 표시합니다.
 
 ## annotation 프로세서
-`Annotation Processing`은 `javac`에 있는 빌드 툴로써, **컴파일 시점**에 어노테이션에 대한 여러 다양한 처리를 위해 사용됩니다. 
+`Annotation Processor`은 `javac`에 있는 빌드 툴로써, **컴파일 시점**에 어노테이션에 대한 여러 다양한 처리를 위해 사용됩니다. 
+
+![javac-flow.png](./javac-flow.png)
+
+그림 출처: [openjdk - compiler](https://openjdk.java.net/groups/compiler/doc/compilation-overview/index.html)
 
 `Java 5`에서부터 사용이 가능했으며, `Java 6`에서 유용한 API들이 제공되었습니다.
 
@@ -304,11 +308,11 @@ void scheduledTask() {
 
     `javax.annotation.processing.Processor` 파일은 프로세서에 대한 `FQN`을 리스트로 가지고 있어야합니다.
 
-    앞의 사항을 모두 만족하면, `javac`가 buildpath에서 자동적으로 `javax.annotation.processing.Processor`파일을 감지하고 커스텀 annotation processor를 등록합니다.
+    앞의 사항을 모두 만족하면, `javac`가 build-path에서 자동적으로 `javax.annotation.processing.Processor`파일을 감지하고 커스텀 annotation processor를 등록합니다.
 
 3. 예제  
 
-    그럼 지금부터 간단한 `annotation process`를 만들어 보도록 하겠습니다. 만들 Processor는 어노테이션이 붙은 클래스의 get메서드들을 이용해서 DTO 클래스를 만들어줍니다.
+    그럼 지금부터 커스텀 `annotation process`를 만들어 보도록 하겠습니다. 만들 Processor는 어노테이션이 붙은 클래스의 DTO 클래스를 만들어줍니다.  
 
     1. 시작에 앞서 준비 사항은 다음과 같습니다.
 
@@ -317,18 +321,160 @@ void scheduledTask() {
         - Google의 `auto-service` 라이브러리 - 자동으로 `javax.annotation.processing.Processor`파일을 만들어줍니다. [[참고 - Google/AutoService](https://github.com/google/auto/tree/master/service)]
         - JavaPoet 라이브러리 - `.java` 파일을 손쉽게 만들어주는 라이브러리입니다.[[참고 - JavaPoet](https://github.com/square/javapoet)]
     
-    2. Annotation 정의
+    2. Annotation 정의  
+
+        어노테이션은 2가지를 정의할 예정입니다. 
+          - `@DTO` - 클래스에 부여할 수 있으며, 해당 어노테이션이 있으면 DTO 클래스를 만들 대상 클래스가 됩니다.
+          - `@DTOProperty` - `@DTO`가 붙은 클래스 내부 필드에 사용할 수 있으며, 해당 어노테이션이 붙은 필드만 생성될 DTO 클래스의 필드가 됩니다.
     
         ```java
-        public @
+        @Documented
+        @Target(ElementType.TYPE) // type으로 명시하여 클래스에 할당할 수 있도록합니다.
+        @Retention(RetentionPolicy.SOURCE) // source로 설정하여 컴파일 이후에는 사용하지 못하도록 합니다.
+        public @interface DTO {
+          String name() default ""; // DTO 클래스의 이름을 정의할 수 있기 위한 속성입니다.
+        }
+
+        @Documented
+        @Target(ElementType.FIELD) // field으로 명시하여 클래스의 필드에 할당할 수 있도록합니다.
+        @Retention(RetentionPolicy.SOURCE) // source로 설정하여 컴파일 이후에는 사용하지 못하도록 합니다.
+        public @interface DTOProperty {
+          String name() default ""; // 필드 이름을 재정의할 수 있기 위한 속성입니다.
+        }
+        ```
+
+    3. Processor 구현  
+        Processor의 동작과정은 다음과 같이 진행됩니다.
+          
+        1. `@DTO`를 가진 Element들을 수집합니다.
+        1. 해당 클래스들을 순회하며, package 정보, 클래스 정보, 필드 정보를 수집합니다.
+        1. 수집된 정보를 기반으로 DTO 클래스를 생성합니다.
+        
+        위의 동작을 수행하기 위해 2가지 데이터 클래스를 정의하도록 하겠습니다.
+
+        1. `DTOAnnotatedClass` - `@DTO`를 가진 클래스에 대한 정보를 보관하는 데이터 클래스입니다.
+
+            ```java
+            public class DTOAnnotatedClass {
+              // Default 이름을 위한 값입니다.
+              private final String POSTFIX = "DTO";
+              // 패키지 element
+              private PackageElement packageElement;
+              // `@DTO`를 가진 클래스 element
+              private TypeElement annotatedClassElement;
+              // `@DTOProperty`를 가진 클래스의 필드 정보를 수집해놓은 collection.
+              private Set<DTOPropertyAnnotatedClass> dtoPropertiesElements;
+              // 클래스 전체이름
+              private String qualifiedClassName;
+              // 클래스 이름
+              private String simpleClassName;
+              // 어노테이션이 주어진 DTO 생성용 이름
+              private String name;
+            }
+            ```
+
+        1. `DTOPropertyAnnotatedClass` - `@DTOProperty`를 가진 필드에 대한 정보를 보관하는 데이터 클래스입니다.
+
+            ```java
+            public class DTOPropertyAnnotatedClass {
+              // `@DTOProperty`를 가진 필드 element
+              private VariableElement annotatedVariableElement;
+              // 필드 이름
+              private String fieldOriginalName;
+              // 재정의할 이름
+              private String name;
+            }
+            ```
+        
+        앞서 이야기한 동작을 하는 최종 생성 코드는 아래와 같습니다.(세부 코드는 생략하도록 하겠습니다. 완성된 코드는 [여기]()서 보실 수 있습니다.)
+
+        ```java
+        @SupportedAnnotationTypes({ "com.bj25.study.java.processors.DTO" }) // 담당할 어노테이션을 지정합니다.
+        @AutoService(Processor.class) // Google의 auth-service 라이브러리를 활용하여 javax.annotation.processing.Processor파일을 생성합니다.
+        public class DTOProcessor extends AbstractProcessor {
+          @Override
+          public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+              //...
+              // 모든 @DTO가 붙은 element를 순회합니다.
+              for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(DTO.class)) {
+                // class 타입의 element인지 확인합니다. 이러한 이유는 class에 한정해서 사용하도록 하기 위함입니다.
+                if (annotatedElement.getKind() != ElementKind.CLASS) {
+                  // error 출력
+                }
+                // 클래스인것을 알기때문에 TypeElement로 캐스팅이 가능합니다.
+                TypeElement typeElement = (TypeElement) annotatedElement;
+                // 패키지 정보를 수집합니다.
+                PackageElement packageElement = this.elementUtils.getPackageOf(typeElement);
+                // DTO 어노테이션을 가진 클래스에 대한 정보를 추출합니다.
+                DTOAnnotatedClass annotatedClass = new DTOAnnotatedClass(packageElement, typeElement);
+                // DTO 클래스 코드를 생성합니다. - 코드의 생성은 JavaPoet를 활용하였습니다.
+                this.generateDTO(annotatedClass);
+              }
+              //...
+          }
+        }
         ```
     
-    3. 
+    4. Processor 사용
 
+        앞서 정의한 어노테이션을 다음의 `Person`클래스에 적용하여, DTO 클래스를 컴파일 시점에 생성하도록 하겠습니다.
 
+        ```java
+        @DTO(name = "PersonExampleDTO")
+        @NoArgsConstructor
+        @Getter
+        public class Person {
+          @DTOProperty(name = "identificationId")
+          private int id;
+
+          @DTOProperty
+          private String email;
+
+          private String firstname;
+
+          private String lastname;
+
+          @DTOProperty
+          private int age;
+
+          private String address;
+
+          @Builder
+          public Person(int id, String email, String firstname, String lastname, int age, String address) {
+            this.id = id;
+            this.email = email;
+            this.firstname = firstname;
+            this.lastname = lastname;
+            this.age = age;
+            this.address = address;
+          }
+        }
+        ```
+
+        위의 코드를 앞서 생성한 annotation processor를 이용하여 컴파일을 하면 `generated-sources`폴더 아래에 아래 코드가 생성되는 것을 확인할 수 있습니다.
+        
+        ```java
+        @Getter
+        @NoArgsConstructor
+        public class PersonExampleDTO {
+          private String email;
+
+          private int identificationId;
+
+          private int age;
+
+          @Builder
+          public PersonExampleDTO(String email, int age, int identificationId) {
+            this.email = email;
+            this.age = age;
+            this.identificationId = identificationId;
+          }
+        }
+        ```
 
 ## 참고 사이트
 - [Oracle - Annotations](https://docs.oracle.com/javase/tutorial/java/annotations/)
 - [Baeldung - Overview of Java Built-in Annotations](https://www.baeldung.com/java-default-annotations)
 - [Baeldung - Java Annotation Processing and Creating a Builder](https://www.baeldung.com/java-annotation-processing-builder)
 - [Hannes Dorfmann - Annotation Processing 101](http://hannesdorfmann.com/annotation-processing/annotationprocessing101/)
+- [Baeldung - Implementing a Custom Lombok Annotation](https://www.baeldung.com/lombok-custom-annotation)

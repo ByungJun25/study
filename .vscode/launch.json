@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
+            "mainClass": "com.bj25.study.java.demo.Main",
+            "projectName": "java-12week-demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
             "mainClass": "com.bj25.study.java.annotations.Main",
             "projectName": "java-12week"
         },
