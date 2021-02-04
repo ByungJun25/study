@@ -386,7 +386,7 @@ void scheduledTask() {
             }
             ```
         
-        앞서 이야기한 동작을 하는 최종 생성 코드는 아래와 같습니다.(세부 코드는 생략하도록 하겠습니다. 완성된 코드는 [여기]()서 보실 수 있습니다.)
+        앞서 이야기한 동작을 하는 최종 생성 코드는 아래와 같습니다.(세부 코드는 생략하도록 하겠습니다. 완성된 코드는 [여기](https://github.com/ByungJun25/study/tree/main/java/whiteship-study/12week/processor/src/main/java/com/bj25/study/java/processors)서 보실 수 있습니다.)
 
         ```java
         @SupportedAnnotationTypes({ "com.bj25.study.java.processors.DTO" }) // 담당할 어노테이션을 지정합니다.
