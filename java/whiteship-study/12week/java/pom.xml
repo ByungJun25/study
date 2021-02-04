@@ -10,9 +10,16 @@
 	</parent>
 
 	<groupId>com.bj25.study</groupId>
-	<artifactId>java-8week</artifactId>
+	<artifactId>java-12week</artifactId>
 	<version>${project.parent.version}</version>
 	<name>java-study</name>
-	<description>white-ship java live study - 8 week</description>
+	<description>white-ship java live study - 12 week</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.bj25.study</groupId>
+			<artifactId>java-12week-processor</artifactId>
+		</dependency>
+	</dependencies>
 
 </project>
