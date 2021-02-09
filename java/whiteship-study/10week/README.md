@@ -16,9 +16,7 @@
   * [Thread 상태](#Thread-상태)
   * [Thread 우선순위](#Thread-우선순위)
 * [동기화](#동기화)
-  * [메모리 일관성 오류](#메모리-일관성-오류)
   * [synchronized 키워드](#synchronized-키워드)
-  * [lock](#lock)
   * [Lock 클래스](#Lock-클래스)
   * [Condition 클래스](#Condition-클래스)
   * [Executor 인터페이스](#Executor-인터페이스)
@@ -132,35 +130,297 @@ public class Main {
     ```
 
 1. interrupt  
-    `interrupt` 메서드는 대기
+    `interrupt` 메서드는 쓰레드를 간섭하여, 현재 진행중인 일을 정지시킵니다.
+    
+    쓰레드를 간섭(interrupt)하기 위해선, 해당 쓰레드가 이를 지원해야합니다. 이를 지원하기위해선 `InterruptedException` 예외를 던지는 함수를 호출하고 있어야합니다. 앞서 이야기한 `sleep`는 이 예외를 던지고 있기때문에, `sleep`을 호출한 쓰레드는 간섭을 지원한다고 볼 수 있습니다. 
 
     ```java
+    public class MyThread implements Runnable {
+        @Override
+        public void run() { // 실제 쓰레드 실행시 작동되는 부분.
+            for (int i = 0; i < 10; i++) {
+                System.out.println(i + "번째 출력");
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    System.out.println("Interrupted!");
+                    return; // 이 return이 없을경우, 'Interrupted!'를 출력하고 계속해서 남은 for 문을 실행하게 됩니다.
+                }
+            }
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) throws InterruptedException {
+            Thread thread = new Thread(new MyThread());
+            thread.start(); // 쓰레드 실행.
+            Thread.sleep(13000); // 13초간 정지
+            myThread.interrupt(); // myThread 정지
+        }
+    }
+    ```
+
+    만약 쓰레드가 `InterruptedException` 예외를 가진 메서드를 호출하지 않는다면, 해당 쓰레드는 무조건 `Thread.interrupted` 메서드를 주기적으로 호출해야합니다. 해당 메서드는 쓰레드가 간섭을 받을 경우 `true`를 반환하는 메서드입니다.
+
+    ```java
+    public class MyThread implements Runnable {
+        @Override
+        public void run() { // 실제 쓰레드 실행시 작동되는 부분.
+            while(true) { // 계속해서 작동합니다.(무한루프)
+                if(Thread.interrupted()) { // interrupt 메서드를 통해 간섭을 받을 경우 true를 반환합니다.
+                    System.out.println("interrupted!");
+                    break;
+                }
+            }
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) throws InterruptedException {
+            Thread thread = new Thread(new MyThread());
+            thread.start(); // 쓰레드 실행.
+            Thread.sleep(5000); // 5초간 정지
+            myThread.interrupt(); // myThread 정지
+        }
+    }
     ```
 
 1. join  
-
+    `join` 메서드는 현재 쓰레드를 호출되는 쓰레드가 완료될때까지 기다리게 하는 메서드입니다. overload된 메서드를 통해 특정 대기 시간을 줄 수도 있지만, 쓰레드는 OS에 의해 관리되기때문에, 주어진 특정 대기 시간동안만 정확하게 기다린다고 확신할 수는 없습니다.
 
     ```java
+    public class MyThread implements Runnable {
+        @Override
+        public void run() { // 실제 쓰레드 실행시 작동되는 부분.
+            for (int i = 0; i < 10; i++) {
+                System.out.println(i + "번째 출력");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Interrupted!");
+                    return;
+                }
+            }
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) throws InterruptedException {
+            Thread thread = new Thread(new MyThread());
+            thread.start(); // 쓰레드 실행.
+            System.out.println("Started Thread and call join");
+            thread.join(); // MyThread가 끝날때까지 main쓰레드는 기다리게 됩니다.
+            System.out.println("Finished");
+        }
+    }
     ```
 
+1. yield  
+    `yield` 메서드는 현재 쓰레드의 프로세서 사용을 포기하고 다른 쓰레드에게 프로세서를 양보하는 메서드입니다. 양보된 쓰레드는 대기 상태가 되어 추후 다시 스케줄러에 의해 호출됩니다. 하지만 이 동작은 플랫폼에 따라 다르게 동작할 수 있습니다.(비결정적 - 즉, 생각한 대로 되지 않을 수 있음)
+    
+    ```java
+    public class YourThread implements Runnable {
+        @Override
+        public void run() { // 실제 쓰레드 실행시 작동되는 부분.
+            for (int i = 0; i < 10; i++) {
+                Thread.yield();
+                System.out.println(Thread.currentThread().getName() + ": " + i + "번째 출력");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Interrupted!");
+                    return;
+                }
+            }
+        }
+    }
+
+    public class MyThread implements Runnable {
+        @Override
+        public void run() { // 실제 쓰레드 실행시 작동되는 부분.
+            for (int i = 0; i < 10; i++) {
+                System.out.println(Thread.currentThread().getName() + ": " + i + "번째 출력");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Interrupted!");
+                    return;
+                }
+            }
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            Thread thread = new Thread(new MyThread(), "my");
+            Thread thread2 = new Thread(new YourThread(), "your");
+            thread2.start();
+            thread.start();
+        }
+    }
+    ```
+    
+    < 첫번째 결과 >  
+    ![yield_결과_1](./yield_result_1.PNG)
+
+    < 두번째 결과 >  
+    ![yield_결과_2](./yield_result_2.PNG)
 
 ## Main Thread
+`main` 메서드의 작업을 수행하는 것도 쓰레드이며, 이를 main 쓰레드라고 합니다. 즉, 우리가 자바 프로그램을 실행하면 해당 프로그램의 process가 생기고 그 process 내부에 `main`메서드를 실행하는 쓰레드가 생기게되는 것입니다.
+
+`main` 쓰레드가 종료되더라도, 다른 쓰레드가 계속해서 실행중이면, 해당 자바 프로그램은 종료되지 않고, 모든 쓰레드가 종료될때까지 실행됩니다.
 
 ## 데몬 Thread
+`Daemon Thread`는 다른 쓰레드의 작업을 돕는 쓰레드를 의미합니다.
+
+`Daemon Thread`는 일반적인 쓰레드와는 다르게, 모든 일반 쓰레드들이 종료되면, 자동적으로 종료됩니다. 
+
+`Daemon Thread`를 만드는 방법은 만들어진 Thread의 `setDaemon` 메서드에 `true`를 주면됩니다. 또한 `Daemon Thread`가 만든 쓰레드들은 자동으로 데몬 쓰레드가 됩니다.
+
+```java
+public class ChildDeamonThread implements Runnable {
+    @Override
+    public void run() {
+        for (int i = 0; i < 1000; i++) {
+            System.out.println(i + "번째 출력 - child");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted!");
+                return;
+            }
+        }
+    }
+}
+
+public class MyDeamonThread implements Runnable {
+    @Override
+    public void run() {
+        Thread child = new Thread(new ChildDeamonThread());
+        child.start(); // 해당 쓰레드는 자동으로 데몬 쓰레드가 됩니다.
+
+        for (int i = 0; i < 1000; i++) {
+            System.out.println(i + "번째 출력");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted!");
+                return;
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        Thread myThread = new Thread(new MyDaemonThread());
+        myThread.setDaemon(true); // 해당 쓰레드를 데몬쓰레드로 지정
+        myThread.start();
+        Thread.sleep(5000); // 5초후 main 쓰레드가 종료되면서, 데몬 쓰레드도 같이 종료됩니다.
+    }
+}
+```
 
 ## Thread 그룹
+`Thread Group`은 여러 쓰레드를 서로 관련된 쓰레드끼리 묶어서 관리할 목적으로 사용됩니다. 그룹화된 쓰레드는 하나의 객체로 취급할 수 있으며, 손쉽게 그룹화된 쓰레드들을 조작할 수 있습니다.
+
+쓰레드 생성시, 그룹을 명시하지 않을 경우, 쓰레드를 생성한 부모 쓰레드의 그룹에 자동으로 속하게 됩니다.
+
+```java
+public class MyThread implements Runnable {
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(Thread.currentThread().getName() + ": " + i + "번째 출력");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted!");
+                return;
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        ThreadGroup group = new ThreadGroup("ThreadGroup");
+        Thread t1 = new Thread(group, new MyThread(), "First");
+        Thread t2 = new Thread(group, new MyThread(), "Second");
+        Thread t3 = new Thread(group, new MyThread(), "Third");
+
+        t1.start();
+        t2.start();
+        t3.start();
+
+        Thread.sleep(5000);
+        group.interrupt(); // 그룹 객체의 interrupt를 호출하면 그룹 내 모든 쓰레드에 interrupt가 호출됩니다.
+    }
+}
+```
 
 ## Thread 상태
+`Thread`에 대한 상태는 여러가지가 존재하며, 모두 `JVM`에 의해 기록되고 관리됩니다. (자세한 내용은 Thread.State enum 클래스를 참고하시기 바랍니다.)
+
+![Thread_states_image](./Life_cycle_of_a_Thread_in_Java.jpg)  
+이미지출처: [Baeldung - Life Cycle of a Thread in Java](https://www.baeldung.com/java-thread-lifecycle)
+
+- NEW - 쓰레드가 생성되었지만 아직 `start`메서드가 호출되지 않은 상태
+- RUNNABLE - 쓰레드가 `JVM`에 의해 실행되고 있는 상태
+- WAITING - 다른 쓰레드의 작업이 끝날때까지 대기중인 상태
+- TIME_WAITING - 지정된 시간까지 다른 쓰레드의 작업이 수행되기를 기다리는 상태
+- BLOCK - 쓰레드가 monitor lock을 기다리면서 차단된 상태
+- TERMINATED - 쓰레드가 종료된 상태
 
 ## Thread 우선순위
+각 쓰레드는 우선순위에 관한 정보를 가지고 있으며, 이를 통해 특정 쓰레드가 더 많은 시간동안 작업할 수 있도록 설정할 수 있습니다.
+
+우선순위는 `getPriority`와 `setPriority` 메서드를 통해 관리할 수 있습니다.
+
+우선순위의 값은 1부터 10까지이며, 숫자가 높을수록 우선순위도 높아집니다.
+
+우선순위가 높다고 해당 쓰레드가 항상 먼저 실행되는 것은 아니며, 단지 상대적으로 다른 쓰레드보다 더 많이 선택될 수 있음을 의미합니다.
 
 ## 동기화
+쓰레드들은 주로 필드 및 개체 참조 필드에 대한 접근을 공유하며 통신하게됩니다. 따라서 이러한 접근에 대한 제어권을 관리하지 않을 경우, 의도치 않은 결과가 발생할 수 있습니다.
 
-## 메모리 일관성 오류
+잘못된 접근을 방지하기 위해 도입된 개념으로 `임계 영역(critical section)`과 `잠금(lock)`이 있습니다.
+
+`임계 영역`이란, 여러 쓰레드가 동시에 접근해서는 안되는 공유 자원을 접근하는 코드부분을 의미합니다.
+
+`잠금(락)`은 말그대로, 자원을 사용하고 있는 동안 해당 자원에 대한 접근을 차단하는 것을 의미합니다.
+
+이렇게 임계역영과 lock을 통해 쓰레드간의 간섭을 막는 것을 `동기화(synchronization)`이라고 합니다.
 
 ## synchronized 키워드
+`Java`에서는 `synchronized` 키워드를 통해 임계 영역을 지정할 수 있습니다. 
 
-## lock
+`synchronized` 키워드를 통한 임계 영역 설정은 멀티쓰레드 프로그램의 성능에 영향을 끼치게 되므로 최소한으로 설정하는 것이 성능이 좋습니다.
+
+1. 메서드 전체  
+    특정 메서드 전체에 임계 영역을 설정하기 위해선 메서드에 `synchronized` 키워드를 붙이면 됩니다. 이렇게 설정할 경우, 메서드가 호출된 시점부터 lock이 해당 쓰레드에게 주어지게 됩니다.
+
+    ```java
+    public synchronized void method() {
+        // codes...
+    }
+    ```
+
+2. 특정 영역  
+    특정 영역에 한해 임계 영역을 설정하기 위해선 `synchronized` 키워드를 이용한 코드 블럭을 작성하면 됩니다. 이때, 참조 변수를 할당할 수 있으며, 이렇게 주어진 참조변수는 해당 코드 블럭안에서 lock됩니다.
+
+    ```java
+    public void method() {
+        // codes...
+
+        synchronized(참조 변수) {
+            // codes...
+        }
+
+        /// codes...
+    }
+    ```
 
 ## Lock 클래스
 
@@ -173,6 +433,8 @@ public class Main {
 ## Concurrent Collection
 
 ## 데드락
+
+## Critical Path
 
 ## 참고 사이트
 - [Oracle Document - Processes and Threads](https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html)
