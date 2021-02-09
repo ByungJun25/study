@@ -9,7 +9,7 @@
   * [Thread 선언과 실행](#Thread-선언과-실행)
     * [Runnable 인터페이스](#Runnable-인터페이스)
     * [Thread 객체](#Thread-객체)
-    * [start, run, sleep, interrupt, join](#start-run-sleep-interrupt-join)
+    * [start, run, sleep, interrupt, join, yield](#start-run-sleep-interrupt-join-yield)
   * [Main Thread](#Main-Thread)
   * [데몬 Thread](#데몬-Thread)
   * [Thread 그룹](#Thread-그룹)
@@ -433,8 +433,15 @@ public class Main {
 ## Concurrent Collection
 
 ## 데드락
+`Deadlock(교착 상태)`란, 둘 이상의 쓰레드가 lock을 획득하기 위해 대기할때, lock을 가진 쓰레드들도 다른 lock을 기다리면서 서로간에 block 상태에 놓이는 것을 말합니다. 
 
-## Critical Path
+교착 상태에 빠지는 조건은 다음과 같습니다.
+- 상호배제(Mutual exclusion): 프로세스들이 필요로 하는 자원에 대해 배타적인 통제권을 요구합니다.
+- 점유대기(Hold and wait): 프로세스가 할당된 자원을 가진 상태에서 다른 자원을 기다립니다.
+- 비선점(No preemption): 프로세스가 어떤 자원의 사용을 끝낼 때까지 그 자원을 뺏을 수 없습니다.
+- 순환대기(Circular wait): 각 프로세스는 순환적으로 다음 프로세스가 요구하는 자원을 가지고 있습니다.
+
+현재의 대부분 운영 체제들은 교착 상태를 막는 것이 불가능합니다. 따라서 각 운영 체제들은 자신들만의 방식으로 교착 상태에 대응합니다. 보통은 위 4가지 조건들 중 하나를 막는 방식으로 대응합니다.
 
 ## 참고 사이트
 - [Oracle Document - Processes and Threads](https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html)
