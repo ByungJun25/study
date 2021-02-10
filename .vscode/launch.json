@@ -6,6 +6,69 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch LockTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.LockTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
+            "name": "Launch DeadlockTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.DeadlockTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
+            "name": "Launch SynchronizedTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.SynchronizedTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
+            "name": "Launch PriorityTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.PriorityTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
+            "name": "Launch ThreadGroupTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.ThreadGroupTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
+            "name": "Launch YieldTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.YieldTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
+            "name": "Launch DeamonThreadTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.DeamonThreadTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
+            "name": "Launch JoinTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.JoinTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
+            "name": "Launch InterruptTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.InterruptTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "com.bj25.study.java.demo.Main",
