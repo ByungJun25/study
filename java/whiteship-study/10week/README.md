@@ -17,7 +17,7 @@
   * [Thread 우선순위](#Thread-우선순위)
 * [동기화](#동기화)
   * [synchronized 키워드](#synchronized-키워드)
-  * [Lock 클래스](#Lock-클래스)
+  * [Lock 인터페이스](#Lock-인터페이스)
 * [데드락](#데드락)
 * [참고 사이트](#참고-사이트)
 * [추가적 공부사항](#추가적-공부사항)
@@ -76,7 +76,7 @@ public class Main {
 }
 ```
 
-## start, run, sleep, interrupt, join
+## start, run, sleep, interrupt, join, yield
 `Thread` 클래스는 여러 메서드를 가지고 있습니다. 지금부터 각 메서드에 대해 알아보도록 하겠습니다.
 
 1. start & run  
