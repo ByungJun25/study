@@ -18,12 +18,9 @@
 * [동기화](#동기화)
   * [synchronized 키워드](#synchronized-키워드)
   * [Lock 클래스](#Lock-클래스)
-  * [Condition 클래스](#Condition-클래스)
-  * [Executor 인터페이스](#Executor-인터페이스)
-  * [Atomic 변수](#Atomic-변수)
-  * [Concurrent Collection](#Concurrent-Collection)
 * [데드락](#데드락)
 * [참고 사이트](#참고-사이트)
+* [추가적 공부사항](#추가적-공부사항)
 
 # Process와 Thread
 
@@ -422,15 +419,34 @@ public class Main {
     }
     ```
 
-## Lock 클래스
+## Lock 인터페이스
+`Lock` 인터페이스는 `java.util.concurrent` 패키지에서 제공되며 많은 concurrent 어플리케이션의 locking을 쉽게 지원합니다.
 
-## Condition 클래스
+`Lock` 객체들은 `synchronized` 키워드를 통한 암시적 잠금과 매우 유사하게 작동합니다. 또한 `Condition` 객체들과 함께 사용함으로써, `wait`/`notify` 매커니즘을 지원합니다.
 
-## Executor 인터페이스
+`Lock` 객체를 사용하는 이유는 lock을 획득하려는 요청을 취소할 수 있기때문입니다.
 
-## Atomic 변수
+주요 메서드
+- `lock`메서드 - 인스턴스에 잠금을 걸어둡니다.
+- `tryLock`메서드 - 즉시 Lock 인스턴스에 잠금을 시도하고 성공 여부를 boolean타입으로 반환합니다.
+- `lockInterruptibly`메서드 - 현재 쓰레드가 interrupted 상태가 아닐 때, Lock 인스턴스에 잠금을 건다. 현재 쓰레드가 interrupted 상태면 interruptedException을 발생시킵니다.
+- `unlock` 메서드 - 인스턴스의 잠금을 해제합니다.
 
-## Concurrent Collection
+**Lock 객체를 사용할때는 `unlock` 메서드를 잊지 않도록 `try-catch-finally`형태로 작성하는 것을 추천합니다.**
+
+`synchronized`와 `Lock`인터페이스를 구분짓는 키워드는 `공정성`입니다.  
+
+여기서 공정성이란 모든 쓰레드가 자신의 작업을 수행할 기회를 공평하게 갖는 것을 의미합니다. 즉, 공정한 방법에선 모든 쓰레드들이 공평하게 lock을 획득할 수 있지만, 불공정한 방법에서는 특정 쓰레드가 대기열을 건너뛰어 lock을 획득하게 될 수도 있습니다. 이를 `경쟁 상태(race condition)`라고하며, 우선 순위가 계속 밀려 lock을 획득하지 못하는 상태를 `기아 상태(starvation)`라고 합니다.
+
+따라서, `synchronized` 키워드를 사용하면 무조건 불공정한 상태가 되고, `Lock`인터페이스를 이용하면 생성자를 통해 공정 / 불공정을 선택할 수 있게됩니다.
+
+`Lock` 인터페이스를 구현한, 구현체는 다음의 종류가 있습니다.
+
+- `ReentrantLock` - 재진입이 가능한 lock 인터페이스 구현체입니다.
+- `ReentrantReadWriteLock` - 읽기에는 공유적이고, 쓰기에는 배타적인 lock 인터페이스 구현체입니다.
+
+그외 `Lock` 클래스
+- `StampedLock` - `ReentrantReadWriteLock`에 낙관적인 lock 기능을 추가한 Lock 클래스입니다. **이 클래스는 `Lock`인터페이스를 구현하지 않았습니다.**
 
 ## 데드락
 `Deadlock(교착 상태)`란, 둘 이상의 쓰레드가 lock을 획득하기 위해 대기할때, lock을 가진 쓰레드들도 다른 lock을 기다리면서 서로간에 block 상태에 놓이는 것을 말합니다. 
@@ -444,7 +460,15 @@ public class Main {
 현재의 대부분 운영 체제들은 교착 상태를 막는 것이 불가능합니다. 따라서 각 운영 체제들은 자신들만의 방식으로 교착 상태에 대응합니다. 보통은 위 4가지 조건들 중 하나를 막는 방식으로 대응합니다.
 
 ## 참고 사이트
-- [Oracle Document - Processes and Threads](https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html)
+- [Oracle Document - Processes and Threads](https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html)
 - [https://sujl95.tistory.com/63](https://sujl95.tistory.com/63)
 - [https://blog.naver.com/hsm622/222212364489](https://blog.naver.com/hsm622/222212364489)
 - [https://www.notion.so/ac23f351403741959ec248b00ea6870e](https://www.notion.so/ac23f351403741959ec248b00ea6870e)
+
+## 추가적 공부사항
+- Condition 클래스
+- Executor 인터페이스
+- Atomic 변수
+- Concurrent Collection
+- Callable, Feature
+- CompletableFuture

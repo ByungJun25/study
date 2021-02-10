@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch LockTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.LockTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
+            "name": "Launch DeadlockTest",
+            "request": "launch",
+            "mainClass": "com.bj25.study.java.threads.DeadlockTest",
+            "projectName": "java-10week"
+        },
+        {
+            "type": "java",
             "name": "Launch SynchronizedTest",
             "request": "launch",
             "mainClass": "com.bj25.study.java.threads.SynchronizedTest",
