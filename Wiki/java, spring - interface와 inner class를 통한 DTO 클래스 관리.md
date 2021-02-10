@@ -1,4 +1,4 @@
-# java - interface와 inner class를 통한 DTO 클래스 관리
+# java, spring - interface와 inner class를 통한 DTO 클래스 관리
 
 **문제점** - 기존에 DTO 클래스를 요청별, 응답별로 개별로 만들어 관리하였다. 이에 따라, 클래스의 갯수가 많아지고, 중복도 생기고, 쪼오끔 관리하기 귀찮아짐.
 
