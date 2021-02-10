@@ -62,7 +62,7 @@ public class Data {
 // DTO
 public interface DataDTO {
 
-    static enum Type {
+    enum Type {
         RESPONSE1, RESPONSE2, RESPONSE3;
     }
 
