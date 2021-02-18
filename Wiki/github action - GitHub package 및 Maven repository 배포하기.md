@@ -7,6 +7,9 @@
 - [OSSRH Guide](https://central.sonatype.org/pages/ossrh-guide.html#deployment)
 - [Deploy - Apache Maven](https://central.sonatype.org/pages/apache-maven.html)
 
+
+## 방법
+
 1. GitHub package에 배포하기
     1. Maven을 통해 배포하기
 
