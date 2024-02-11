@@ -71,7 +71,9 @@ Elastic beanstalk -> Amazon SNS -> Lambda -> Discord
                     return data;
                 }
 
-                let [key, value] = part.split(":");
+                // Because of Timestamp
+                let key = part.substring(0, part.indexOf(":"));
+                let value = part.substring(part.indexOf(":")+1);
                 key = key.trim();
                 value = value.trim();
                 
@@ -104,14 +106,26 @@ Elastic beanstalk -> Amazon SNS -> Lambda -> Discord
             username: "ALARM_BOT",
             content: "Elastic beanstalk 서버의 상태가 변경되었습니다. 확인해주세요.",
             embeds: [
-            {
-                title: "Environment: " + data.Environment,
-                description: highlightMessage(data.Message),
-                color: setColor(data.Message),
-            }
+                {
+                    title: "Environment: " + data.Environment,
+                    description: highlightMessage(data.Message),
+                    color: setColor(data.Message),
+                    timestamp: formatDate(data.Timestamp)
+                }
             ]
         }
     }
+
+    // embeds에 삽입할 시간 데이터
+    const formatDate = (timestamp) => {
+        try {
+            const date = new Date(timestamp);
+            return date.toISOString();
+        } catch (error) {
+            console.error("Failed to convert timestamp: "+ timestamp);
+            return new Date().toISOString();
+        }
+    };
 
     // 메세지의 첫 문장을 bold처리하는 메소드입니다.
     const highlightMessage = (msg) => {
