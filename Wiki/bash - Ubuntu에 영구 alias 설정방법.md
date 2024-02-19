@@ -8,10 +8,33 @@ Here is a function named `peras` that you can add to your `~/.bashrc` file:
 
 ```bash
 function peras() {
+    local help=0
+    local list=0
     local force=0
     if [ "$1" = "-f" ]; then
         force=1
         shift
+    fi
+
+    if [ "$1" = "-h" ]; then
+        help=1
+    fi
+
+    if [ "$1" = "-l" ]; then
+        list=1
+    fi
+
+    if [ $help -eq 1 ]; then
+        echo "Usage: peras [-f] <alias name> <command>"
+        echo "Options:"
+        echo "  -f: Force overwrite if alias already exists"
+        echo "  -l: List all permanent aliases"
+        return 0
+    fi
+
+    if [ $list -eq 1 ]; then
+        peras_ls
+        return 0
     fi
 
     if [ -z "$1" ] || [ -z "$2" ]; then
@@ -33,9 +56,23 @@ function peras() {
         source ~/.bash_aliases
     fi
 }
+
+function peras_ls() {
+    if [ -f ~/.bash_aliases ]; then
+        echo "Aliases:"
+        grep '^alias ' ~/.bash_aliases | cut -d ' ' -f 2- | sed 's/=/ -> /'
+    else
+        echo "No aliases found"
+    fi
+}
 ```
 
-This function takes two arguments: the alias name and the command. If either of these arguments is missing, the function will return an error message. If the alias already exists in the `~/.bash_aliases` file, the function will check if the `-f` option was used. If it was, the function will overwrite the existing alias with the new command. If the `-f` option was not used, the function will return an error message. If the alias does not exist, the function will append it to the `~/.bash_aliases` file. Finally, the function will source the `~/.bash_aliases` file to make the new alias available immediately.
+This code defines two functions: `peras` and `peras_ls`, which are used to manage permanent aliases in Ubuntu's Bash shell.
+
+- The `peras` function allows users to create or update a permanent alias. It takes two arguments: the alias name and the command to be aliased. Optional flags `-f`, `-h`, and `-l` can be used to force overwrite, display help, or list all permanent aliases, respectively.
+- The `peras_ls` function lists all the permanent aliases defined in the `~/.bash_aliases` file.
+
+To use these functions, source the `~/.bash_aliases` file after defining or updating aliases.
 
 ## Example
 
