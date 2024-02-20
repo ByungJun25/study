@@ -18,10 +18,12 @@ function peras() {
 
     if [ "$1" = "-h" ]; then
         help=1
+        shift
     fi
 
     if [ "$1" = "-l" ]; then
         list=1
+        shift
     fi
 
     if [ $help -eq 1 ]; then
