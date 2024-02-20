@@ -11,6 +11,7 @@ function peras() {
     local help=0
     local list=0
     local force=0
+
     if [ "$1" = "-f" ]; then
         force=1
         shift
@@ -18,12 +19,10 @@ function peras() {
 
     if [ "$1" = "-h" ]; then
         help=1
-        shift
     fi
 
     if [ "$1" = "-l" ]; then
         list=1
-        shift
     fi
 
     if [ $help -eq 1 ]; then
