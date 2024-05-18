@@ -13,7 +13,20 @@ logging:
     ## Add %replace([%kvp]){'\\[\\]', ''} to the pattern to print the key-value pairs in the log message. The key-value pairs are printed in the format of [key1=value1, key2=value2, ...]
     ## If kvp is empty, the pattern will be replaced with an empty string.
     console: "${CONSOLE_LOG_PATTERN:%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd'T'HH:mm:ss.SSSXXX}}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(${PID:}){magenta} %clr(---){faint} %clr(%applicationName[%15.15t]){faint} %clr(${LOG_CORRELATION_PATTERN:}){faint}%clr(%-40.40logger{39}){cyan} %clr(:){faint} %m %replace([%kvp]){'\\[\\]', ''}%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}}"
-
 ```
 
 위 코드에는 `%replace([%kvp]){'\\[\\]', ''}`를 추가하였는데 이는 `kvp`가 없는 값일 경우 `[]`도 출력 안하기 위해 빈 값으로 치환하는 코드가 같이 있는것임.
+
+
+#### multiline version
+
+```yaml
+logging:
+  pattern:
+    console: "${CONSOLE_LOG_PATTERN:%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd'T'HH:mm:ss.SSSXXX}}){faint} \
+    %clr(${LOG_LEVEL_PATTERN:%5p}) \
+    %clr(${PID:}){magenta} \
+    %clr(---){faint} %clr(%applicationName[%15.15t]){faint} \
+    %clr(${LOG_CORRELATION_PATTERN:}){faint}%clr(%-40.40logger{39}){cyan} \
+    %clr(:){faint} %m %replace([%kvp]){'\\[\\]', ''}%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}}"
+```
